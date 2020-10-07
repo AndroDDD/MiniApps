@@ -285,7 +285,7 @@ const Notepad: React.FC = () => {
                           label=" WHAT'S THE NOTE?"
                           required
                         />
-                        <View style={{ alignItems: "center" }}>
+                        <View style={{ position: "relative", top: "100px", alignItems: "center" }}>
                           <button
                             className={styles.formSubmitButton}
                             type={"submit"}
@@ -348,7 +348,7 @@ const Notepad: React.FC = () => {
                           label=" WHAT'S THE NOTE?"
                           required
                         />
-                        <View style={{ alignItems: "center" }}>
+                        <View style={{ position: "relative", top: "100px", alignItems: "center" }}>
                           <button
                             className={styles.formSubmitButton}
                             type={"submit"}
@@ -389,12 +389,12 @@ const styles2 = StyleSheet.create({
   },
   notepadHeader: {
     flexDirection: "row",
-    margin: "auto",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     width: "100%",
     height: "10%",
   },
   headerTitleText: {
+    width: "80%",
     margin: "auto",
     color: "rgba(100, 216, 216, 0.75)",
     textAlign: "center",
@@ -418,6 +418,7 @@ const styles2 = StyleSheet.create({
     justifyContent: "space-between",
   },
   availableNoteButtonText: {
+    color: "rgba(255, 102, 204, 0.75)",
     textAlign: "center",
     fontSize: 40,
     fontWeight: "700",
@@ -425,7 +426,7 @@ const styles2 = StyleSheet.create({
     textShadowRadius: 3,
   },
   availableNoteButtonTextHovered: {
-    color: "rgba(255, 215, 0, 1)",
+    color: "rgba(255, 102, 204, 0.75)",
     textAlign: "center",
     fontSize: 40,
     fontWeight: "700",

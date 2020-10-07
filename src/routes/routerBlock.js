@@ -22,7 +22,7 @@ export const store = configureStore();
 
 export const isMobile = checkIfMobileBrowser();
 
-export const localUrl = `http://localhost:3000/`;
+export const localUrl = `https://www.imaginative-accumulation.com/portSite/mini-appsv2/`;
 
 export const dataBaseUrl = ``;
 
@@ -79,61 +79,61 @@ const RoutesComposed = () => {
           <Switch>
             <Route
               exact
-              path="/"
+              path="/portSite/mini-appsv2"
               component={isMobile ? IndexPage : IndexPage}
             />
             <Route
               exact
-              path="/countdown-timer"
+              path="/portSite/mini-appsv2/countdown-timer"
               component={isMobile ? CountdownTimer : CountdownTimer}
             />
             <Route
               exact
-              path="/random-quiz"
+              path="/portSite/mini-appsv2/random-quiz"
               component={isMobile ? RandomQuiz : RandomQuiz}
             />
             <Route
               exact
-              path="/cookbook"
+              path="/portSite/mini-appsv2/cookbook"
               component={isMobile ? Cookbook : Cookbook}
             />
             <Route
               exact
-              path="/notepad"
+              path="/portSite/mini-appsv2/notepad"
               component={isMobile ? Notepad : Notepad}
             />
             <Route
               exact
-              path="/todo-list"
+              path="/portSite/mini-appsv2/todo-list"
               component={isMobile ? TodoList : TodoList}
             />
             <Route
               exact
-              path="/movies-library"
+              path="/portSite/mini-appsv2/movies-library"
               component={isMobile ? MoviesLibrary : MoviesLibrary}
             />
             <Route
               exact
-              path="/github-profiles"
+              path="/portSite/mini-appsv2/github-profiles"
               component={isMobile ? GitHubProfiles : GitHubProfiles}
             />
             <Route
               exact
-              path="/art-board"
+              path="/portSite/mini-appsv2/art-board"
               component={isMobile ? ArtPage : ArtPage}
             />
             <Route
               exact
-              path="/password-generator"
+              path="/portSite/mini-appsv2/password-generator"
               component={isMobile ? PasswordGenerator : PasswordGenerator}
             />
             <Route
               exact
-              path="/weather-detector"
+              path="/portSite/mini-appsv2/weather-detector"
               component={isMobile ? WeatherDetector : WeatherDetector}
             />
             <ProtectedRoute
-              path="/protected"
+              path="/portSite/mini-appsv2/protected"
               component={isMobile ? HoldPage : HoldPage}
             />
           </Switch>

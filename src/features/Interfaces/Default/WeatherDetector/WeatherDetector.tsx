@@ -292,7 +292,7 @@ const styles2 = StyleSheet.create({
   },
   weatherDataDisplay: {
     width: "100%",
-    height: "400px",
+    height: "380px",
     paddingLeft: "7px",
     paddingRight: "7px",
     justifyContent: "space-evenly",

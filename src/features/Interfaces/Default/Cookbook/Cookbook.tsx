@@ -846,14 +846,14 @@ const styles2 = StyleSheet.create({
   },
   leftCookbookMenuNavigationButtonText: {
     position: "relative",
-    top: "-7px",
+    top: "-30px",
     right: "6px",
     fontWeight: "700",
   },
   rightCookbookMenuNavigationButtonText: {
     position: "relative",
-    top: "-7px",
-    right: "5px",
+    top: "-30px",
+    right: "4px",
     fontWeight: "700",
   },
   recipeDisplay: {
@@ -922,25 +922,27 @@ const styles2 = StyleSheet.create({
   recipeInstructionsText: {},
   recipeNavView: {
     position: "relative",
-    top: "-409px",
+    top: "-425px",
     flexDirection: "row",
     alignItems: "stretch",
   },
   leftRecipeNavView: {
     width: "50%",
-    transform: [{ rotate: "90deg" }, { translateY: 105 }, { translateX: -2 }],
+    transform: [{ rotate: "90deg" }, { translateY: 89 }, { translateX: -2 }],
     alignItems: "flex-start",
   },
   rightRecipeNavView: {
     width: "50%",
-    transform: [{ rotate: "-90deg" }, { translateY: 105 }, { translateX: 132 }],
+    transform: [{ rotate: "-90deg" }, { translateY: 90 }, { translateX: 132 }],
     alignItems: "flex-start",
   },
   leftRecipeNavText: {
+    color: "rgba(112, 128, 144, 1)",
     fontWeight: "500",
     letterSpacing: 1,
   },
   rightRecipeNavText: {
+    color: "rgba(112, 128, 144, 1)",
     fontWeight: "500",
     letterSpacing: 1,
   },
