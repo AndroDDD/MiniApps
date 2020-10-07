@@ -1,0 +1,47 @@
+.notepadDisplaySupportClass {
+  background-color: plum;
+  background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fda6496a-be27-4802-b692-3dd43563281f/d132i8d-056bf8ee-4590-4bfc-b245-5ec9179549ae.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwic3ViIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsImF1ZCI6WyJ1cm46c2VydmljZTpmaWxlLmRvd25sb2FkIl0sIm9iaiI6W1t7InBhdGgiOiIvZi9mZGE2NDk2YS1iZTI3LTQ4MDItYjY5Mi0zZGQ0MzU2MzI4MWYvZDEzMmk4ZC0wNTZiZjhlZS00NTkwLTRiZmMtYjI0NS01ZWM5MTc5NTQ5YWUuanBnIn1dXX0.HIof4ETfHxjHnmuYmwgx8humoege6YkeyOma3k4V9vE");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.addPostIconButton {
+}
+
+.addPostIcon {
+  background-color: tomato;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
+}
+
+.homeIconButton {
+}
+
+.homeIcon {
+  background-color: tomato;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
+}
+
+.tempNotesButtonsViewSupport {
+  width: 100%;
+  height: 90%;
+  overflow: auto;
+}
+
+.availableNoteButton {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-bottom: 7px;
+  background-color: rgba(255, 253, 208, 0.75);
+  cursor: pointer;
+}
+
+.availableNoteButton:hover {
+  background-color: rgba(55, 0, 128, 0.5);
+}
+
+.formSubmitButton {
+  background-color: rgba(0, 128, 128, 0.5);
+  color: whitesmoke;
+  position: relative;
+  font-weight: 700;
+}

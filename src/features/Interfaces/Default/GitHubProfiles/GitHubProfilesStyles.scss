@@ -1,0 +1,29 @@
+.gitHubProfilesPageDisplaySupportClass {
+  background-color: plum;
+  background-image: url("https://avatars3.githubusercontent.com/u/9919?v=3&s=280");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.searchQueryButton {
+}
+
+.searchQueryButtonIcon {
+  border-radius: 50%;
+  background-color: black;
+  color: rgba(112, 128, 144, 1);
+  border: 1px solid rgba(112, 128, 144, 1);
+  filter: drop-shadow(0px 0px 5px rgba(112, 128, 144, 0.95));
+}
+
+.profilePhoto {
+  border: 1px solid rgba(0, 0, 0, 0.65);
+  border-radius: 50%;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
+}
+
+.profileSnippetTitle {
+  color: rgb(0, 0, 0);
+  text-shadow: 0px 0px 3px rgba(112, 128, 144, 1);
+  font-weight: 700;
+}

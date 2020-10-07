@@ -1,0 +1,90 @@
+@keyframes locationQueryInputAnimation {
+  0% {
+    background-color: rgba(112, 128, 144, 0.65);
+  }
+  50% {
+    background-color: rgba(65, 105, 225, 0.65);
+  }
+  100% {
+    background-color: rgba(204, 85, 0, 0.45);
+  }
+}
+
+@keyframes locationQuerySearchIconAnimation {
+  0% {
+    color: rgba(112, 128, 144, 0.65);
+  }
+  50% {
+    color: rgba(65, 105, 225, 0.65);
+  }
+  100% {
+    color: rgba(204, 85, 0, 0.65);
+  }
+}
+
+.weatherDetectorPageDisplaySupportClass {
+  background-color: plum;
+  background-image: url("https://behrend.psu.edu/sites/behrend/files/styles/callout_component_image/public/weather-collage_2.jpg?itok=6r93EKxl");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.locationQueryInput {
+  width: 90%;
+  height: 25px;
+  margin-left: 10px;
+  color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(112, 128, 144, 0.9);
+  border: 1px solid rgba(0, 127, 255, 0.45);
+  border-radius: 10px;
+  text-align: center;
+  text-shadow: 0px 0px 10px rgba(112, 128, 144, 1);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  animation-name: locationQueryInputAnimation;
+  animation-duration: 15s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.locationQueryInput::placeholder {
+  color: rgb(236, 134, 1);
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.locationQueryInput:hover {
+  border: 1px solid rgba(236, 134, 1, 1);
+}
+
+.locationQueryInput:focus {
+  outline: none;
+}
+
+.locationQuerySearchIconDisplay {
+  width: 10%;
+}
+
+.locationQuerySearchIcon {
+  padding: 2px;
+  border: 3px solid rgba(112, 128, 144, 0.65);
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.75);
+  animation-name: locationQuerySearchIconAnimation;
+  animation-duration: 15s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.locationQuerySearchIcon:hover {
+  border-color: rgba(236, 134, 1, 1);
+}
+
+.locationQuerySearchIcon:active {
+  border-color: rgba(236, 134, 1, 1);
+  background-color: rgba(236, 134, 1, 0.5);
+  box-shadow: 0px 0px 10px 5px rgba(236, 134, 1, 0.4);
+}

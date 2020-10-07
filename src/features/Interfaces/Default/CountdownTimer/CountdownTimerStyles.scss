@@ -1,0 +1,23 @@
+.countdownTimerDisplaySupportClass {
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(20, 0, 0, 1),
+    70%,
+    rgb(0, 92, 92)
+  );
+}
+.countdownTimerImage {
+  display: flex;
+  position: absolute;
+  top: 20%;
+  margin: auto;
+  padding-top: 10px;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+}
+
+.countdownTimerImageStyleSupport {
+  border-radius: 20px;
+  box-shadow: 0px 0px 5px 3px rgba(142, 69, 133, 0.75);
+}

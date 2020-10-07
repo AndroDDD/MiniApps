@@ -1,0 +1,89 @@
+.indexPageDisplaySupportClass {
+  visibility: hidden;
+  background-color: plum;
+  background-image: url("https://i.pinimg.com/originals/fc/78/01/fc780105b68bc70ed3f6b1e8698f0c06.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+button {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 7px;
+  color: rgba(213, 175, 130, 0.9);
+  text-align: center;
+  text-shadow: 2px 0px 0px rgba(0, 0, 0, 1), -2px 0px 0px rgba(0, 0, 0, 1),
+    0px -2px 0px rgba(0, 0, 0, 1), 1px 1px 0px rgba(0, 0, 0, 1),
+    -1px -1px 0px rgba(0, 0, 0, 1), 1px -1px 0px rgba(0, 0, 0, 1),
+    -1px 1px 0px rgba(0, 0, 0, 1);
+  font-family: "Marker felt", fantasy;
+  font-size: 35px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgba(0, 0, 0, 0.75);
+  color: rgba(112, 128, 144, 1);
+}
+
+.artPageButton {
+  background-color: rgba(194, 88, 17, 0.5);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.cookbookButton {
+  background-color: rgba(0, 255, 255, 0.5);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.countdownTimerButton {
+  background-color: rgba(0, 255, 34, 0.5);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.githubProfilesButton {
+  background-color: rgba(251, 255, 0, 0.5);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.moviesLibraryButton {
+  background-color: rgba(255, 0, 221, 0.5);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.notepadButton {
+  background-color: rgba(255, 0, 0, 0.5);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.passwordGeneratorButton {
+  background-color: rgba(0, 102, 255, 0.5);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.randomQuizButton {
+  background-color: rgba(211, 131, 57, 0.5);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.todoListButton {
+  background-color: rgba(7, 3, 59, 0.5);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.weatherDetectorButton {
+  background-color: rgba(0, 255, 76, 0.5);
+  font-weight: 800;
+  cursor: pointer;
+}

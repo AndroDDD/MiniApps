@@ -1,0 +1,59 @@
+.cookbookDisplaySupportClass {
+  background-color: plum;
+  background-image: url("https://i.pinimg.com/originals/9d/a7/0e/9da70e17b25d41ec21707c46e8480c95.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.cookbookMenuItemButton {
+  margin: 3px;
+  width: 20%;
+  height: 95px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+}
+
+.cookbookMenuItemButton:hover {
+  cursor: pointer;
+  border-color: tan;
+}
+
+.cookbookMenuItemButtonSelected {
+  margin: 3px;
+  width: 20%;
+  height: 95px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.75);
+  border-color: tan;
+  box-shadow: 0px 0px 5px 3px rgba(112, 128, 144, 0.75);
+  overflow: hidden;
+}
+
+.leftCookbookMenuNavigationButton {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.rightCookbookMenuNavigationButton {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.leftRecipeNavButton {
+  width: 105px;
+  background-color: tan;
+  cursor: pointer;
+}
+
+.rightRecipeNavButton {
+  width: 105px;
+  background-color: tan;
+  cursor: pointer;
+}
