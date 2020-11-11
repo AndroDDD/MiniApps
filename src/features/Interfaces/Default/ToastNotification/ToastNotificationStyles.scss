@@ -1,0 +1,42 @@
+.mainTNDisplaySupportClass {
+  background-color: plum;
+  background-image: url("https://th.bing.com/th/id/OIP.lj-HwFCijXAX-cBOCMtfrgHaE3?pid=Api&rs=1");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.toastNotificationDisplay {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 95%;
+  height: 95%;
+  background-color: rgba(95, 158, 160, 0.5);
+  border-radius: 15px;
+  overflow: auto;
+}
+
+.toastNotificationButton {
+  outline: none;
+  border: none;
+  background-image: linear-gradient(
+    to right,
+    rgba(112, 124, 144, 1),
+    rgba(231, 201, 169, 1)
+  );
+}
+
+.notificationListItem {
+  width: 100%;
+  background-image: linear-gradient(
+    to right,
+    rgba(231, 201, 169, 1),
+    rgba(112, 124, 144, 1)
+  );
+  color: rgba(0, 255, 255, 1);
+  text-align: center;
+  font-family: monospace;
+  font-size: 15px;
+  font-weight: 600;
+}

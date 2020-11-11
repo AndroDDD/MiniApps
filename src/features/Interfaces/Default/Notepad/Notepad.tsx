@@ -388,9 +388,10 @@ const styles2 = StyleSheet.create({
     backgroundColor: "rgba(112, 128, 144, 0.9)",
   },
   notepadHeader: {
+    position: "relative",
+    left: "50px",
     flexDirection: "row",
-    margin: "auto",
-    justifyContent: "space-between",
+    justifyContent: "center",
     width: "100%",
     height: "10%",
   },

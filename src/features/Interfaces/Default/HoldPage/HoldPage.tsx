@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  ImageBackground,
-  Text,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 
 import $ from "jquery";
 
@@ -26,13 +20,6 @@ const HoldPage: React.FC = () => {
     console.log({ updatedScreenHeight: screenHeight });
   });
 
-  // Declare stylesheet for manipulation
-  const [styles, setStyles] = React.useState({
-    mainDisplay: styles2.mainDisplay,
-    mainDisplaySupportClass: `holdPageDisplaySupportClass`,
-    mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
-  });
-
   // Handle screen size changes
   React.useEffect(() => {
     console.log({ detectedScreenHeightChange: screenHeight });
@@ -46,6 +33,14 @@ const HoldPage: React.FC = () => {
     setStyles(updatedHeightConfig);
   }, [screenHeight]);
 
+  // Declare stylesheet for manipulation
+  const [styles, setStyles] = React.useState({
+    mainDisplay: styles2.mainDisplay,
+    mainDisplaySupportClass: `mainDisplaySupportClass`,
+    mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+  });
+
+  // Handle component return view
   return (
     <div
       className={styles.mainDisplaySupportClass}

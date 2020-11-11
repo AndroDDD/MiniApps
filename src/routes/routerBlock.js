@@ -16,13 +16,30 @@ import GitHubProfiles from "../features/Interfaces/Default/GitHubProfiles/GitHub
 import ArtPage from "../features/Interfaces/Default/ArtPage/ArtPage";
 import PasswordGenerator from "../features/Interfaces/Default/PasswordGenerator/PasswordGenerator";
 import WeatherDetector from "../features/Interfaces/Default/WeatherDetector/WeatherDetector";
+import HamburgerExpansion from "../features/Interfaces/Default/HamburgerExpansion/HamburgerExpansion";
+import ToastNotification from "../features/Interfaces/Default/ToastNotification/ToastNotification";
+import AutoTextWriter from "../features/Interfaces/Default/AutoTextWriter/AutotextWriter"
+import Popup from "../features/Interfaces/Default/Popup/Popup";
+import RainingHearts from "../features/Interfaces/Default/RainingHearts/RainingHearts";
+import BackgroundChanger from "../features/Interfaces/Default/BackgroundChanger/BackgroundChanger"
+import DarkModeToggler from "../features/Interfaces/Default/DarkModeToggler/DarkModeToggler"
+import Carousel from "../features/Interfaces/Default/Carousel/Carousel";
+import SoundBoard from "../features/Interfaces/Default/SoundBoard/SoundBoard";
+import Magnify from "../features/Interfaces/Default/Magnify/Magnify"
 import HoldPage from "../features/Interfaces/Default/HoldPage/HoldPage";
 
+import MobileIndexPage from "../features/Interfaces/Mobile/IndexPage/IndexPage";
+import MobileArtPage from "../features/Interfaces/Mobile/ArtPage/ArtPage";
+import MobileCookbook from "../features/Interfaces/Mobile/Cookbook/Cookbook";
+import MobileCountdownTimer from "../features/Interfaces/Mobile/CountdownTimer/CountdownTimer";
+import MobileGitHubProfiles from "../features/Interfaces/Mobile/GitHubProfiles/GitHubProfiles";
+import {MobileNotePad} from "../features/Interfaces/Mobile/NotePad/NotePad";
+import MobilePasswordGenerator from "../features/Interfaces/Mobile/PasswordGenerator/PasswordGenerator";
+import MobileRandomQuiz from "../features/Interfaces/Mobile/RandomQuiz/RandomQuiz";
+import MobileTodoList from "../features/Interfaces/Mobile/TodoList/TodoList";
+import GenericPage from "../features/Interfaces/Mobile/GenericPage/GenericPage";
+
 export const store = configureStore();
-
-export const isMobile = checkIfMobileBrowser();
-
-export const localUrl = `http://localhost:3000/`;
 
 export const dataBaseUrl = ``;
 
@@ -41,6 +58,11 @@ function checkIfMobileBrowser() {
   })(navigator.userAgent || navigator.vendor || window.opera);
   return check;
 }
+
+export const isMobile = checkIfMobileBrowser();
+
+export const localUrl = isMobile ? `http://192.168.1.144:3000/`: `http://localhost:3000/`;
+
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   return (
@@ -80,32 +102,32 @@ const RoutesComposed = () => {
             <Route
               exact
               path="/"
-              component={isMobile ? IndexPage : IndexPage}
+              component={isMobile ? MobileIndexPage : IndexPage}
             />
             <Route
               exact
               path="/countdown-timer"
-              component={isMobile ? CountdownTimer : CountdownTimer}
+              component={isMobile ? MobileCountdownTimer : CountdownTimer}
             />
             <Route
               exact
               path="/random-quiz"
-              component={isMobile ? RandomQuiz : RandomQuiz}
+              component={isMobile ? MobileRandomQuiz : RandomQuiz}
             />
             <Route
               exact
               path="/cookbook"
-              component={isMobile ? Cookbook : Cookbook}
+              component={isMobile ? MobileCookbook : Cookbook}
             />
             <Route
               exact
               path="/notepad"
-              component={isMobile ? Notepad : Notepad}
+              component={isMobile ? MobileNotePad : Notepad}
             />
             <Route
               exact
               path="/todo-list"
-              component={isMobile ? TodoList : TodoList}
+              component={isMobile ? MobileTodoList : TodoList}
             />
             <Route
               exact
@@ -115,26 +137,76 @@ const RoutesComposed = () => {
             <Route
               exact
               path="/github-profiles"
-              component={isMobile ? GitHubProfiles : GitHubProfiles}
+              component={isMobile ? MobileGitHubProfiles : GitHubProfiles}
             />
             <Route
               exact
               path="/art-board"
-              component={isMobile ? ArtPage : ArtPage}
+              component={isMobile ? MobileArtPage : ArtPage}
             />
             <Route
               exact
               path="/password-generator"
-              component={isMobile ? PasswordGenerator : PasswordGenerator}
+              component={isMobile ? MobilePasswordGenerator : PasswordGenerator}
             />
             <Route
               exact
               path="/weather-detector"
               component={isMobile ? WeatherDetector : WeatherDetector}
             />
+            <Route
+              exact
+              path="/hamburger-expansion"
+              component={isMobile ? HamburgerExpansion : HamburgerExpansion}
+            />
+            <Route
+              exact
+              path="/toast-notification"
+              component={isMobile ? ToastNotification : ToastNotification}
+            />
+            <Route
+              exact
+              path="/auto-text-writer"
+              component={isMobile ? AutoTextWriter : AutoTextWriter}
+            />
+            <Route
+              exact
+              path="/popup"
+              component={isMobile ? Popup: Popup}
+            />
+            <Route
+              exact
+              path="/raining-hearts"
+              component={isMobile ? RainingHearts: RainingHearts}
+            />
+            <Route
+              exact
+              path="/background-changer"
+              component={isMobile ? BackgroundChanger: BackgroundChanger}
+            />
+            <Route
+              exact
+              path="/dark-mode-toggler"
+              component={isMobile ? DarkModeToggler:DarkModeToggler}
+            />
+            <Route
+              exact
+              path="/carousel"
+              component={isMobile ? Carousel: Carousel}
+            />
+            <Route
+              exact
+              path="/sound-board"
+              component={isMobile ? SoundBoard: SoundBoard}
+            />
+            <Route
+              exact
+              path="/magnify"
+              component={isMobile ? Magnify: Magnify}
+            />
             <ProtectedRoute
               path="/protected"
-              component={isMobile ? HoldPage : HoldPage}
+              component={isMobile ? GenericPage : HoldPage}
             />
           </Switch>
         </Router>

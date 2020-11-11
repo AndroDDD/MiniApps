@@ -189,6 +189,11 @@ const WeatherDetector: React.FC = () => {
                 setLocationQueryInput(updatedQueryValue);
                 console.log({ searching: updatedQueryValue });
               }}
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
+                  setWhichLocation(locationQueryInput);
+                }
+              }}
             />
           </View>
           <View style={styles.weatherDataDisplay}>

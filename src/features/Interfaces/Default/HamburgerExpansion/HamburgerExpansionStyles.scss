@@ -1,0 +1,69 @@
+@keyframes hamburgerButtonAnimation {
+  0% {
+    background-color: beige;
+  }
+  100% {
+    background-color: lightsalmon;
+  }
+}
+
+.mainHEDisplaySupportClass {
+  background-color: plum;
+  background-image: url("https://i.pinimg.com/736x/e5/6c/8c/e56c8c21cb5cb3112dbb412025c7d00f.jpg");
+  background-repeat: repeat;
+  background-size: auto;
+}
+
+.hamburgerExpansionDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 90%;
+  border: 1px solid maroon;
+  border-radius: 15px;
+  background-color: beige;
+  overflow: hidden;
+}
+
+.hamburgerIngredientsDisplay {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 0%;
+  height: 100%;
+  background-color: brown;
+  overflow: hidden;
+}
+
+.hamburgerIngredientsListDisplay {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  color: beige;
+  text-align: center;
+  font-family: monospace;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.hamburgerButtonDisplay {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: honeydew;
+}
+
+.hamburgerButtonDisplay:hover {
+  animation: hamburgerButtonAnimation 3s ease-out infinite alternate;
+  cursor: pointer;
+}
+
+.hamburgerButtonIcon {
+  color: blue;
+}

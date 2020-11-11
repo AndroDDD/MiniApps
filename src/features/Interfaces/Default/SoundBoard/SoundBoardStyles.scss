@@ -1,0 +1,48 @@
+.mainSoundBoardDisplaySupportClass {
+  background-color: plum;
+  background-image: url("https://voiceemergent.files.wordpress.com/2013/05/sound-waves.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.soundPlayersDisplay {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 90%;
+  height: 90%;
+  overflow: auto;
+}
+
+.soundPlayerContainer {
+  width: 300px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: black;
+  border: 1px solid rgba(231, 201, 169, 1);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+}
+
+.soundPlayerTitle {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: rgba(231, 201, 169, 1);
+  text-align: center;
+  text-shadow: 0px 0px 2px rgba(112, 128, 144, 0.7);
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 25px;
+}
+
+.soundPlayer {
+  width: 100%;
+}

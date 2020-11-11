@@ -9,9 +9,11 @@ import {
 
 import $ from "jquery";
 
+import { isMobile } from "../../../../routes/routerBlock";
+
 import "./MoviesLibraryStyles.scss";
 
-const apiKey = "";
+const apiKey = "04c35731a5ee918f014970082a0088b1";
 
 const OMDBAPIURL = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${apiKey}&page=1`;
 
@@ -38,6 +40,7 @@ const MoviesLibrary: React.FC = () => {
     mainDisplaySupportClass: `moviesLibraryPageDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
     moviesDisplay: styles2.moviesDisplay,
+    moviesDisplaySupport: { width: isMobile ? "400px" : "600px" },
     mainDisplayTitle: styles2.mainDisplayTitle,
     movieView: styles2.movieView,
     movieTitle: styles2.movieTitle,
@@ -128,7 +131,9 @@ const MoviesLibrary: React.FC = () => {
     >
       <View style={styles.mainDisplay}>
         <Text style={styles.mainDisplayTitle}>{`MINI MOVIES LIBRARY`}</Text>
-        <View style={styles.moviesDisplay}>{movieViews}</View>
+        <View style={[styles.moviesDisplay, styles.moviesDisplaySupport]}>
+          {movieViews}
+        </View>
       </View>
     </div>
   );
@@ -162,13 +167,11 @@ const styles2 = StyleSheet.create({
     flexWrap: "wrap",
     margin: "auto",
     paddingTop: "50px",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "600px",
     height: "auto",
   },
   movieView: {
-    margin: "auto",
+    marginLeft: "5px",
+    marginRight: "5px",
     marginBottom: "10px",
     paddingTop: "5px",
     paddingBottom: "5px",

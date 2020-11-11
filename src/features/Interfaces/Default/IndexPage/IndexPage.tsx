@@ -46,6 +46,16 @@ const IndexPage: React.FC = () => {
     randomQuizButton: `randomQuizButton`,
     todoListButton: `todoListButton`,
     weatherDetectorButton: `weatherDetectorButton`,
+    autoTextWriterButton: `autoTextWriterButton`,
+    backgroundChangerButton: `backgroundChangerButtonv2`,
+    carouselButton: `carouselButton`,
+    darkModeTogglerButton: `darkModeToggler`,
+    hamburgerExpansionButton: `hamburgerExpansionButton`,
+    magnifyButton: `magnifyButton`,
+    popupButton: `popupButtonv2`,
+    rainingHeartsButton: `rainingHeartsButton`,
+    soundBoardButton: `soundBoardButton`,
+    toastNotificationButton: `toastNotificationButton`,
   });
 
   // Declare ref for main display
@@ -62,6 +72,17 @@ const IndexPage: React.FC = () => {
   let randomQuizButtonRef = React.useRef(null);
   let todoListButtonRef = React.useRef(null);
   let weatherDetectorButtonRef = React.useRef(null);
+
+  let autoTextWriterButtonRef = React.useRef(null);
+  let backgroundChangerButtonRef = React.useRef(null);
+  let carouselButtonRef = React.useRef(null);
+  let darkModeTogglerButtonRef = React.useRef(null);
+  let hamburgerExpansionButtonRef = React.useRef(null);
+  let magnifyButtonRef = React.useRef(null);
+  let popupButtonRef = React.useRef(null);
+  let rainingHeartsButtonRef = React.useRef(null);
+  let soundBoardButtonRef = React.useRef(null);
+  let toastNotificationButtonRef = React.useRef(null);
 
   // Handle screen size changes
   React.useEffect(() => {
@@ -87,6 +108,11 @@ const IndexPage: React.FC = () => {
         moviesLibraryButtonRef.current,
         passwordGeneratorButtonRef.current,
         todoListButtonRef.current,
+        autoTextWriterButtonRef.current,
+        carouselButtonRef.current,
+        hamburgerExpansionButtonRef.current,
+        popupButtonRef.current,
+        soundBoardButtonRef.current,
       ],
       0.8,
       {
@@ -102,6 +128,11 @@ const IndexPage: React.FC = () => {
         notepadButtonRef.current,
         randomQuizButtonRef.current,
         weatherDetectorButtonRef.current,
+        backgroundChangerButtonRef.current,
+        darkModeTogglerButtonRef.current,
+        magnifyButtonRef.current,
+        rainingHeartsButtonRef.current,
+        toastNotificationButtonRef.current,
       ],
       0.8,
       {
@@ -212,6 +243,96 @@ const IndexPage: React.FC = () => {
           >
             {"WEATHER DETECTOR"}
           </button>
+          <button
+            ref={autoTextWriterButtonRef}
+            className={styles.autoTextWriterButton}
+            onClick={() => {
+              window.open(`${localUrl}auto-text-writer/`, "_self");
+            }}
+          >
+            {"AUTO TEXT WRITER"}
+          </button>
+          <button
+            ref={backgroundChangerButtonRef}
+            className={styles.backgroundChangerButton}
+            onClick={() => {
+              window.open(`${localUrl}background-changer/`, "_self");
+            }}
+          >
+            {"BACKGROUND CHANGER"}
+          </button>
+          <button
+            ref={carouselButtonRef}
+            className={styles.carouselButton}
+            onClick={() => {
+              window.open(`${localUrl}carousel/`, "_self");
+            }}
+          >
+            {"CAROUSEL"}
+          </button>
+          <button
+            ref={darkModeTogglerButtonRef}
+            className={styles.darkModeTogglerButton}
+            onClick={() => {
+              window.open(`${localUrl}dark-mode-toggler/`, "_self");
+            }}
+          >
+            {"DARK MODE TOGGLER"}
+          </button>
+          <button
+            ref={hamburgerExpansionButtonRef}
+            className={styles.hamburgerExpansionButton}
+            onClick={() => {
+              window.open(`${localUrl}hamburger-expansion/`, "_self");
+            }}
+          >
+            {"HAMBURGER EXPANSION"}
+          </button>
+          <button
+            ref={magnifyButtonRef}
+            className={styles.magnifyButton}
+            onClick={() => {
+              window.open(`${localUrl}magnify/`, "_self");
+            }}
+          >
+            {"MAGNIFY"}
+          </button>
+          <button
+            ref={popupButtonRef}
+            className={styles.popupButton}
+            onClick={() => {
+              window.open(`${localUrl}popup/`, "_self");
+            }}
+          >
+            {"POPUP"}
+          </button>
+          <button
+            ref={rainingHeartsButtonRef}
+            className={styles.rainingHeartsButton}
+            onClick={() => {
+              window.open(`${localUrl}raining-hearts/`, "_self");
+            }}
+          >
+            {"RAINING HEARTS"}
+          </button>
+          <button
+            ref={soundBoardButtonRef}
+            className={styles.soundBoardButton}
+            onClick={() => {
+              window.open(`${localUrl}sound-board/`, "_self");
+            }}
+          >
+            {"SOUND BOARD"}
+          </button>
+          <button
+            ref={toastNotificationButtonRef}
+            className={styles.toastNotificationButton}
+            onClick={() => {
+              window.open(`${localUrl}toast-notification/`, "_self");
+            }}
+          >
+            {"TOAST NOTIFICATION"}
+          </button>
         </View>
       </View>
     </div>
@@ -220,16 +341,19 @@ const IndexPage: React.FC = () => {
 
 const styles2 = StyleSheet.create({
   mainDisplay: {
+    paddingTop: "25px",
+    paddingBottom: "25px",
     margin: "auto",
     width: "100%",
     height: "100%",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
-    overflow: "hidden",
+    overflowX: "hidden",
+    overflowY: "scroll",
   },
   indexDisplay: {
     width: "500px",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
     alignItems: "center",
     border: "1px solid rgba(112, 128, 144, 1.0)",
     backgroundColor: "rgba(112, 128, 144, 0.5)",

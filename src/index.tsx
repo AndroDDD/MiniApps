@@ -4,6 +4,8 @@ import "typeface-roboto";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
+import "./index.css"
+
 AppRegistry.registerComponent("App", () => App);
 
 AppRegistry.runApplication("App", {

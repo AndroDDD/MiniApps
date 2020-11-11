@@ -1,0 +1,22 @@
+@keyframes heartFall {
+  0% {
+    top: -10%;
+  }
+
+  100% {
+    top: 110%;
+  }
+}
+
+.mainRHDisplaySupportClass {
+  background-color: black;
+  background-image: url("https://wallpapercave.com/wp/gCqWjfd.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.heart {
+  width: 25px;
+  height: 25px;
+  animation: heartFall ease-in-out 0.5s 1 forwards;
+}

@@ -1,0 +1,72 @@
+.todoTitleInput {
+  width: 80%;
+  height: 100%;
+  padding-left: 15px;
+  background-color: rgba(128, 0, 0, 0.5);
+  color: rgba(248, 236, 194, 1);
+}
+
+.newTodoButton {
+  width: 20%;
+  height: 100%;
+  background-color: rgba(112, 128, 144, 0.5);
+}
+
+.newTodoButtonIcon {
+}
+
+.todoTitleInput::placeholder {
+  color: rgba(248, 236, 194, 1);
+  text-shadow: 0px 0px 2px rgba(128, 0, 0, 1);
+}
+
+.todoInput {
+  width: 100%;
+  height: 65%;
+  padding-left: 15px;
+  border: 2px solid cyan;
+  background-color: rgba(128, 0, 0, 0.5);
+  color: rgba(248, 236, 194, 1);
+}
+
+.todoInput::placeholder {
+  color: rgba(248, 236, 194, 1);
+  text-shadow: 0px 0px 2px rgba(128, 0, 0, 1);
+}
+
+.todoCompleteByInput {
+  width: 67%;
+  height: 100%;
+  padding-left: 15px;
+  border: 2px solid cyan;
+  background-color: rgba(128, 0, 0, 0.5);
+  color: rgba(248, 236, 194, 1);
+}
+
+.todoCompleteByInput::placeholder {
+  color: rgba(248, 236, 194, 1);
+  text-shadow: 0px 0px 2px rgba(128, 0, 0, 1);
+}
+
+.todoSaveButton {
+  width: 33%;
+  height: 100%;
+  background-color: rgba(248, 236, 194, 0.5);
+  color: rgba(248, 236, 194, 1);
+  text-shadow: 0px 0px 2px rgba(0, 15, 144, 1);
+  text-align: center;
+  font-size: 15px;
+}
+
+.todoItemEditButton {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 228, 181, 0.75);
+}
+
+.todoItemEditButtonIcon {
+  background-color: rgba(0, 15, 144, 0.75);
+  color: rgba(248, 236, 194, 1);
+  border-radius: 100%;
+  box-shadow: 0px 0px 3px 5px rgba(0, 15, 144, 0.5);
+}
