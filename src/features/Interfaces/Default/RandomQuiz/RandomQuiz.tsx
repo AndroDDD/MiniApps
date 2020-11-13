@@ -127,9 +127,9 @@ const RandomQuiz: React.FC = () => {
     answerCText: styles2.answerCText,
     answerDText: styles2.answerDText,
     answerSubmitDisplay: styles2.answerSubmitDisplay,
-    answerSubmitButton: {},
-    finishQuizButton: {},
-    retakeQuizButton: {},
+    answerSubmitButton: { color: "cyan" },
+    finishQuizButton: { color: "orangered" },
+    retakeQuizButton: { color: "purple" },
   });
 
   // Declare variable tracking current quiz
@@ -296,13 +296,13 @@ const RandomQuiz: React.FC = () => {
                     {"FINISH QUIZ!"}
                   </Button>
                 ) : (
-                  <Button
-                    style={styles.answerSubmitButton}
-                    onClick={submitAnswer}
-                  >
-                    {"SUBMIT ANSWER"}
-                  </Button>
-                )}
+                    <Button
+                      style={styles.answerSubmitButton}
+                      onClick={submitAnswer}
+                    >
+                      {"SUBMIT ANSWER"}
+                    </Button>
+                  )}
               </View>
             </View>
           </View>

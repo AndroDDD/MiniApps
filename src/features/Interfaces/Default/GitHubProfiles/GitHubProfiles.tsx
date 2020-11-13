@@ -220,7 +220,7 @@ const styles2 = StyleSheet.create({
   },
   profileView: {
     postion: "relative",
-    top: "-200px",
+    top: "-100px",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",

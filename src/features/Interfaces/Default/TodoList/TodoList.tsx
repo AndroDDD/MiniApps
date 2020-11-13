@@ -217,7 +217,7 @@ const HoldPage: React.FC = () => {
                           required
                         />
                         <View
-                          style={{ marginTop: "20px", alignItems: "center" }}
+                          style={{ position: "relative", top: "100px", marginTop: "20px", alignItems: "center" }}
                         >
                           <button
                             className={styles.formSubmitButton}
@@ -262,17 +262,17 @@ const styles2 = StyleSheet.create({
   },
   todoListHeader: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    margin: "auto",
+    justifyContent: "space-evenly",
     width: "100%",
     height: "10%",
   },
   todoListHeaderTitle: {
-    margin: "auto",
+    width: "80%",
+    paddingTop: "15px",
     color: "rgba(255, 253, 208, 0.75)",
     textAlign: "center",
     textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowRadius: 3,
+    textShadowRadius: 7,
     fontSize: 20,
     fontWeight: "500",
   },
@@ -319,7 +319,7 @@ const styles2 = StyleSheet.create({
     width: "500px",
     height: "650px",
     border: "1px solid rgba(0, 0, 0, 0.75)",
-    backgroundColor: "rgba(0, 0, 0, 0.2)",
+    backgroundColor: "rgba(255, 253, 208, 0.75)",
   },
   addTodoFormDisplay: {
     margin: "auto",

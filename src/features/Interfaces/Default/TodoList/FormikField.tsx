@@ -41,16 +41,16 @@ const FormikField: React.FC<FormikFieldInterface> = ({
           style: {
             paddingLeft: "10px",
             paddingRight: "10px",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(0, 0, 0, 0.0)",
             color: "rgba(255, 253, 208, 1)",
           },
         }}
         InputProps={style}
         InputLabelProps={{
           style: {
-            color: "rgba(255, 255, 255, 2)",
+            color: "rgba(0, 0, 0, 0.7)",
             paddingLeft: "5px",
-            textShadow: "0px 0px 3px rgba(112, 128, 144, 0.75)",
+            textShadow: "0px 0px 5px rgba(112, 128, 144, 0.75)",
           },
         }}
         multiline={multiline?.isMultilined}
