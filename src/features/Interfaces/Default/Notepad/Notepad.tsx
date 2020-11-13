@@ -285,7 +285,13 @@ const Notepad: React.FC = () => {
                           label=" WHAT'S THE NOTE?"
                           required
                         />
-                        <View style={{ position: "relative", top: "100px", alignItems: "center" }}>
+                        <View
+                          style={{
+                            position: "relative",
+                            top: "100px",
+                            alignItems: "center",
+                          }}
+                        >
                           <button
                             className={styles.formSubmitButton}
                             type={"submit"}
@@ -348,7 +354,13 @@ const Notepad: React.FC = () => {
                           label=" WHAT'S THE NOTE?"
                           required
                         />
-                        <View style={{ position: "relative", top: "100px", alignItems: "center" }}>
+                        <View
+                          style={{
+                            position: "relative",
+                            top: "100px",
+                            alignItems: "center",
+                          }}
+                        >
                           <button
                             className={styles.formSubmitButton}
                             type={"submit"}
@@ -391,11 +403,7 @@ const styles2 = StyleSheet.create({
     position: "relative",
     left: "50px",
     flexDirection: "row",
-<<<<<<< HEAD
     justifyContent: "center",
-=======
-    justifyContent: "space-evenly",
->>>>>>> 3c9287f9f51dbcdeace59acfe1e78364725efa43
     width: "100%",
     height: "10%",
   },
