@@ -39,11 +39,7 @@ import MobileRandomQuiz from "../features/Interfaces/Mobile/RandomQuiz/RandomQui
 import MobileTodoList from "../features/Interfaces/Mobile/TodoList/TodoList";
 import GenericPage from "../features/Interfaces/Mobile/GenericPage/GenericPage";
 
-<<<<<<< HEAD
 export const store = configureStore();
-=======
-export const localUrl = `https://www.imaginative-accumulation.com/portSite/mini-appsv2/`;
->>>>>>> 3c9287f9f51dbcdeace59acfe1e78364725efa43
 
 export const dataBaseUrl = ``;
 
@@ -105,7 +101,6 @@ const RoutesComposed = () => {
           <Switch>
             <Route
               exact
-<<<<<<< HEAD
               path="/"
               component={isMobile ? MobileIndexPage : IndexPage}
             />
@@ -133,35 +128,6 @@ const RoutesComposed = () => {
               exact
               path="/todo-list"
               component={isMobile ? MobileTodoList : TodoList}
-=======
-              path="/portSite/mini-appsv2"
-              component={isMobile ? IndexPage : IndexPage}
-            />
-            <Route
-              exact
-              path="/portSite/mini-appsv2/countdown-timer"
-              component={isMobile ? CountdownTimer : CountdownTimer}
-            />
-            <Route
-              exact
-              path="/portSite/mini-appsv2/random-quiz"
-              component={isMobile ? RandomQuiz : RandomQuiz}
-            />
-            <Route
-              exact
-              path="/portSite/mini-appsv2/cookbook"
-              component={isMobile ? Cookbook : Cookbook}
-            />
-            <Route
-              exact
-              path="/portSite/mini-appsv2/notepad"
-              component={isMobile ? Notepad : Notepad}
-            />
-            <Route
-              exact
-              path="/portSite/mini-appsv2/todo-list"
-              component={isMobile ? TodoList : TodoList}
->>>>>>> 3c9287f9f51dbcdeace59acfe1e78364725efa43
             />
             <Route
               exact
@@ -170,7 +136,6 @@ const RoutesComposed = () => {
             />
             <Route
               exact
-<<<<<<< HEAD
               path="/github-profiles"
               component={isMobile ? MobileGitHubProfiles : GitHubProfiles}
             />
@@ -183,20 +148,6 @@ const RoutesComposed = () => {
               exact
               path="/password-generator"
               component={isMobile ? MobilePasswordGenerator : PasswordGenerator}
-=======
-              path="/portSite/mini-appsv2/github-profiles"
-              component={isMobile ? GitHubProfiles : GitHubProfiles}
-            />
-            <Route
-              exact
-              path="/portSite/mini-appsv2/art-board"
-              component={isMobile ? ArtPage : ArtPage}
-            />
-            <Route
-              exact
-              path="/portSite/mini-appsv2/password-generator"
-              component={isMobile ? PasswordGenerator : PasswordGenerator}
->>>>>>> 3c9287f9f51dbcdeace59acfe1e78364725efa43
             />
             <Route
               exact
@@ -254,13 +205,8 @@ const RoutesComposed = () => {
               component={isMobile ? Magnify: Magnify}
             />
             <ProtectedRoute
-<<<<<<< HEAD
               path="/protected"
               component={isMobile ? GenericPage : HoldPage}
-=======
-              path="/portSite/mini-appsv2/protected"
-              component={isMobile ? HoldPage : HoldPage}
->>>>>>> 3c9287f9f51dbcdeace59acfe1e78364725efa43
             />
           </Switch>
         </Router>
