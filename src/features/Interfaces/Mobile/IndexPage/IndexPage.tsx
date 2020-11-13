@@ -12,6 +12,8 @@ import $ from "jquery";
 
 import { localUrl } from "../../../../routes/routerBlock";
 
+import "./MobileIndexPageStyles.scss";
+
 const MobileIndexPage: React.FC = () => {
   // Handle screen size detection and changes
   // Declare variable tracking screen height
@@ -65,13 +67,13 @@ const MobileIndexPage: React.FC = () => {
     autoTextWriterButton: `autoTextWriterButton`,
     backgroundChangerButton: `backgroundChangerButtonv2`,
     carouselButton: `carouselButton`,
-    darkModeTogglerButton: `darkModeToggler`,
+    darkModeTogglerButton: `darkModeTogglerButtonv2`,
     hamburgerExpansionButton: `hamburgerExpansionButton`,
     magnifyButton: `magnifyButton`,
     popupButton: `popupButtonv2`,
     rainingHeartsButton: `rainingHeartsButton`,
     soundBoardButton: `soundBoardButton`,
-    toastNotificationButton: `toastNotificationButton`,
+    toastNotificationButton: `toastNotificationButtonv2`,
     genericText: styles2.genericText,
   });
 
