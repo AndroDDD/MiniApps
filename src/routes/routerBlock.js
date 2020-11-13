@@ -18,14 +18,14 @@ import PasswordGenerator from "../features/Interfaces/Default/PasswordGenerator/
 import WeatherDetector from "../features/Interfaces/Default/WeatherDetector/WeatherDetector";
 import HamburgerExpansion from "../features/Interfaces/Default/HamburgerExpansion/HamburgerExpansion";
 import ToastNotification from "../features/Interfaces/Default/ToastNotification/ToastNotification";
-import AutoTextWriter from "../features/Interfaces/Default/AutoTextWriter/AutotextWriter"
+import AutoTextWriter from "../features/Interfaces/Default/AutoTextWriter/AutotextWriter";
 import Popup from "../features/Interfaces/Default/Popup/Popup";
 import RainingHearts from "../features/Interfaces/Default/RainingHearts/RainingHearts";
-import BackgroundChanger from "../features/Interfaces/Default/BackgroundChanger/BackgroundChanger"
-import DarkModeToggler from "../features/Interfaces/Default/DarkModeToggler/DarkModeToggler"
+import BackgroundChanger from "../features/Interfaces/Default/BackgroundChanger/BackgroundChanger";
+import DarkModeToggler from "../features/Interfaces/Default/DarkModeToggler/DarkModeToggler";
 import Carousel from "../features/Interfaces/Default/Carousel/Carousel";
 import SoundBoard from "../features/Interfaces/Default/SoundBoard/SoundBoard";
-import Magnify from "../features/Interfaces/Default/Magnify/Magnify"
+import Magnify from "../features/Interfaces/Default/Magnify/Magnify";
 import HoldPage from "../features/Interfaces/Default/HoldPage/HoldPage";
 
 import MobileIndexPage from "../features/Interfaces/Mobile/IndexPage/IndexPage";
