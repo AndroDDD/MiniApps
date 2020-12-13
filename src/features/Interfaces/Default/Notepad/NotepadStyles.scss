@@ -5,12 +5,75 @@
   background-size: cover;
 }
 
+.notepadDisplaySupportClassv2 {
+  background-color: black;
+}
+
+.headerBarForNotepad {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: black;
+  border-bottom: 1px solid rgba(112, 128, 144, 1);
+}
+
+.backToIndexPageButtonForNotepad {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid honeydew;
+  color: honeydew;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.backToIndexPageButtonForNotepad:hover {
+  background-color: slategrey;
+}
+
+.switchStylesButtonForNotepad {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 7px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.switchStylesButtonForNotepad:hover {
+  background-color: slategrey;
+}
+
 .addPostIconButton {
   width: 20%;
 }
 
 .addPostIcon {
   background-color: tomato;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
+}
+
+.addPostIconv2 {
+  background-color: gainsboro;
   box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
 }
 
@@ -23,6 +86,11 @@
   box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
 }
 
+.homeIconv2 {
+  background-color: gainsboro;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.75);
+}
+
 .tempNotesButtonsViewSupport {
   width: 100%;
   height: 90%;
@@ -32,8 +100,14 @@
 .availableNoteButton {
   margin-top: 5px;
   margin-bottom: 5px;
-  padding-bottom: 7px;
   background-color: rgba(255, 253, 208, 0.75);
+  cursor: pointer;
+}
+
+.availableNoteButtonv2 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: gainsboro;
   cursor: pointer;
 }
 
@@ -41,9 +115,66 @@
   background-color: rgba(55, 0, 128, 0.5);
 }
 
+.availableNoteButtonText {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 102, 204, 0.75);
+  text-align: center;
+  font-size: 40;
+  font-weight: 700;
+  font-family: monospace;
+  text-shadow: 0px 0px 3px rgba(112, 128, 144, 0.75);
+}
+
+.availableNoteButtonText:hover {
+  color: rgba(255, 102, 204, 0.75);
+  text-align: center;
+  font-size: 40;
+  font-weight: 700;
+  text-shadow: 0px 0px 3px rgba(112, 128, 144, 0.75);
+}
+
+.availableNoteButtonTextv2 {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  text-align: center;
+  font-size: 40;
+  font-weight: 700;
+  font-family: monospace;
+  text-shadow: 0px 0px 3px rgba(112, 128, 144, 0.75);
+}
+
+.availableNoteButtonTextv2:hover {
+  color: gainsboro;
+  text-align: center;
+  font-size: 40;
+  font-weight: 700;
+  text-shadow: 0px 0px 3px rgba(112, 128, 144, 0.75);
+}
+
+.availableNoteButtonv2:hover {
+  background-color: black;
+}
+
 .formSubmitButton {
   background-color: rgba(0, 128, 128, 0.5);
   color: whitesmoke;
   position: relative;
   font-weight: 700;
+}
+
+.formSubmitButtonv2 {
+  background-color: gainsboro;
+  color: black;
+  position: relative;
+  font-weight: 500;
+  font-family: monospace;
+  letter-spacing: 4px;
 }

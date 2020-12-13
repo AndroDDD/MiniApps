@@ -11,6 +11,8 @@ import { IconButton } from "@material-ui/core";
 import { Add, Edit } from "@material-ui/icons";
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./TodoListStyles.scss";
 
 const MobileTodoList: React.FC = () => {
@@ -56,6 +58,9 @@ const MobileTodoList: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupport: { width: "100%", height: screenHeight },
     mainHeader: styles2.mainHeader,
+    headerBar: `headerBarForTL`,
+    backToIndexPageButton: `backToIndexPageButtonForTL`,
+    switchStylesButton: `switchStylesButtonForTL`,
     mainHeaderTitleView: styles2.mainHeaderTitleView,
     mainHeaderTitle: styles2.mainHeaderTitle,
     formSupport: { width: screenWidth, height: screenHeight * 45 * 0.01 },
@@ -102,12 +107,77 @@ const MobileTodoList: React.FC = () => {
   // Declare variable tracking which todo item to edit
   const [todoItemToEdit, setTodoItemToEdit] = React.useState(0);
 
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainHeaderTitle: styles2.mainHeaderTitle,
+          todoFormView: styles2.todoFormView,
+          todoFormHeaderView: styles2.todoFormHeaderView,
+          newTodoButton: `newTodoButton`,
+          todoTitleInput: `todoTitleInput`,
+          todoInput: `todoInput`,
+          todoSaveButton: `todoSaveButton`,
+          todoCompleteByInput: `todoCompleteByInput`,
+          todoListView: styles2.todoListView,
+          todoItemView: styles2.todoItemView,
+          todoItemSubjectView: styles2.todoItemSubjectView,
+          todoItemTitleText: styles2.todoItemTitleText,
+          todoItemCompleteByText: styles2.todoItemCompleteByText,
+          todoItemEditButton: `todoItemEditButton`,
+          todoItemEditButtonIcon: `todoItemEditButtonIcon`,
+          genericText: styles2.genericText,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainHeaderTitle: styles2.mainHeaderTitlev2,
+          todoFormView: styles2.todoFormViewv2,
+          todoFormHeaderView: styles2.todoFormHeaderViewv2,
+          newTodoButton: `newTodoButtonv2`,
+          todoTitleInput: `todoTitleInputv2`,
+          todoInput: `todoInputv2`,
+          todoSaveButton: `todoSaveButtonv2`,
+          todoCompleteByInput: `todoCompleteByInputv2`,
+          todoListView: styles2.todoListViewv2,
+          todoItemView: styles2.todoItemViewv2,
+          todoItemSubjectView: styles2.todoItemSubjectViewv2,
+          todoItemTitleText: styles2.todoItemTitleTextv2,
+          todoItemCompleteByText: styles2.todoItemCompleteByTextv2,
+          todoItemEditButton: `todoItemEditButtonv2`,
+          todoItemEditButtonIcon: `todoItemEditButtonIconv2`,
+          genericText: styles2.genericTextv2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   // Handle component return view
   return (
     <ImageBackground
       source={{
         uri:
-          "http://yesofcorsa.com/wp-content/uploads/2017/09/Horizon-Best-Wallpaper1.jpg",
+          kindOfStyle === `colorful`
+            ? "http://yesofcorsa.com/wp-content/uploads/2017/09/Horizon-Best-Wallpaper1.jpg"
+            : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2O4c+fOfwAIwAOUHj6BoQAAAABJRU5ErkJggg==",
       }}
       imageStyle={{ resizeMode: "cover" }}
       style={styles.backgroundImage}
@@ -117,6 +187,30 @@ const MobileTodoList: React.FC = () => {
           <View style={styles.mainHeaderTitleView}>
             <Text style={styles.mainHeaderTitle}>{`WHAT TO DO?`}</Text>
           </View>
+          <div className={styles.headerBar}>
+            <div
+              className={styles.backToIndexPageButton}
+              onClick={() => {
+                window.location.href = `${localUrl}`;
+              }}
+            >{`Back To Index Page`}</div>
+            <div
+              ref={switchStylesButtonRef}
+              className={styles.switchStylesButton}
+              onClick={(event) => {
+                const innerHtml = event.currentTarget.innerHTML;
+                if (innerHtml === `Switch To Plain View`) {
+                  setKindOfStyle(() => {
+                    return `plain`;
+                  });
+                } else if (innerHtml === `Switch To Colorful View`) {
+                  setKindOfStyle(() => {
+                    return `colorful`;
+                  });
+                }
+              }}
+            >{`Switch To Plain View`}</div>
+          </div>
         </View>
         <View style={styles.todoFormView}>
           <Formik
@@ -244,6 +338,7 @@ const styles2 = StyleSheet.create({
   mainHeader: {
     position: "relative",
     top: "0%",
+    justifyContent: "space-between",
     flexDirection: "row",
     width: "100%",
     height: "10%",
@@ -251,7 +346,7 @@ const styles2 = StyleSheet.create({
   mainHeaderTitleView: {
     position: "relative",
     justifyContent: "center",
-    width: "100%",
+    width: "65%",
     height: "100%",
   },
   mainHeaderTitle: {
@@ -263,10 +358,25 @@ const styles2 = StyleSheet.create({
     fontWeight: "700",
     fontFamily: "Consolas",
   },
+  mainHeaderTitlev2: {
+    color: "black",
+    textAlign: "center",
+    textShadowColor: "silver",
+    textShadowRadius: 5,
+    fontSize: 30,
+    fontWeight: "700",
+    fontFamily: "Consolas",
+  },
   todoFormView: {
     width: "100%",
     height: "45%",
     backgroundColor: "rgba(112, 128, 144, 0.5)",
+    overflow: "hidden",
+  },
+  todoFormViewv2: {
+    width: "100%",
+    height: "45%",
+    backgroundColor: "gainsboro",
     overflow: "hidden",
   },
   todoFormFooterView: {
@@ -284,6 +394,14 @@ const styles2 = StyleSheet.create({
     overflow: "hidden",
     border: "1px solid rgba(0, 255, 255, 1)",
   },
+  todoFormHeaderViewv2: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    height: "20%",
+    overflow: "hidden",
+    border: "1px solid black",
+  },
   todoListView: {
     width: "100%",
     height: "45%",
@@ -293,11 +411,26 @@ const styles2 = StyleSheet.create({
     backgroundColor: "rgba(112, 128, 144, 0.5)",
     overflowY: "scroll",
   },
+  todoListViewv2: {
+    width: "100%",
+    height: "45%",
+    borderTopColor: "black",
+    borderTopWidth: 1,
+    borderTopStyle: "solid",
+    backgroundColor: "gainsboro",
+    overflowY: "scroll",
+  },
   todoItemView: {
     flexDirection: "row",
     width: "100%",
     height: "50px",
     border: "1px solid rgba(231, 201, 169, 0.5)",
+  },
+  todoItemViewv2: {
+    flexDirection: "row",
+    width: "100%",
+    height: "50px",
+    border: "1px solid black",
   },
   todoItemSubjectView: {
     width: "75%",
@@ -307,12 +440,28 @@ const styles2 = StyleSheet.create({
     border: "1px solid rgba(231, 201, 169, 0.5)",
     backgroundColor: "rgba(231, 201, 169, 0.1)",
   },
+  todoItemSubjectViewv2: {
+    width: "75%",
+    height: "100%",
+    paddingLeft: 10,
+    paddingTop: 2,
+    border: "1px solid black",
+    backgroundColor: "gainsboro",
+  },
   todoItemTitleText: {
     width: "100%",
     height: "50%",
     color: "cyan",
     textShadowRadius: 2,
     textShadowColor: "rgba(231, 201, 169, 1)",
+    fontWeight: "600",
+  },
+  todoItemTitleTextv2: {
+    width: "100%",
+    height: "50%",
+    color: "black",
+    textShadowRadius: 2,
+    textShadowColor: "silver",
     fontWeight: "600",
   },
   todoItemCompleteByText: {
@@ -323,9 +472,21 @@ const styles2 = StyleSheet.create({
     textShadowColor: "rgba(112,128, 144, 1)",
     fontWeight: "600",
   },
+  todoItemCompleteByTextv2: {
+    width: "100%",
+    height: "50%",
+    color: "black",
+    textShadowRadius: 2,
+    textShadowColor: "silver",
+    fontWeight: "600",
+  },
   todoItemEditButtonView: { width: "25%", height: "100%" },
   genericText: {
     color: "slategrey",
+    textAlign: "center",
+  },
+  genericTextv2: {
+    color: "black",
     textAlign: "center",
   },
 });

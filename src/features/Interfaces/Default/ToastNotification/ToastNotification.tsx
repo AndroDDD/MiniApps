@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./ToastNotificationStyles.scss";
-import { ListItemIcon } from "@material-ui/core";
 
 const ToastNotification: React.FC = () => {
   // Handle screen size detection and changes
@@ -39,6 +40,9 @@ const ToastNotification: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `mainTNDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForTN`,
+    backToIndexPageButton: `backToIndexPageButtonForTN`,
+    switchStylesButton: `switchStylesButtonForTN`,
     toastNotificationDisplay: `toastNotificationDisplay`,
     toastNotificationButton: `toastNotificationButton`,
     notificationListItem: `notificationListItem`,
@@ -49,12 +53,75 @@ const ToastNotification: React.FC = () => {
     Array<JSX.Element>
   >([]);
 
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainTNDisplaySupportClass`,
+          toastNotificationDisplay: `toastNotificationDisplay`,
+          toastNotificationButton: `toastNotificationButton`,
+          notificationListItem: `notificationListItem`,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainTNDisplaySupportClassv2`,
+          toastNotificationDisplay: `toastNotificationDisplayv2`,
+          toastNotificationButton: `toastNotificationButtonv3`,
+          notificationListItem: `notificationListItemv2`,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   return (
     <div
       className={styles.mainDisplaySupportClass}
       style={styles.mainDisplaySupportStyle}
     >
       <View style={styles.mainDisplay}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <div className={styles.toastNotificationDisplay}>
           <button
             className={styles.toastNotificationButton}
@@ -89,7 +156,7 @@ const ToastNotification: React.FC = () => {
 
 const styles2 = StyleSheet.create({
   mainDisplay: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     margin: "auto",
     width: "100%",

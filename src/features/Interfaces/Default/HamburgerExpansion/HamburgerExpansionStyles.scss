@@ -7,6 +7,15 @@
   }
 }
 
+@keyframes hamburgerButtonAnimationv2 {
+  0% {
+    background-color: gainsboro;
+  }
+  100% {
+    background-color: slategrey;
+  }
+}
+
 .mainHEDisplaySupportClass {
   background-color: plum;
   background-image: url("https://i.pinimg.com/736x/e5/6c/8c/e56c8c21cb5cb3112dbb412025c7d00f.jpg");
@@ -14,15 +23,87 @@
   background-size: auto;
 }
 
+.mainHEDisplaySupportClassv2 {
+  background-color: black;
+}
+
+.headerBarForHED {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: black;
+  border-bottom: 1px solid rgba(112, 128, 144, 1);
+}
+
+.backToIndexPageButtonForHED {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid honeydew;
+  color: honeydew;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.backToIndexPageButtonForHED:hover {
+  background-color: slategrey;
+}
+
+.switchStylesButtonForHED {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 7px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.switchStylesButtonForHED:hover {
+  background-color: slategrey;
+}
+
 .hamburgerExpansionDisplay {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
   width: 80%;
   height: 90%;
   border: 1px solid maroon;
   border-radius: 15px;
   background-color: beige;
+  overflow: hidden;
+}
+
+.hamburgerExpansionDisplayv2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 80%;
+  height: 90%;
+  border: 1px solid floralwhite;
+  border-radius: 15px;
+  background-color: silver;
   overflow: hidden;
 }
 
@@ -37,12 +118,35 @@
   overflow: hidden;
 }
 
+.hamburgerIngredientsDisplayv2 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 0%;
+  height: 100%;
+  background-color: gainsboro;
+  overflow: hidden;
+}
+
 .hamburgerIngredientsListDisplay {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%;
   color: beige;
+  text-align: center;
+  font-family: monospace;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.hamburgerIngredientsListDisplayv2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  color: black;
   text-align: center;
   font-family: monospace;
   font-size: 25px;
@@ -66,4 +170,23 @@
 
 .hamburgerButtonIcon {
   color: blue;
+}
+
+.hamburgerButtonDisplayv2 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: floralwhite;
+}
+
+.hamburgerButtonDisplayv2:hover {
+  animation: hamburgerButtonAnimationv2 3s ease-out infinite alternate;
+  cursor: pointer;
+}
+
+.hamburgerButtonIconv2 {
+  color: black;
 }

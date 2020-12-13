@@ -10,6 +10,8 @@ import { Swipeable } from "react-swipeable";
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./MobileCookbookStyles.scss";
 
 const recipes = [
@@ -268,8 +270,8 @@ const MobileCookbook: React.FC = () => {
           ...styles.mainDisplaySupport,
           height: screenHeight,
         },
-        backgroundImage: {
-          ...styles.backgroundImage,
+        backgroundImageSupport: {
+          ...styles.backgroundImageSupport,
           height: screenHeight,
         },
       };
@@ -281,7 +283,11 @@ const MobileCookbook: React.FC = () => {
   const [styles, setStyles] = React.useState({
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupport: { width: "100%", height: screenHeight },
-    backgroundImage: { width: "100%", height: screenHeight },
+    headerBar: `headerBarForMobileCookbook`,
+    backToIndexPageButton: `backToIndexPageButtonForMobileCookbook`,
+    switchStylesButton: `switchStylesButtonForMobileCookbook`,
+    backgroundImage: styles2.backgroundImage,
+    backgroundImageSupport: { width: "100%", height: screenHeight },
     recipesNavigationView: styles2.recipeNavigationView,
     firstRecipeButtonView: styles2.firstRecipeButtonView,
     firstRecipeButton: `firstRecipeButton`,
@@ -299,7 +305,7 @@ const MobileCookbook: React.FC = () => {
     fifthRecipeButton: `fifthRecipeButton`,
     fifthRecipeButtonImage: `fifthRecipeButtonImage`,
     swipeContainer: `swipeContainer`,
-    swipeContainerSupport: { width: "100%", height: screenHeight },
+    swipeContainerSupport: { width: "100%", height: "97%" },
     recipePhotoView: styles2.recipePhotoView,
     recipePhotoTitleView: styles2.recipePhotoTitleView,
     recipePhotoTitleText: styles2.recipePhotoTitleText,
@@ -314,7 +320,6 @@ const MobileCookbook: React.FC = () => {
     instructionsListView: styles2.instructionsListView,
     instructionsTitleText: styles2.instructionsTitleText,
     instructionsListText: styles2.instructionsListText,
-
     genericText: styles2.genericText,
   });
 
@@ -342,6 +347,11 @@ const MobileCookbook: React.FC = () => {
     height: isPortrait ? screenHeight * 20 * 0.01 : screenHeight,
   });
 
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
   // Declare refs for elements
   const mainDisplayRef = React.useRef<any>();
   const recipePhotoViewRef = React.useRef<any>();
@@ -350,6 +360,9 @@ const MobileCookbook: React.FC = () => {
   const recipeInstructionsViewRef = React.useRef<any>();
   const recipesNavigationSwiperRef = React.useRef<any>();
   const recipesNavigationViewRef = React.useRef<any>();
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Handle recipe page setup and changes
   React.useEffect(() => {
@@ -678,6 +691,7 @@ const MobileCookbook: React.FC = () => {
     isPortrait,
     screenHeight,
     screenWidth,
+    styles,
   ]);
 
   // Handle recipes navigation bar setup and updates
@@ -939,7 +953,7 @@ const MobileCookbook: React.FC = () => {
         </Swipeable>
       );
     });
-  }, [isPortrait, screenHeight, screenWidth, navBarRecipesIndex]);
+  }, [isPortrait, screenHeight, screenWidth, navBarRecipesIndex, styles]);
 
   // Handle updating current recipe navigation dimensions
   React.useEffect(() => {
@@ -954,6 +968,47 @@ const MobileCookbook: React.FC = () => {
     recipesNavigationViewRef.current?.offsetHeight,
   ]);
 
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          recipePhotoView: styles2.recipePhotoView,
+          recipePhotoTitleText: styles2.recipePhotoTitleText,
+          ingredientsTitleView: styles2.ingredientsTitleView,
+          ingredientsTitleText: styles2.ingredientsTitleText,
+          ingredientsListText: styles2.ingredientsListText,
+          instructionsTitleView: styles2.instructionsTitleView,
+          instructionsTitleText: styles2.instructionsTitleText,
+          instructionsListText: styles2.instructionsListText,
+          genericText: styles2.genericText,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          recipePhotoView: styles2.recipePhotoViewv2,
+          recipePhotoTitleText: styles2.recipePhotoTitleTextv2,
+          ingredientsTitleView: styles2.ingredientsTitleViewv2,
+          ingredientsTitleText: styles2.ingredientsTitleTextv2,
+          ingredientsListText: styles2.ingredientsListTextv2,
+          instructionsTitleView: styles2.instructionsTitleViewv2,
+          instructionsTitleText: styles2.instructionsTitleTextv2,
+          instructionsListText: styles2.instructionsListTextv2,
+          genericText: styles2.genericTextv2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   // Handle component return view
   return (
     <ImageBackground
@@ -962,12 +1017,36 @@ const MobileCookbook: React.FC = () => {
           "https://cdn.shopify.com/s/files/1/0399/6233/products/TIM_20190129113706_1024x1024.JPG?v=1564716284",
       }}
       imageStyle={{ resizeMode: "cover" }}
-      style={styles.backgroundImage}
+      style={[styles.backgroundImage, styles.backgroundImageSupport]}
     >
       <View
         ref={mainDisplayRef}
         style={[styles.mainDisplay, styles.mainDisplaySupport]}
       >
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <Swipeable
           className={styles.swipeContainer}
           style={styles.swipeContainerSupport}
@@ -1001,6 +1080,7 @@ const MobileCookbook: React.FC = () => {
 // Declare stylesheet for react-native components
 const styles2 = StyleSheet.create({
   mainDisplay: {},
+  backgroundImage: { overflow: "hidden" },
   recipeNavigationView: {
     backgroundColor: "black",
   },
@@ -1029,6 +1109,11 @@ const styles2 = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(255, 253, 208, 0.75)",
   },
+  recipePhotoViewv2: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "black",
+  },
   recipePhotoTitleView: {
     paddingTop: "2%",
     paddingBottom: "2%",
@@ -1048,10 +1133,16 @@ const styles2 = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "rgba(255, 253, 208, 0.75)",
   },
+  ingredientsTitleViewv2: {
+    width: "100%",
+    height: "10%",
+    justifyContent: "center",
+    backgroundColor: "black",
+  },
   ingredientsListView: {
     width: "100%",
     height: "90%",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "black",
   },
@@ -1061,10 +1152,16 @@ const styles2 = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "rgba(255, 253, 208, 0.75)",
   },
+  instructionsTitleViewv2: {
+    width: "100%",
+    height: "10%",
+    justifyContent: "center",
+    backgroundColor: "black",
+  },
   instructionsListView: {
     width: "100%",
     height: "90%",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "black",
   },
@@ -1078,16 +1175,36 @@ const styles2 = StyleSheet.create({
     fontSize: 35,
     fontWeight: "800",
   },
+  recipePhotoTitleTextv2: {
+    color: "gainsboro",
+    textAlign: "center",
+    fontSize: 35,
+    fontWeight: "800",
+  },
   ingredientsTitleText: {
     color: "slategrey",
     textAlign: "center",
     fontSize: 35,
     fontWeight: "800",
   },
+  ingredientsTitleTextv2: {
+    color: "gainsboro",
+    textAlign: "center",
+    fontSize: 35,
+    fontWeight: "800",
+  },
   ingredientsListText: {
+    marginBottom: "15px",
     color: "slategrey",
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 15,
+    fontWeight: "600",
+  },
+  ingredientsListTextv2: {
+    marginBottom: "15px",
+    color: "gainsboro",
+    textAlign: "center",
+    fontSize: 15,
     fontWeight: "600",
   },
   instructionsTitleText: {
@@ -1096,14 +1213,32 @@ const styles2 = StyleSheet.create({
     fontSize: 35,
     fontWeight: "800",
   },
+  instructionsTitleTextv2: {
+    color: "gainsboro",
+    textAlign: "center",
+    fontSize: 35,
+    fontWeight: "800",
+  },
   instructionsListText: {
+    marginBottom: "15px",
     color: "slategrey",
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 15,
+    fontWeight: "600",
+  },
+  instructionsListTextv2: {
+    marginBottom: "15px",
+    color: "gainsboro",
+    textAlign: "center",
+    fontSize: 15,
     fontWeight: "600",
   },
   genericText: {
     color: "slategrey",
+    textAlign: "center",
+  },
+  genericTextv2: {
+    color: "gainsboro",
     textAlign: "center",
   },
 });

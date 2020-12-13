@@ -5,14 +5,86 @@
   background-size: cover;
 }
 
+.mainMagnifyDisplaySupportClassv2 {
+  background-color: black;
+}
+
+.headerBarForMagnify {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: black;
+  border-bottom: 1px solid rgba(112, 128, 144, 1);
+}
+
+.backToIndexPageButtonForMagnify {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid honeydew;
+  color: honeydew;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.backToIndexPageButtonForMagnify:hover {
+  background-color: slategrey;
+}
+
+.switchStylesButtonForMagnify {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 7px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.switchStylesButtonForMagnify:hover {
+  background-color: slategrey;
+}
+
 .magnifyDisplay {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
   width: 90%;
   height: 90%;
   background-color: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(112, 128, 144, 1);
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.magnifyDisplayv2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  width: 90%;
+  height: 90%;
+  background-color: gainsboro;
+  border: 1px solid silver;
   border-radius: 30px;
   overflow: hidden;
 }

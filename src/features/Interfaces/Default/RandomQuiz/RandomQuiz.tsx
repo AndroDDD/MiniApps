@@ -10,6 +10,8 @@ import { Button } from "@material-ui/core";
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./RandomQuizStyles.scss";
 
 const quizData = [
@@ -115,6 +117,9 @@ const RandomQuiz: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `randomQuizDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForRandomQuiz`,
+    backToIndexPageButton: `backToIndexPageButtonForRandomQuiz`,
+    switchStylesButton: `switchStylesButtonForRandomQuiz`,
     quizDisplay: styles2.quizDisplay,
     quizQuestion: styles2.quizQuestion,
     quizChoicesDisplay: styles2.quizChoicesDisplay,
@@ -146,6 +151,14 @@ const RandomQuiz: React.FC = () => {
 
   // Declare varible tracking quiz completion
   const [quizCompleted, setQuizCompleted] = React.useState(false);
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Declare function to handle answer submission
   const submitAnswer = () => {
@@ -186,6 +199,52 @@ const RandomQuiz: React.FC = () => {
     setStyles(updatedHeightConfig);
   }, [screenHeight]);
 
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `randomQuizDisplaySupportClass`,
+          answerSubmitButton: { color: "cyan" },
+          finishQuizButton: { color: "orangered" },
+          retakeQuizButton: { color: "purple" },
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `randomQuizDisplaySupportClassv2`,
+          answerSubmitButton: {
+            color: "black",
+            fontSize: 20,
+            fontFamily: "monospace",
+            letterSpacing: 6,
+          },
+          finishQuizButton: {
+            color: "black",
+            fontSize: 20,
+            fontFamily: "monospace",
+            letterSpacing: 6,
+          },
+          retakeQuizButton: {
+            color: "black",
+            fontSize: 20,
+            fontFamily: "monospace",
+            letterSpacing: 6,
+          },
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   switch (quizCompleted) {
     case true:
       return (
@@ -194,6 +253,30 @@ const RandomQuiz: React.FC = () => {
           style={styles.mainDisplaySupportStyle}
         >
           <View style={styles.mainDisplay}>
+            <div className={styles.headerBar}>
+              <div
+                className={styles.backToIndexPageButton}
+                onClick={() => {
+                  window.location.href = `${localUrl}`;
+                }}
+              >{`Back To Index Page`}</div>
+              <div
+                ref={switchStylesButtonRef}
+                className={styles.switchStylesButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (innerHtml === `Switch To Plain View`) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                  } else if (innerHtml === `Switch To Colorful View`) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                  }
+                }}
+              >{`Switch To Plain View`}</div>
+            </div>
             <View style={styles.quizDisplay}>
               <Text>{`Quiz completed.!.`}</Text>
               <Text>{`You've scored ${quizScore} out of ${quizData.length}`}</Text>
@@ -212,6 +295,30 @@ const RandomQuiz: React.FC = () => {
           style={styles.mainDisplaySupportStyle}
         >
           <View style={styles.mainDisplay}>
+            <div className={styles.headerBar}>
+              <div
+                className={styles.backToIndexPageButton}
+                onClick={() => {
+                  window.location.href = `${localUrl}`;
+                }}
+              >{`Back To Idex Page`}</div>
+              <div
+                ref={switchStylesButtonRef}
+                className={styles.switchStylesButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (innerHtml === `Switch To Plain View`) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                  } else if (innerHtml === `Switch To Colorful View`) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                  }
+                }}
+              >{`Switch To Plain View`}</div>
+            </div>
             <View style={styles.quizDisplay}>
               <Text style={styles.quizQuestion}>
                 {quizData[currentQuiz].question}
@@ -296,13 +403,13 @@ const RandomQuiz: React.FC = () => {
                     {"FINISH QUIZ!"}
                   </Button>
                 ) : (
-                    <Button
-                      style={styles.answerSubmitButton}
-                      onClick={submitAnswer}
-                    >
-                      {"SUBMIT ANSWER"}
-                    </Button>
-                  )}
+                  <Button
+                    style={styles.answerSubmitButton}
+                    onClick={submitAnswer}
+                  >
+                    {"SUBMIT ANSWER"}
+                  </Button>
+                )}
               </View>
             </View>
           </View>

@@ -1,7 +1,47 @@
+.headerBar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 5px;
+  margin-bottom: 25px;
+  background-color: black;
+  border-bottom: 1px solid rgba(112, 128, 144, 1);
+}
+
+.switchStylesButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.switchStylesButton:hover {
+  background-color: slategrey;
+}
+
 .indexPageDisplaySupportClass {
   visibility: hidden;
   background-color: plum;
   background-image: url("https://i.pinimg.com/originals/fc/78/01/fc780105b68bc70ed3f6b1e8698f0c06.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.indexPageDisplaySupportClassv2 {
+  visibility: hidden;
+  background-color: black;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -16,7 +56,7 @@ button {
     0px -2px 0px rgba(0, 0, 0, 1), 1px 1px 0px rgba(0, 0, 0, 1),
     -1px -1px 0px rgba(0, 0, 0, 1), 1px -1px 0px rgba(0, 0, 0, 1),
     -1px 1px 0px rgba(0, 0, 0, 1);
-  font-family: "Marker felt", fantasy;
+  font-family: monospace;
   font-size: 35px;
   font-weight: 600;
   letter-spacing: 5px;
@@ -142,7 +182,7 @@ button:hover {
   cursor: pointer;
 }
 
-.toastNotificationButton {
+.toastNotificationButtonv2 {
   background-color: rgba(119, 32, 75, 0.5);
   font-weight: 800;
   cursor: pointer;

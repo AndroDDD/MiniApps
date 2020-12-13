@@ -4,6 +4,8 @@ import { gsap } from "gsap";
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./CarouselStyles.scss";
 
 const Carousel: React.FC = () => {
@@ -53,6 +55,9 @@ const Carousel: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `mainCarouselDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForCarousel`,
+    backToIndexPageButton: `backToIndexPageButtonForCarousel`,
+    switchStylesButton: `switchStylesButtonForCarousel`,
     carouselDisplay: `carouselDisplay`,
     formerImageDiv: `formerImageDiv`,
     formerImage: `formerImage`,
@@ -77,6 +82,14 @@ const Carousel: React.FC = () => {
   const [carouselIteration, setCarouselIteration] = React.useState(() => {
     return 1;
   });
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Declare gsap ref for animating view
   let gsapRef = React.useRef<any>();
@@ -242,6 +255,31 @@ const Carousel: React.FC = () => {
     }
   }, [carouselIteration, imagesFetched]);
 
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainCarouselDisplaySupportClass`,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainCarouselDisplaySupportClassv2`,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   // Handle component return view
   return (
     <div
@@ -249,6 +287,30 @@ const Carousel: React.FC = () => {
       style={styles.mainDisplaySupportStyle}
     >
       <View style={styles.mainDisplay}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <div ref={carouselDisplayRef} className={styles.carouselDisplay}>
           <div ref={formerImageDivRef} className={styles.formerImageDiv}>
             <img
@@ -288,7 +350,7 @@ const Carousel: React.FC = () => {
 
 const styles2 = StyleSheet.create({
   mainDisplay: {
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     margin: "auto",
     width: "100%",

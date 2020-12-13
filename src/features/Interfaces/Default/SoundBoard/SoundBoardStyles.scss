@@ -5,6 +5,66 @@
   background-size: cover;
 }
 
+.mainSoundBoardDisplaySupportClassv2 {
+  background-color: black;
+}
+
+.headerBarForSoundBoard {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  top: 0%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: black;
+  border-bottom: 1px solid rgba(112, 128, 144, 1);
+}
+
+.backToIndexPageButtonForSoundBoard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid honeydew;
+  color: honeydew;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.backToIndexPageButtonForSoundBoard:hover {
+  background-color: slategrey;
+}
+
+.switchStylesButtonForSoundBoard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 7px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.switchStylesButtonForSoundBoard:hover {
+  background-color: slategrey;
+}
+
 .soundPlayersDisplay {
   padding-top: 10px;
   padding-bottom: 10px;

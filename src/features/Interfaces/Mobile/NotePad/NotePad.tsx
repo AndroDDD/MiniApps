@@ -12,6 +12,8 @@ import { ArrowBack, PostAddSharp } from "@material-ui/icons";
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./NotePadStyles.scss";
 
 interface notePadFormValues {
@@ -73,6 +75,9 @@ export const MobileNotePad: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupport: { width: "100%", height: screenHeight },
     backgroundImage: { width: "100%", height: screenHeight },
+    headerBar: `headerBarForNotePad`,
+    backToIndexPageButton: `backToIndexPageButtonForNotePad`,
+    switchStylesButton: `switchStylesButtonForNotePad`,
     mainHeader: styles2.mainHeader,
     mainHeaderTitleView: styles2.mainHeaderTitleView,
     mainHeaderTitle: styles2.mainHeaderTitle,
@@ -107,6 +112,55 @@ export const MobileNotePad: React.FC = () => {
   const [inputTitleValue, setInputTitleValue] = React.useState(``);
   const [inputNoteValue, setInputNoteValue] = React.useState(``);
 
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainHeaderTitle: styles2.mainHeaderTitle,
+          notePadHomeButton: `notePadHomeButton`,
+          notePadHomeIcon: `notePadHomeIcon`,
+          savedNoteView: styles2.savedNoteView,
+          formInputTitleLabel: styles2.formInputTitleLabel,
+          formInputNote: `formInputNote`,
+          formInputNoteLabel: styles2.formInputNoteLabel,
+          formSubmitButton: `formSubmitButton`,
+          genericText: styles2.genericText,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainHeaderTitle: styles2.mainHeaderTitlev2,
+          notePadHomeButton: `notePadHomeButtonv2`,
+          notePadHomeIcon: `notePadHomeIconv2`,
+          savedNoteView: styles2.savedNoteViewv2,
+          formInputTitleLabel: styles2.formInputTitleLabelv2,
+          formInputNote: `formInputNotev2`,
+          formInputNoteLabel: styles2.formInputNoteLabelv2,
+          formSubmitButton: `formSubmitButtonv2`,
+          genericText: styles2.genericTextv2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   // Handle component return view
   switch (notePadView) {
     case `main`:
@@ -114,12 +168,38 @@ export const MobileNotePad: React.FC = () => {
         <ImageBackground
           source={{
             uri:
-              "http://4.bp.blogspot.com/-6dJnOVtK2Mw/UTcaydsAb0I/AAAAAAAABEc/jvwhj-yv_0g/s1600/DSC_0017.JPG",
+              kindOfStyle === `colorful`
+                ? "http://4.bp.blogspot.com/-6dJnOVtK2Mw/UTcaydsAb0I/AAAAAAAABEc/jvwhj-yv_0g/s1600/DSC_0017.JPG"
+                : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2O4c+fOfwAIwAOUHj6BoQAAAABJRU5ErkJggg==",
           }}
           imageStyle={{ resizeMode: "cover" }}
           style={styles.backgroundImage}
         >
           <View style={[styles.mainDisplay, styles.mainDisplaySupport]}>
+            <div className={styles.headerBar}>
+              <div
+                className={styles.backToIndexPageButton}
+                onClick={() => {
+                  window.location.href = `${localUrl}`;
+                }}
+              >{`Back To Index Page`}</div>
+              <div
+                ref={switchStylesButtonRef}
+                className={styles.switchStylesButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (innerHtml === `Switch To Plain View`) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                  } else if (innerHtml === `Switch To Colorful View`) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                  }
+                }}
+              >{`Switch To Plain View`}</div>
+            </div>
             <View style={styles.mainHeader}>
               <IconButton
                 className={styles.notePadHomeButton}
@@ -163,12 +243,38 @@ export const MobileNotePad: React.FC = () => {
         <ImageBackground
           source={{
             uri:
-              "http://4.bp.blogspot.com/-6dJnOVtK2Mw/UTcaydsAb0I/AAAAAAAABEc/jvwhj-yv_0g/s1600/DSC_0017.JPG",
+              kindOfStyle === `colorful`
+                ? "http://4.bp.blogspot.com/-6dJnOVtK2Mw/UTcaydsAb0I/AAAAAAAABEc/jvwhj-yv_0g/s1600/DSC_0017.JPG"
+                : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2O4c+fOfwAIwAOUHj6BoQAAAABJRU5ErkJggg==",
           }}
           imageStyle={{ resizeMode: "cover" }}
           style={styles.backgroundImage}
         >
           <View style={[styles.mainDisplay, styles.mainDisplaySupport]}>
+            <div className={styles.headerBar}>
+              <div
+                className={styles.backToIndexPageButton}
+                onClick={() => {
+                  window.location.href = `${localUrl}`;
+                }}
+              >{`Back To Index Page`}</div>
+              <div
+                ref={switchStylesButtonRef}
+                className={styles.switchStylesButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (innerHtml === `Switch To Plain View`) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                  } else if (innerHtml === `Switch To Colorful View`) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                  }
+                }}
+              >{`Switch To Plain View`}</div>
+            </div>
             <View style={styles.mainHeader}>
               <IconButton
                 className={styles.notePadHomeButton}
@@ -231,12 +337,38 @@ export const MobileNotePad: React.FC = () => {
         <ImageBackground
           source={{
             uri:
-              "http://4.bp.blogspot.com/-6dJnOVtK2Mw/UTcaydsAb0I/AAAAAAAABEc/jvwhj-yv_0g/s1600/DSC_0017.JPG",
+              kindOfStyle === `colorful`
+                ? "http://4.bp.blogspot.com/-6dJnOVtK2Mw/UTcaydsAb0I/AAAAAAAABEc/jvwhj-yv_0g/s1600/DSC_0017.JPG"
+                : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2O4c+fOfwAIwAOUHj6BoQAAAABJRU5ErkJggg==",
           }}
           imageStyle={{ resizeMode: "cover" }}
           style={styles.backgroundImage}
         >
           <View style={[styles.mainDisplay, styles.mainDisplaySupport]}>
+            <div className={styles.headerBar}>
+              <div
+                className={styles.backToIndexPageButton}
+                onClick={() => {
+                  window.location.href = `${localUrl}`;
+                }}
+              >{`Back To Index Page`}</div>
+              <div
+                ref={switchStylesButtonRef}
+                className={styles.switchStylesButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (innerHtml === `Switch To Plain View`) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                  } else if (innerHtml === `Switch To Colorful View`) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                  }
+                }}
+              >{`Switch To Plain View`}</div>
+            </div>
             <View style={styles.mainHeader}>
               <IconButton
                 className={styles.notePadHomeButton}
@@ -306,6 +438,30 @@ export const MobileNotePad: React.FC = () => {
     default:
       return (
         <View>
+          <div className={styles.headerBar}>
+            <div
+              className={styles.backToIndexPageButton}
+              onClick={() => {
+                window.location.href = `${localUrl}`;
+              }}
+            >{`Back To Index Page`}</div>
+            <div
+              ref={switchStylesButtonRef}
+              className={styles.switchStylesButton}
+              onClick={(event) => {
+                const innerHtml = event.currentTarget.innerHTML;
+                if (innerHtml === `Switch To Plain View`) {
+                  setKindOfStyle(() => {
+                    return `plain`;
+                  });
+                } else if (innerHtml === `Switch To Colorful View`) {
+                  setKindOfStyle(() => {
+                    return `colorful`;
+                  });
+                }
+              }}
+            >{`Switch To Plain View`}</div>
+          </div>
           <Text>{`.!.You shouldnt be here.!.`}</Text>
         </View>
       );
@@ -322,6 +478,7 @@ const styles2 = StyleSheet.create({
     overflowX: "hidden",
   },
   mainHeader: {
+    paddingTop: "1%",
     flexDirection: "row",
     width: "100%",
     height: "10%",
@@ -341,12 +498,24 @@ const styles2 = StyleSheet.create({
     fontWeight: "700",
     fontFamily: "Consolas",
   },
+  mainHeaderTitlev2: {
+    textAlign: "center",
+    textShadowColor: "gainsboro",
+    textShadowRadius: 5,
+    fontSize: 30,
+    fontWeight: "700",
+    fontFamily: "Consolas",
+  },
   savedNotesView: {
     width: "100%",
   },
   savedNoteView: {
     width: "100%",
     backgroundColor: "whitesmoke",
+  },
+  savedNoteViewv2: {
+    width: "100%",
+    backgroundColor: "gainsboro",
   },
   formView: {},
   formInputTitleLabel: {
@@ -356,6 +525,18 @@ const styles2 = StyleSheet.create({
     color: "whitesmoke",
     textAlign: "center",
     textShadowColor: "cyan",
+    textShadowRadius: 3,
+    fontSize: 25,
+    fontWeight: "700",
+    fontFamily: "Consolas",
+  },
+  formInputTitleLabelv2: {
+    height: "7%",
+    paddingTop: "5px",
+    paddingBottom: "5px",
+    color: "black",
+    textAlign: "center",
+    textShadowColor: "silver",
     textShadowRadius: 3,
     fontSize: 25,
     fontWeight: "700",
@@ -373,8 +554,24 @@ const styles2 = StyleSheet.create({
     fontWeight: "700",
     fontFamily: "Consolas",
   },
+  formInputNoteLabelv2: {
+    height: "7%",
+    paddingTop: "5px",
+    paddingBottom: "5px",
+    color: "black",
+    textAlign: "center",
+    textShadowColor: "silver",
+    textShadowRadius: 3,
+    fontSize: 25,
+    fontWeight: "700",
+    fontFamily: "Consolas",
+  },
   genericText: {
     color: "slategrey",
+    textAlign: "center",
+  },
+  genericTextv2: {
+    color: "black",
     textAlign: "center",
   },
 });

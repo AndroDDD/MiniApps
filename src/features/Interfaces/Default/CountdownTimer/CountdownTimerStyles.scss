@@ -6,6 +6,11 @@
     rgb(0, 92, 92)
   );
 }
+
+.countdownTimerDisplaySupportClassv2 {
+  background-color: black;
+}
+
 .countdownTimerImage {
   display: flex;
   position: absolute;
@@ -17,7 +22,79 @@
   height: auto;
 }
 
+.countdownTimerImagev2 {
+  display: flex;
+  position: absolute;
+  top: 20%;
+  margin: auto;
+  padding-top: 10px;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  background-color: gainsboro;
+}
+
 .countdownTimerImageStyleSupport {
+  visibility: visible;
   border-radius: 20px;
   box-shadow: 0px 0px 5px 3px rgba(142, 69, 133, 0.75);
+}
+
+.countdownTimerImageStyleSupportv2 {
+  visibility: hidden;
+}
+
+.headerBarForCountdownTimer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  margin-bottom: 5px;
+  background-color: black;
+  border-bottom: 1px solid rgba(112, 128, 144, 1);
+}
+
+.backToIndexPageButtonForCountdownTimer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid honeydew;
+  color: honeydew;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.backToIndexPageButtonForCountdownTimer:hover {
+  background-color: slategrey;
+}
+
+.switchStylesButtonForCountdownTimer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 7px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.switchStylesButtonForCountdownTimer:hover {
+  background-color: slategrey;
 }

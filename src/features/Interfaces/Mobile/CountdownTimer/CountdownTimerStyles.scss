@@ -1,18 +1,17 @@
-.searchQueryInput {
-  text-align: center;
-}
-
-.headerBarForGitHubProfiles {
+.headerBarForCountdownTimer {
   width: 100%;
+  position: absolute;
+  right: 0%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
-  background-color: black;
-  border-bottom: 1px solid rgba(112, 128, 144, 1);
+  background-color: rgba(112, 128, 144, 0);
+  border-bottom: 0px;
+  z-index: 5;
 }
 
-.backToIndexPageButtonForGitHubProfiles {
+.backToIndexPageButtonForCountdownTimer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,11 +29,11 @@
   cursor: pointer;
 }
 
-.backToIndexPageButtonForGitHubProfiles:hover {
+.backToIndexPageButtonForCountdownTimer:hover {
   background-color: slategrey;
 }
 
-.switchStylesButtonForGitHubProfiles {
+.switchStylesButtonCountdownTimer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,6 +51,6 @@
   cursor: pointer;
 }
 
-.switchStylesButtonForGitHubProfiles:hover {
+.switchStylesButtonForCountdownTimer:hover {
   background-color: slategrey;
 }

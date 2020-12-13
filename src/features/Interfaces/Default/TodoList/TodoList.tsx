@@ -18,6 +18,8 @@ import $ from "jquery";
 
 import FormikField from "./FormikField";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./TodoListStyles.scss";
 
 interface FormValues {
@@ -46,6 +48,9 @@ const HoldPage: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `todoListDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForTodoList`,
+    backToIndexPageButton: `backToIndexPageButtonForTodoList`,
+    switchStylesButton: `switchStylesButtonForTodoList`,
     todoListDisplay: styles2.todoListDisplay,
     todoListHeader: styles2.todoListHeader,
     todoListHeaderTitle: styles2.todoListHeaderTitle,
@@ -88,6 +93,14 @@ const HoldPage: React.FC = () => {
     todo: ``,
     doBy: ``,
   };
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Declare function to add new todo item
   const handleTodoPost = (values: FormValues) => {
@@ -146,7 +159,46 @@ const HoldPage: React.FC = () => {
       </div>
     );
     setTodoItemsListView(configgedTodoListViewHold);
-  }, [todoList]);
+  }, [todoList, styles]);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `todoListDisplaySupportClass`,
+          todoListDisplay: styles2.todoListDisplay,
+          todoListHeaderTitle: styles2.todoListHeaderTitle,
+          todoListItemView: styles2.todoListItemView,
+          addTodoDisplay: styles2.addTodoDisplay,
+          addTodoIconButton: `addTodoIconButton`,
+          addTodoIcon: `addTodoIcon`,
+          formSubmitButton: `formSubmitButton`,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `todoListDisplaySupportClassv2`,
+          todoListDisplay: styles2.todoListDisplayv2,
+          todoListHeaderTitle: styles2.todoListHeaderTitlev2,
+          todoListItemView: styles2.todoListItemViewv2,
+          addTodoDisplay: styles2.addTodoDisplayv2,
+          addTodoIconButton: `addTodoIconButtonv2`,
+          addTodoIcon: `addTodoIconv2`,
+          formSubmitButton: `formSubmitButtonv2`,
+        };
+      });
+    }
+  }, [kindOfStyle]);
 
   switch (todoPage) {
     case "main":
@@ -156,6 +208,30 @@ const HoldPage: React.FC = () => {
           style={styles.mainDisplaySupportStyle}
         >
           <View style={styles.mainDisplay}>
+            <div className={styles.headerBar}>
+              <div
+                className={styles.backToIndexPageButton}
+                onClick={() => {
+                  window.location.href = `${localUrl}`;
+                }}
+              >{`Back To Index Page`}</div>
+              <div
+                ref={switchStylesButtonRef}
+                className={styles.switchStylesButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (innerHtml === `Switch To Plain View`) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                  } else if (innerHtml === `Switch To Colorful View`) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                  }
+                }}
+              >{`Switch To Plain View`}</div>
+            </div>
             <View style={styles.todoListDisplay}>
               <View style={styles.todoListHeader}>
                 <Text style={styles.todoListHeaderTitle}>{`Todo List`}</Text>
@@ -183,6 +259,30 @@ const HoldPage: React.FC = () => {
           style={styles.mainDisplaySupportStyle}
         >
           <View style={styles.mainDisplay}>
+            <div className={styles.headerBar}>
+              <div
+                className={styles.backToIndexPageButton}
+                onClick={() => {
+                  window.location.href = `${localUrl}`;
+                }}
+              >{`Back To Index Page`}</div>
+              <div
+                ref={switchStylesButtonRef}
+                className={styles.switchStylesButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (innerHtml === `Switch To Plain View`) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                  } else if (innerHtml === `Switch To Colorful View`) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                  }
+                }}
+              >{`Switch To Plain View`}</div>
+            </div>
             <View style={styles.addTodoDisplay}>
               <View style={styles.todoListHeader}>
                 <Text
@@ -205,19 +305,31 @@ const HoldPage: React.FC = () => {
                   {() => {
                     return (
                       <Form>
-                        <FormikField name={"title"} label={"Title"} required />
+                        <FormikField
+                          name={"title"}
+                          label={"Title"}
+                          required
+                          kindOfStyle={kindOfStyle}
+                        />
                         <FormikField
                           name={"todo"}
                           label={"What to do?"}
                           required
+                          kindOfStyle={kindOfStyle}
                         />
                         <FormikField
                           name={"doBy"}
                           label={"Complete by?"}
                           required
+                          kindOfStyle={kindOfStyle}
                         />
                         <View
-                          style={{ position: "relative", top: "100px", marginTop: "20px", alignItems: "center" }}
+                          style={{
+                            position: "relative",
+                            top: "100px",
+                            marginTop: "20px",
+                            alignItems: "center",
+                          }}
                         >
                           <button
                             className={styles.formSubmitButton}
@@ -239,7 +351,31 @@ const HoldPage: React.FC = () => {
     default:
       return (
         <View>
-          <Text>{`Sorry the code has directed you here default. You shouldn't be here.`}</Text>
+          <div className={styles.headerBar}>
+            <div
+              className={styles.backToIndexPageButton}
+              onClick={() => {
+                window.location.href = `${localUrl}`;
+              }}
+            >{`Back To Index Page`}</div>
+            <div
+              ref={switchStylesButtonRef}
+              className={styles.switchStylesButton}
+              onClick={(event) => {
+                const innerHtml = event.currentTarget.innerHTML;
+                if (innerHtml === `Switch To Plain View`) {
+                  setKindOfStyle(() => {
+                    return `plain`;
+                  });
+                } else if (innerHtml === `Switch To Colorful View`) {
+                  setKindOfStyle(() => {
+                    return `colorful`;
+                  });
+                }
+              }}
+            >{`Switch To Plain View`}</div>
+          </div>
+          <Text>{`Sorry the code has directed you to default. You shouldn't be here.`}</Text>
         </View>
       );
   }
@@ -260,16 +396,35 @@ const styles2 = StyleSheet.create({
     border: "1px solid rgba(0, 0, 0, 0.75)",
     backgroundColor: "rgba(0, 0, 0, 0.4)",
   },
+  todoListDisplayv2: {
+    margin: "auto",
+    paddingBottom: "10px",
+    width: "500px",
+    height: "650px",
+    border: "1px solid rgba(0, 0, 0, 0.75)",
+    backgroundColor: "rgba(0, 0, 0, 1)",
+  },
   todoListHeader: {
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: "100%",
     height: "10%",
+    paddingTop: "10px",
   },
   todoListHeaderTitle: {
     width: "80%",
     paddingTop: "15px",
     color: "rgba(255, 253, 208, 0.75)",
+    textAlign: "center",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowRadius: 7,
+    fontSize: 20,
+    fontWeight: "500",
+  },
+  todoListHeaderTitlev2: {
+    width: "80%",
+    paddingTop: "15px",
+    color: "gainsboro",
     textAlign: "center",
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowRadius: 7,
@@ -294,6 +449,15 @@ const styles2 = StyleSheet.create({
     border: "1px solid rgba(255, 253, 208, 1)",
     backgroundColor: "rgba(255, 253, 208, 0.75)",
   },
+  todoListItemViewv2: {
+    margin: "auto",
+    paddingTop: "5px",
+    paddingBottom: "5px",
+    paddingLeft: "10px",
+    width: "80%",
+    border: "1px solid rgba(0, 0, 0, 0.75)",
+    backgroundColor: "gainsboro",
+  },
   todoListItemDeleteButtonView: {
     position: "absolute",
     right: "0px",
@@ -317,9 +481,17 @@ const styles2 = StyleSheet.create({
     margin: "auto",
     paddingBottom: "10px",
     width: "500px",
-    height: "650px",
+    height: "auto",
     border: "1px solid rgba(0, 0, 0, 0.75)",
     backgroundColor: "rgba(255, 253, 208, 0.75)",
+  },
+  addTodoDisplayv2: {
+    margin: "auto",
+    paddingBottom: "10px",
+    width: "500px",
+    height: "auto",
+    border: "1px solid rgba(0, 0, 0, 0.75)",
+    backgroundColor: "gainsboro",
   },
   addTodoFormDisplay: {
     margin: "auto",

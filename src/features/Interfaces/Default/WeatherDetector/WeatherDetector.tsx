@@ -11,6 +11,8 @@ import { ImageSearchTwoTone } from "@material-ui/icons";
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./WeatherDetectorStyles.scss";
 
 // Declare variables for storing api fetch url
@@ -98,6 +100,9 @@ const WeatherDetector: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `weatherDetectorPageDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForWeatherDetector`,
+    backToIndexPageButton: `backToIndexPageButtonForWeatherDetector`,
+    switchStylesButton: `switchStylesButtonForWeatherDetector`,
     weatherDetectorDisplay: styles2.weatherDetectorDisplay,
     weatherDetectorDisplayTitleText: styles2.weatherDetectorDisplayTitleText,
     locationQueryDisplay: styles2.locationQueryDisplay,
@@ -133,6 +138,15 @@ const WeatherDetector: React.FC = () => {
   const [weatherMaxTemp, setWeatherMaxTemp] = React.useState(0);
   const [weatherMinTemp, setWeatherMinTemp] = React.useState(0);
   const [weatherHumidity, setWeatherHumidity] = React.useState(0);
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
+
   // Handle screen size changes
   React.useEffect(() => {
     console.log({ detectedScreenHeightChange: screenHeight });
@@ -161,12 +175,90 @@ const WeatherDetector: React.FC = () => {
     );
   }, [whichLocation]);
 
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `weatherDetectorPageDisplaySupportClass`,
+          locationQueryInput: `locationQueryInput`,
+          locationQuerySearchIcon: `locationQuerySearchIcon`,
+          weatherDetectorDisplay: styles2.weatherDetectorDisplay,
+          weatherDetectorDisplayTitleText:
+            styles2.weatherDetectorDisplayTitleText,
+          weatherDataDisplay: styles2.weatherDataDisplay,
+          tempView: styles2.tempView,
+          longCoordsText: styles2.longCoordsText,
+          latCoordsText: styles2.latCoordsText,
+          weatherTempTitleText: styles2.weatherTempTitleText,
+          weatherTempText: styles2.weatherTempText,
+          weatherFeelsLikeText: styles2.weatherFeelsLikeText,
+          weatherMaxTempText: styles2.weatherMaxTempText,
+          weatherMinTempText: styles2.weatherMinTempText,
+          weatherHumidityText: styles2.weatherHumidityText,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `weatherDetectorPageDisplaySupportClassv2`,
+          locationQueryInput: `locationQueryInputv2`,
+          locationQuerySearchIcon: `locationQuerySearchIconv2`,
+          weatherDetectorDisplay: styles2.weatherDetectorDisplayv2,
+          weatherDetectorDisplayTitleText:
+            styles2.weatherDetectorDisplayTitleTextv2,
+          weatherDataDisplay: styles2.weatherDataDisplayv2,
+          tempView: styles2.tempViewv2,
+          longCoordsText: styles2.longCoordsTextv2,
+          latCoordsText: styles2.latCoordsTextv2,
+          weatherTempTitleText: styles2.weatherTempTitleTextv2,
+          weatherTempText: styles2.weatherTempTextv2,
+          weatherFeelsLikeText: styles2.weatherFeelsLikeTextv2,
+          weatherMaxTempText: styles2.weatherMaxTempTextv2,
+          weatherMinTempText: styles2.weatherMinTempTextv2,
+          weatherHumidityText: styles2.weatherHumidityTextv2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   return (
     <div
       className={styles.mainDisplaySupportClass}
       style={styles.mainDisplaySupportStyle}
     >
       <View style={styles.mainDisplay}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <View style={styles.weatherDetectorDisplay}>
           <Text
             style={styles.weatherDetectorDisplayTitleText}
@@ -265,6 +357,14 @@ const styles2 = StyleSheet.create({
     borderRadius: 30,
     backgroundColor: "rgba(112, 128, 144, 0.75)",
   },
+  weatherDetectorDisplayv2: {
+    paddingTop: "5px",
+    width: "400px",
+    height: "500px",
+    border: "1px solid black",
+    borderRadius: 30,
+    backgroundColor: "gainsboro",
+  },
   weatherDetectorDisplayTitleText: {
     margin: "auto",
     marginTop: "8px",
@@ -277,6 +377,25 @@ const styles2 = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     color: "rgba(0, 255, 255, 0.2)",
+    textAlign: "center",
+    textShadowColor: "rgba(112, 128, 144, 0.75)",
+    textShadowRadius: 7,
+    fontFamily: "Cambria",
+    fontWeight: "700",
+    fontSize: 17,
+  },
+  weatherDetectorDisplayTitleTextv2: {
+    margin: "auto",
+    marginTop: "8px",
+    marginBottom: "8px",
+    paddingLeft: "4px",
+    paddingRight: "4px",
+    paddingBottom: "6px",
+    height: "50px",
+    paddingTop: "5px",
+    borderRadius: 10,
+    backgroundColor: "gainsboro",
+    color: "black",
     textAlign: "center",
     textShadowColor: "rgba(112, 128, 144, 0.75)",
     textShadowRadius: 7,
@@ -305,6 +424,16 @@ const styles2 = StyleSheet.create({
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },
+  weatherDataDisplayv2: {
+    width: "100%",
+    height: "380px",
+    paddingLeft: "7px",
+    paddingRight: "7px",
+    justifyContent: "space-evenly",
+    backgroundColor: "gainsboro",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+  },
   coordsView: {
     width: "100%",
     position: "absolute",
@@ -325,6 +454,19 @@ const styles2 = StyleSheet.create({
     fontWeight: "300",
     fontFamily: "OCR A Std, monospace",
   },
+  longCoordsTextv2: {
+    height: "12px",
+    marginRight: "1px",
+    paddingLeft: "1px",
+    paddingRight: "1px",
+    paddingBottom: "2px",
+    backgroundColor: "gainsboro",
+    color: "black",
+    textAlign: "center",
+    fontSize: 10,
+    fontWeight: "300",
+    fontFamily: "OCR A Std, monospace",
+  },
   latCoordsText: {
     height: "12px",
     marginLeft: "1px",
@@ -338,16 +480,42 @@ const styles2 = StyleSheet.create({
     fontWeight: "300",
     fontFamily: "OCR A Std, monospace",
   },
+  latCoordsTextv2: {
+    height: "12px",
+    marginLeft: "1px",
+    paddingLeft: "1px",
+    paddingRight: "1px",
+    paddingBottom: "2px",
+    backgroundColor: "gainsboro",
+    color: "black",
+    textAlign: "center",
+    fontSize: 10,
+    fontWeight: "300",
+    fontFamily: "OCR A Std, monospace",
+  },
   aboveTempView: { width: "100%", flexDirection: "row" },
   tempView: {
     width: "100%",
     border: "1px solid rgba(112, 128, 144, 0.75)",
     backgroundColor: "rgba(204, 85, 0, 0.5)",
   },
+  tempViewv2: {
+    width: "100%",
+    border: "1px solid black",
+    backgroundColor: "gainsboro",
+  },
   belowTempView: { width: "100%", flexDirection: "row" },
   weatherTempTitleText: {
     width: "100%",
     color: "rgba(112, 128, 144, 1)",
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "600",
+    fontFamily: "OCR A Std, monospace",
+  },
+  weatherTempTitleTextv2: {
+    width: "100%",
+    color: "black",
     textAlign: "center",
     fontSize: 20,
     fontWeight: "600",
@@ -363,6 +531,16 @@ const styles2 = StyleSheet.create({
     fontWeight: "700",
     fontFamily: "OCR A Std, monospace",
   },
+  weatherTempTextv2: {
+    width: "100%",
+    color: "black",
+    textAlign: "center",
+    textShadowColor: "rgba(112, 128, 144, 0.75)",
+    textShadowRadius: 10,
+    fontSize: 75,
+    fontWeight: "700",
+    fontFamily: "OCR A Std, monospace",
+  },
   weatherFeelsLikeText: {
     width: "50%",
     height: "30px",
@@ -373,6 +551,21 @@ const styles2 = StyleSheet.create({
     borderColor: "rgba(112, 128, 144, 0.75)",
     borderTopLeftRadius: 20,
     color: "rgba(112, 128, 144, 1)",
+    textAlign: "center",
+    fontSize: 15,
+    fontWeight: "500",
+    fontFamily: "OCR A Std, monospace",
+  },
+  weatherFeelsLikeTextv2: {
+    width: "50%",
+    height: "30px",
+    backgroundColor: "gainsboro",
+    paddingTop: "6px",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "black",
+    borderTopLeftRadius: 20,
+    color: "black",
     textAlign: "center",
     fontSize: 15,
     fontWeight: "500",
@@ -394,6 +587,22 @@ const styles2 = StyleSheet.create({
     fontWeight: "500",
     fontFamily: "OCR A Std, monospace",
   },
+  weatherMaxTempTextv2: {
+    width: "50%",
+    height: "30px",
+    paddingTop: "4px",
+    backgroundColor: "gainsboro",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "black",
+    borderBottomLeftRadius: 20,
+    color: "black",
+    textAlign: "center",
+    fontSize: 15,
+    fontWeight: "500",
+    fontFamily: "OCR A Std, monospace",
+  },
   weatherMinTempText: {
     width: "50%",
     height: "30px",
@@ -410,6 +619,22 @@ const styles2 = StyleSheet.create({
     fontWeight: "500",
     fontFamily: "OCR A Std, monospace",
   },
+  weatherMinTempTextv2: {
+    width: "50%",
+    height: "30px",
+    paddingTop: "4px",
+    backgroundColor: "gainsboro",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "black",
+    borderBottomRightRadius: 20,
+    color: "black",
+    textAlign: "center",
+    fontSize: 15,
+    fontWeight: "500",
+    fontFamily: "OCR A Std, monospace",
+  },
   weatherHumidityText: {
     width: "50%",
     height: "30px",
@@ -421,6 +646,22 @@ const styles2 = StyleSheet.create({
     borderColor: "rgba(112, 128, 144, 0.75)",
     borderTopRightRadius: 20,
     color: "rgba(112, 128, 144, 1)",
+    textAlign: "center",
+    fontSize: 15,
+    fontWeight: "500",
+    fontFamily: "OCR A Std, monospace",
+  },
+  weatherHumidityTextv2: {
+    width: "50%",
+    height: "30px",
+    backgroundColor: "gainsboro",
+    paddingTop: "6px",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "black",
+    borderTopRightRadius: 20,
+    color: "black",
     textAlign: "center",
     fontSize: 15,
     fontWeight: "500",

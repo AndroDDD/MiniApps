@@ -9,6 +9,8 @@ import {
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./CookbookStyles.scss";
 
 const recipes = [
@@ -393,11 +395,19 @@ const Cookbook: React.FC = () => {
     console.log({ updatedScreenHeight: screenHeight });
   });
 
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
   // Declare stylesheet for manipulation
   const [styles, setStyles] = React.useState({
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `cookbookDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForCookbook`,
+    backToIndexPageButton: `backToIndexPageButtonForCookbook`,
+    switchStylesButton: `switchStylesButtonForCookbook`,
     cookbookDisplay: styles2.cookbookDisplay,
     cookbookMenu: styles2.cookbookMenu,
     cookbookMenuItemButton: `cookbookMenuItemButton`,
@@ -420,6 +430,7 @@ const Cookbook: React.FC = () => {
     recipeTitle: styles2.recipeTitle,
     recipeIngredientsDisplay: styles2.recipeIngredientsDisplay,
     recipeIngredientsContainer: styles2.recipeIngredientsContainer,
+    recipeIngredientsText: styles2.recipeIngredientsText,
     recipeInstructionsDisplay: styles2.recipeInstructionsDisplay,
     recipeInstructionsTextDisplay: styles2.recipeInstructionsTextDisplay,
     recipeInstructionsText: styles2.recipeInstructionsText,
@@ -463,6 +474,9 @@ const Cookbook: React.FC = () => {
   const [leftNavText, setLeftNavText] = React.useState(`instructions`);
   const [rightNavText, setRightNavText] = React.useState(`ingredients`);
 
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
+
   // Handle screen size changes
   React.useEffect(() => {
     console.log({ detectedScreenHeightChange: screenHeight });
@@ -475,6 +489,44 @@ const Cookbook: React.FC = () => {
     };
     setStyles(updatedHeightConfig);
   }, [screenHeight]);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `cookbookDisplaySupportClass`,
+          cookbookDisplay: styles2.cookbookDisplay,
+          recipeIngredientsText: styles2.recipeIngredientsText,
+          recipeInstructionsText: styles2.recipeInstructionsText,
+          leftRecipeNavButton: `leftRecipeNavButton`,
+          rightRecipeNavButton: `rightRecipeNavButton`,
+          recipeIngredientsContainer: styles2.recipeIngredientsContainer,
+          recipeInstructionsTextDisplay: styles2.recipeInstructionsTextDisplay,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `cookbookDisplaySupportClassv2`,
+          cookbookDisplay: styles2.cookbookDisplayv2,
+          leftRecipeNavButton: `leftRecipeNavButtonv2`,
+          rightRecipeNavButton: `rightRecipeNavButtonv2`,
+          recipeIngredientsContainer: styles2.recipeIngredientsContainerv2,
+          recipeInstructionsTextDisplay:
+            styles2.recipeInstructionsTextDisplayv2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
 
   // Handle current recipe update
   React.useEffect(() => {
@@ -499,7 +551,11 @@ const Cookbook: React.FC = () => {
         </View>
         <View style={styles.recipeIngredientsContainer}>
           {recipes[currentRecipe].ingredients.map((ingredient) => {
-            return <Text>{`• ${ingredient}`}</Text>;
+            return (
+              <Text
+                style={styles.recipeIngredientsText}
+              >{`• ${ingredient}`}</Text>
+            );
           })}
         </View>
       </View>
@@ -517,7 +573,7 @@ const Cookbook: React.FC = () => {
       </View>
     );
     setWhichRecipeView(`recipeImageView`);
-  }, [currentRecipe]);
+  }, [currentRecipe, styles]);
 
   // Handle recipe view navigation
   React.useEffect(() => {
@@ -548,6 +604,30 @@ const Cookbook: React.FC = () => {
       style={styles.mainDisplaySupportStyle}
     >
       <View style={styles.mainDisplay}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <View style={styles.cookbookDisplay}>
           <View style={styles.cookbookMenuNavigationDisplay}>
             <View style={styles.leftCookbookMenuNavigationButtonDisplay}>
@@ -820,6 +900,16 @@ const styles2 = StyleSheet.create({
     border: "1px solid rgba(112, 128, 144, 0.75)",
     backgroundColor: "rgba(241, 213, 146, 0.85)",
   },
+  cookbookDisplayv2: {
+    margin: "auto",
+    paddingTop: "1px",
+    paddingLeft: "1px",
+    alignItems: "center",
+    width: "500px",
+    height: "650px",
+    border: "1px solid rgba(112, 128, 144, 0.75)",
+    backgroundColor: "black",
+  },
   cookbookMenu: {
     marginTop: "10px",
     flexDirection: "row",
@@ -903,6 +993,18 @@ const styles2 = StyleSheet.create({
     border: "2px solid rgba(112, 128, 144, 0.75)",
     transform: [{ translateY: 0 }],
   },
+  recipeIngredientsContainerv2: {
+    margin: "auto",
+    paddingLeft: 10,
+    justifyContent: "space-evenly",
+    alignItems: "stretch",
+    width: "100%",
+    height: "413px",
+    border: "2px solid rgba(112, 128, 144, 0.75)",
+    backgroundColor: `gainsboro`,
+    transform: [{ translateY: 0 }],
+  },
+  recipeIngredientsText: {},
   recipeInstructionsDisplay: {
     margin: "auto",
     width: "100%",
@@ -917,6 +1019,17 @@ const styles2 = StyleSheet.create({
     justifyContent: "flex-start",
     border: "2px solid rgba(112, 128, 144, 0.75)",
     paddingLeft: "10px",
+    overflowY: "scroll",
+  },
+  recipeInstructionsTextDisplayv2: {
+    margin: "auto",
+    paddingBottom: "5px",
+    width: "100%",
+    height: "413px",
+    justifyContent: "flex-start",
+    border: "2px solid rgba(112, 128, 144, 0.75)",
+    paddingLeft: "10px",
+    backgroundColor: `gainsboro`,
     overflowY: "scroll",
   },
   recipeInstructionsText: {},

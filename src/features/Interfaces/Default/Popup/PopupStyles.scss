@@ -10,11 +10,80 @@
   }
 }
 
+@keyframes closePopupButtonHoverAnimationv2 {
+  0% {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  100% {
+    background-color: floralwhite;
+  }
+}
+
 .mainPUDisplaySupportClass {
   background-color: plum;
   background-image: url("https://4.bp.blogspot.com/-Kf5sixrRhOA/VpEcm2OTZqI/AAAAAAAAD2s/_hTp2Y2yIJ8/s1600/1448819792782_surprise-nappy-bundle.png");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.mainPUDisplaySupportClassv2 {
+  background-color: gainsboro;
+}
+
+.headerBarForPopup {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  top: 0%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: black;
+  border-bottom: 1px solid rgba(112, 128, 144, 1);
+}
+
+.backToIndexPageButtonForPopup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid honeydew;
+  color: honeydew;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.backToIndexPageButtonForPopup:hover {
+  background-color: slategrey;
+}
+
+.switchStylesButtonForPopup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 7px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.switchStylesButtonForPopup:hover {
+  background-color: slategrey;
 }
 
 .popupButton {
@@ -33,14 +102,36 @@
   cursor: pointer;
 }
 
+.popupButtonv3 {
+  position: absolute;
+  display: flex;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 15px;
+  background-color: black;
+  color: silver;
+  text-align: center;
+  text-shadow: 0px 0px 3px rgba(112, 128, 144, 0.75);
+  font-family: monospace, cursive;
+  font-size: 40px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .popupButton:hover {
   border: 2px solid blue;
   color: blue;
 }
 
+.popupButtonv3:hover {
+  border: 2px solid black;
+  color: silver;
+}
+
 .popupDisplay {
   width: 50%;
-  height: 75%;
+  height: auto;
+  max-height: 75%;
   position: absolute;
   display: none;
   flex-direction: column;
@@ -54,12 +145,27 @@
 
 .closePopupButton {
   width: 100%;
-  height: 10%;
+  height: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-right: 5%;
   color: rebeccapurple;
+  background-color: black;
+  font-size: 30px;
+  font-weight: 900;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.closePopupButtonv2 {
+  width: 100%;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 5%;
+  color: silver;
   background-color: black;
   font-size: 30px;
   font-weight: 900;
@@ -73,14 +179,22 @@
   animation: closePopupButtonHoverAnimation 3s infinite alternate ease-in-out;
 }
 
+.closePopupButtonv2:hover {
+  color: black;
+  text-shadow: 0px 0px 5px silver;
+  animation: closePopupButtonHoverAnimationv2 3s infinite alternate ease-in-out;
+}
+
 .popupImageDisplay {
   width: 100%;
-  height: 90%;
+  height: auto;
   display: flex;
-  justify-content: "center";
+  justify-content: center;
   align-items: center;
 }
 
 .popupImage {
   width: 100%;
+  height: 100%;
+  object-fit: contain;
 }

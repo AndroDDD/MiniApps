@@ -15,6 +15,7 @@ interface FormikFieldInterface {
     maxNumberOfRows: number;
   };
   required: boolean;
+  kindOfStyle: string;
 }
 
 const FormikField: React.FC<FormikFieldInterface> = ({
@@ -24,6 +25,7 @@ const FormikField: React.FC<FormikFieldInterface> = ({
   style,
   multiline,
   required = false,
+  kindOfStyle,
 }) => {
   // Declare stylesheet for mutation
   const [styles, setStyles] = React.useState({
@@ -41,14 +43,21 @@ const FormikField: React.FC<FormikFieldInterface> = ({
           style: {
             paddingLeft: "10px",
             paddingRight: "10px",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            color: "rgba(255, 253, 208, 1)",
+            backgroundColor:
+              kindOfStyle === `colorful` ? "rgba(0, 0, 0, 0.5)" : "gainsboro",
+            color:
+              kindOfStyle === `colorful`
+                ? "rgba(255, 253, 208, 1)"
+                : "rgba(0, 0, 0, 1)",
           },
         }}
         InputProps={style}
         InputLabelProps={{
           style: {
-            color: "rgba(255, 253, 208, 1)",
+            color:
+              kindOfStyle === `colorful`
+                ? "rgba(255, 253, 208, 1)"
+                : "rgba(0, 0, 0, 1)",
             paddingLeft: "5px",
             textShadow: "0px 0px 3px rgba(0, 0, 0, 0.75)",
           },

@@ -10,6 +10,15 @@
   }
 }
 
+@keyframes locationQueryInputAnimationv2 {
+  0% {
+    background-color: gainsboro;
+  }
+  100% {
+    background-color: grey;
+  }
+}
+
 @keyframes locationQuerySearchIconAnimation {
   0% {
     color: rgba(112, 128, 144, 0.65);
@@ -22,11 +31,80 @@
   }
 }
 
+@keyframes locationQuerySearchIconAnimationv2 {
+  0% {
+    color: floralwhite;
+  }
+  100% {
+    color: black;
+  }
+}
+
 .weatherDetectorPageDisplaySupportClass {
   background-color: plum;
   background-image: url("https://behrend.psu.edu/sites/behrend/files/styles/callout_component_image/public/weather-collage_2.jpg?itok=6r93EKxl");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.weatherDetectorPageDisplaySupportClassv2 {
+  background-color: grey;
+}
+
+.headerBarForWeatherDetector {
+  width: 100%;
+  position: absolute;
+  top: 0%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: black;
+  border-bottom: 1px solid rgba(112, 128, 144, 1);
+}
+
+.backToIndexPageButtonForWeatherDetector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid honeydew;
+  color: honeydew;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.backToIndexPageButtonForWeatherDetector:hover {
+  background-color: slategrey;
+}
+
+.switchStylesButtonForWeatherDetector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 7px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.switchStylesButtonForWeatherDetector:hover {
+  background-color: slategrey;
 }
 
 .locationQueryInput {
@@ -48,6 +126,25 @@
   animation-iteration-count: infinite;
 }
 
+.locationQueryInputv2 {
+  width: 90%;
+  height: 25px;
+  margin-left: 10px;
+  color: rgba(0, 0, 0, 1);
+  background-color: gainsboro;
+  border: 1px solid black;
+  border-radius: 10px;
+  text-align: center;
+  text-shadow: 0px 0px 10px rgba(112, 128, 144, 1);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  animation-name: locationQueryInputAnimationv2;
+  animation-duration: 15s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
 .locationQueryInput::placeholder {
   color: rgb(236, 134, 1);
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
@@ -56,8 +153,20 @@
   letter-spacing: 2px;
 }
 
+.locationQueryInputv2::placeholder {
+  color: black;
+  text-shadow: 0px 0px 10px rgba(112, 128, 144, 1);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
 .locationQueryInput:hover {
   border: 1px solid rgba(236, 134, 1, 1);
+}
+
+.locationQueryInputv2:hover {
+  border: 1px solid black;
 }
 
 .locationQueryInput:focus {
@@ -79,12 +188,33 @@
   animation-iteration-count: infinite;
 }
 
+.locationQuerySearchIconv2 {
+  padding: 2px;
+  border: 3px solid black;
+  border-radius: 15px;
+  background-color: gainsboro;
+  animation-name: locationQuerySearchIconAnimationv2;
+  animation-duration: 15s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
 .locationQuerySearchIcon:hover {
   border-color: rgba(236, 134, 1, 1);
+}
+
+.locationQuerySearchIconv2:hover {
+  border-color: black;
 }
 
 .locationQuerySearchIcon:active {
   border-color: rgba(236, 134, 1, 1);
   background-color: rgba(236, 134, 1, 0.5);
   box-shadow: 0px 0px 10px 5px rgba(236, 134, 1, 0.4);
+}
+
+.locationQuerySearchIconv2:active {
+  border-color: black;
+  background-color: gainsboro;
+  box-shadow: 0px 0px 10px 5px rgba(112, 128, 144, 0.75);
 }

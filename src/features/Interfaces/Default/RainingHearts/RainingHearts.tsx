@@ -1,7 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 
 import $ from "jquery";
+
+import { localUrl } from "../../../../routes/routerBlock";
 
 import "./RainingHeartsStyles.scss";
 
@@ -38,6 +40,9 @@ const RainingHearts: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `mainRHDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForRH`,
+    backToIndexPageButton: `backToIndexPageButtonForRH`,
+    switchStylesButton: `switchStylesButtonForRH`,
     heart: `heart`,
   });
 
@@ -53,11 +58,20 @@ const RainingHearts: React.FC = () => {
     }
   );
 
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
   // Declare refs for data extraction and view manipulation
   let mainDisplayRef = React.useRef<any>();
 
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
+
   // Handle heart falls
   React.useEffect(() => {
+    let plainStyle = Math.random() < 0.5 ? 0 : 1;
     let skyHeart = (
       <svg
         version="1.0"
@@ -69,9 +83,19 @@ const RainingHearts: React.FC = () => {
       >
         <g
           transform="translate(0.000000,120.000000) scale(0.100000,-0.100000)"
-          fill={`rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(
-            Math.random() * 255
-          )}, ${Math.floor(Math.random() * 255)}, ${Math.random() + 0.5})`}
+          fill={`rgba(${
+            kindOfStyle === `colorful`
+              ? Math.floor(Math.random() * 255)
+              : plainStyle
+          }, ${
+            kindOfStyle === `colorful`
+              ? Math.floor(Math.random() * 255)
+              : plainStyle
+          }, ${
+            kindOfStyle === `colorful`
+              ? Math.floor(Math.random() * 255)
+              : plainStyle
+          }, ${Math.random() + 0.5})`}
           stroke="none"
         >
           <path
@@ -118,6 +142,31 @@ const RainingHearts: React.FC = () => {
     }, 50);
   }, [heartFallsIteration]);
 
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainRHDisplaySupportClass`,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainRHDisplaySupportClassv2`,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   // Handle component return view
   return (
     <div
@@ -125,9 +174,42 @@ const RainingHearts: React.FC = () => {
       style={styles.mainDisplaySupportStyle}
     >
       <View ref={mainDisplayRef} style={styles.mainDisplay}>
-        {heartDisplays.map((displays) => {
-          return displays;
-        })}
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "95%",
+            zIndex: -10,
+          }}
+        >
+          {heartDisplays.map((displays) => {
+            return displays;
+          })}
+        </div>
       </View>
     </div>
   );

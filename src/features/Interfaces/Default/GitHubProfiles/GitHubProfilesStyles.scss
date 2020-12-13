@@ -5,6 +5,67 @@
   background-size: cover;
 }
 
+.gitHubProfilesPageDisplaySupportClassv2 {
+  background-color: gainsboro;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.headerBarForGitHubProfiles {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  margin-bottom: 5px;
+  background-color: black;
+  border-bottom: 1px solid rgba(112, 128, 144, 1);
+}
+
+.backToIndexPageButtonForGitHubProfiles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid honeydew;
+  color: honeydew;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.backToIndexPageButtonForGitHubProfiles:hover {
+  background-color: slategrey;
+}
+
+.switchStylesButtonForGitHubProfiles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 7px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.switchStylesButtonForGitHubProfiles:hover {
+  background-color: slategrey;
+}
+
 .searchQueryButton {
 }
 

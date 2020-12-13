@@ -9,7 +9,9 @@ import {
 } from "react-native";
 import $ from "jquery";
 import { Formik, Form, Field, FieldProps } from "formik";
-import { TextField } from "@material-ui/core";
+
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./PasswordGeneratorStyles.scss";
 
 interface passwordGeneratorValues {
@@ -40,6 +42,9 @@ const PasswordGenerator: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `passwordGeneratorPageDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForPasswordGenerator`,
+    backToIndexPageButton: `backToIndexPageButtonForPasswordGenerator`,
+    switchStylesButton: `switchStylesButtonForPasswordGenerator`,
     passwordGeneratorDisplay: styles2.passwordGeneratorDisplay,
     passwordFormText: styles2.passwordFormText,
     formDisplay: styles2.formDisplay,
@@ -74,6 +79,20 @@ const PasswordGenerator: React.FC = () => {
 
   // Declare variable holding passwordLength
   const [passwordLength, setPasswordLength] = React.useState(`0`);
+
+  // Declare store state for form input values
+  const [formInputValues, setFormInputValues] = React.useState({
+    title: ``,
+    note: ``,
+  });
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Declare functions for generating various password values
   const getUppercase = () => {
@@ -183,12 +202,71 @@ const PasswordGenerator: React.FC = () => {
     setStyles(updatedHeightConfig);
   }, [screenHeight]);
 
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `passwordGeneratorPageDisplaySupportClass`,
+          passwordGeneratorDisplay: styles2.passwordGeneratorDisplay,
+          passwordFormText: styles2.passwordFormText,
+          generateButton: `generateButton`,
+          generatedPasswordDisplay: styles2.generatedPasswordDisplay,
+          generatedPasswordText: styles2.generatedPasswordText,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `passwordGeneratorPageDisplaySupportClassv2`,
+          passwordGeneratorDisplay: styles2.passwordGeneratorDisplayv2,
+          passwordFormText: styles2.passwordFormTextv2,
+          generateButton: `generateButtonv2`,
+          generatedPasswordDisplay: styles2.generatedPasswordDisplayv2,
+          generatedPasswordText: styles2.generatedPasswordTextv2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   return (
     <div
       className={styles.mainDisplaySupportClass}
       style={styles.mainDisplaySupportStyle}
     >
       <View style={styles.mainDisplay}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <View style={styles.passwordGeneratorDisplay}>
           <Text
             style={{
@@ -199,10 +277,17 @@ const PasswordGenerator: React.FC = () => {
               borderStyle: "solid",
               borderColor: "rgba(112, 128, 144, 0.75)",
               borderRadius: 25,
-              backgroundColor: "rgba(0, 0, 255, 0.5)",
-              color: "rgba(0, 255, 50, 0.5)",
+              backgroundColor:
+                kindOfStyle === `colorful`
+                  ? "rgba(0, 0, 255, 0.5)"
+                  : "gainsboro",
+              color:
+                kindOfStyle === `colorful` ? "rgba(0, 255, 50, 0.5)" : "black",
               textAlign: "center",
-              textShadowColor: "rgba(255, 0, 0, 0.75)",
+              textShadowColor:
+                kindOfStyle === `colorful`
+                  ? "rgba(255, 0, 0, 0.75)"
+                  : "slategrey",
               textShadowRadius: 5,
               fontSize: 17,
               fontWeight: "600",
@@ -336,8 +421,24 @@ const styles2 = StyleSheet.create({
     backgroundColor: "black",
     overflow: "hidden",
   },
+  passwordGeneratorDisplayv2: {
+    height: "360px",
+    paddingTop: "10px",
+    border: "1px solid rgba(112, 128, 144, 0.75)",
+    borderRadius: 50,
+    backgroundColor: "gainsboro",
+    overflow: "hidden",
+  },
   passwordFormText: {
     color: "green",
+    textShadowColor: "rgba(112, 128, 144, 0.75)",
+    textShadowRadius: 5,
+    fontSize: 25,
+    fontWeight: "600",
+    fontFamily: "Comic Sans MS",
+  },
+  passwordFormTextv2: {
+    color: "black",
     textShadowColor: "rgba(112, 128, 144, 0.75)",
     textShadowRadius: 5,
     fontSize: 25,
@@ -364,10 +465,31 @@ const styles2 = StyleSheet.create({
     border: "1px solid rgba(112, 128, 144, 0.75)",
     borderRadius: 50,
   },
+  generatedPasswordDisplayv2: {
+    position: "relative",
+    top: "30px",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "500px",
+    height: "75px",
+    backgroundColor: "gainsboro",
+    border: "1px solid rgba(112, 128, 144, 0.75)",
+    borderRadius: 50,
+  },
   generatedPasswordText: {
     width: "425px",
     height: "35px",
     color: "rgba(112, 128, 144, 1.0)",
+    overflow: "hidden",
+    textAlign: "center",
+    fontSize: 27,
+    fontWeight: "500",
+    fontFamily: "Comic Sans MS",
+  },
+  generatedPasswordTextv2: {
+    width: "425px",
+    height: "35px",
+    color: "black",
     overflow: "hidden",
     textAlign: "center",
     fontSize: 27,

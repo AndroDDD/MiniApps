@@ -53,6 +53,7 @@ const MobileIndexPage: React.FC = () => {
     mainHeader: styles2.mainHeader,
     mainHeaderTitleView: styles2.mainHeaderTitleView,
     mainHeaderTitle: styles2.mainHeaderTitle,
+    switchKindOfStyleButton: `switchKindOfStyleButton`,
     indexDisplay: styles2.indexDisplay,
     artPageButton: `artPageButton`,
     cookbookButton: `cookbookButton`,
@@ -74,7 +75,13 @@ const MobileIndexPage: React.FC = () => {
     rainingHeartsButton: `rainingHeartsButton`,
     soundBoardButton: `soundBoardButton`,
     toastNotificationButton: `toastNotificationButtonv2`,
+    basicButtonStyle: {},
     genericText: styles2.genericText,
+  });
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
   });
 
   // Declare ref for main display
@@ -123,7 +130,7 @@ const MobileIndexPage: React.FC = () => {
       0.8,
       {
         stagger: 0.25,
-        y: -1500,
+        x: -1500,
         ease: Power3.easeOut,
       }
     );
@@ -143,19 +150,44 @@ const MobileIndexPage: React.FC = () => {
       0.8,
       {
         stagger: 0.25,
-        y: 1500,
+        x: 1500,
         ease: Power3.easeOut,
         delay: 0.2,
       }
     );
   }, []);
 
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      setStyles((styles) => {
+        return {
+          ...styles,
+          basicButtonStyle: {},
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      setStyles((styles) => {
+        return {
+          ...styles,
+          basicButtonStyle: {
+            color: "gainsboro",
+            background: "black",
+            border: "1px solid silver",
+          },
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   // Handle component return view
   return (
     <ImageBackground
       source={{
         uri:
-          "https://th.bing.com/th/id/OIP.gzdKJMIRYYKJeQWClV9OcgHaNK?pid=Api&rs=1",
+          kindOfStyle === `colorful`
+            ? "https://th.bing.com/th/id/OIP.gzdKJMIRYYKJeQWClV9OcgHaNK?pid=Api&rs=1"
+            : "https://th.bing.com/th/id/OIP.vL-1Tn1mERcG-lUMK5iOoQHaEo?pid=Api&rs=1",
       }}
       imageStyle={{ resizeMode: "cover" }}
       style={styles.backgroundImage}
@@ -165,12 +197,46 @@ const MobileIndexPage: React.FC = () => {
           <View style={styles.mainHeader}>
             <View style={styles.mainHeaderTitleView}>
               <Text style={styles.mainHeaderTitle}>{`MINI APPS INDEX`}</Text>
+              <div
+                className={styles.switchKindOfStyleButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (
+                    styles[`switchKindOfStyleButton`] ===
+                    `switchKindOfStyleButton`
+                  ) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                    setStyles((prevStyles) => {
+                      return {
+                        ...prevStyles,
+                        switchKindOfStyleButton: `switchKindOfStyleButtonv2`,
+                      };
+                    });
+                  } else if (
+                    styles[`switchKindOfStyleButton`] ===
+                    `switchKindOfStyleButtonv2`
+                  ) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                    setStyles((prevStyles) => {
+                      return {
+                        ...prevStyles,
+                        switchKindOfStyleButton: `switchKindOfStyleButton`,
+                      };
+                    });
+                  }
+                }}
+              ></div>
             </View>
           </View>
           <View style={styles.indexDisplay}>
             <button
               ref={artPageButtonRef}
               className={styles.artPageButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}art-board/`, "_self");
               }}
@@ -180,6 +246,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={cookbookButtonRef}
               className={styles.cookbookButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}cookbook/`, "_self");
               }}
@@ -189,6 +256,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={countdownTimerButtonRef}
               className={styles.countdownTimerButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}countdown-timer/`, "_self");
               }}
@@ -198,6 +266,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={githubProfilesButtonRef}
               className={styles.githubProfilesButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}github-profiles/`, "_self");
               }}
@@ -207,6 +276,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={moviesLibraryButtonRef}
               className={styles.moviesLibraryButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}movies-library/`, "_self");
               }}
@@ -216,6 +286,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={notepadButtonRef}
               className={styles.notepadButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}notepad/`, "_self");
               }}
@@ -225,6 +296,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={passwordGeneratorButtonRef}
               className={styles.passwordGeneratorButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}password-generator/`, "_self");
               }}
@@ -234,6 +306,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={randomQuizButtonRef}
               className={styles.randomQuizButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}random-quiz/`, "_self");
               }}
@@ -243,6 +316,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={todoListButtonRef}
               className={styles.todoListButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}todo-list/`, "_self");
               }}
@@ -252,6 +326,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={weatherDetectorButtonRef}
               className={styles.weatherDetectorButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}weather-detector/`, "_self");
               }}
@@ -261,6 +336,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={autoTextWriterButtonRef}
               className={styles.autoTextWriterButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}auto-text-writer/`, "_self");
               }}
@@ -270,6 +346,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={backgroundChangerButtonRef}
               className={styles.backgroundChangerButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}background-changer/`, "_self");
               }}
@@ -279,6 +356,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={carouselButtonRef}
               className={styles.carouselButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}carousel/`, "_self");
               }}
@@ -288,6 +366,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={darkModeTogglerButtonRef}
               className={styles.darkModeTogglerButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}dark-mode-toggler/`, "_self");
               }}
@@ -297,6 +376,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={hamburgerExpansionButtonRef}
               className={styles.hamburgerExpansionButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}hamburger-expansion/`, "_self");
               }}
@@ -306,6 +386,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={magnifyButtonRef}
               className={styles.magnifyButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}magnify/`, "_self");
               }}
@@ -315,6 +396,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={popupButtonRef}
               className={styles.popupButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}popup/`, "_self");
               }}
@@ -324,6 +406,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={rainingHeartsButtonRef}
               className={styles.rainingHeartsButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}raining-hearts/`, "_self");
               }}
@@ -333,6 +416,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={soundBoardButtonRef}
               className={styles.soundBoardButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}sound-board/`, "_self");
               }}
@@ -342,6 +426,7 @@ const MobileIndexPage: React.FC = () => {
             <button
               ref={toastNotificationButtonRef}
               className={styles.toastNotificationButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 window.open(`${localUrl}toast-notification/`, "_self");
               }}

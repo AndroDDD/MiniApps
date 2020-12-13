@@ -9,6 +9,8 @@ import {
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./CountdownTimerStyles.scss";
 
 // Declare new years date
@@ -85,6 +87,9 @@ const CountdownTimer: React.FC = () => {
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
     mainDisplayTitle: styles2.mainDisplayTitle,
     mainDisplayTitleView: styles2.mainDisplayTitleView,
+    headerBar: `headerBarForCountdownTimer`,
+    backToIndexPageButton: `backToIndexPageButtonForCountdownTimer`,
+    switchStylesButton: `switchStylesButtonForCountdownTimer`,
     countdownTimerImage: `countdownTimerImage`,
     countdownTimerImageStyleSupport: `countdownTimerImageStyleSupport`,
     countdownTimer: styles2.countdownTimer,
@@ -111,6 +116,11 @@ const CountdownTimer: React.FC = () => {
   const [minutes, setMinutes] = React.useState(0);
   const [seconds, setSeconds] = React.useState(0);
 
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
   // Handle time updates
   React.useEffect(() => {
     countdown({
@@ -125,6 +135,9 @@ const CountdownTimer: React.FC = () => {
     }, 1000);
   }, [incrementCount]);
 
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
+
   // Handle screen size changes
   React.useEffect(() => {
     console.log({ detectedScreenHeightChange: screenHeight });
@@ -137,6 +150,45 @@ const CountdownTimer: React.FC = () => {
     };
     setStyles(updatedHeightConfig);
   }, [screenHeight]);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `countdownTimerDisplaySupportClass`,
+          mainDisplayTitle: styles2.mainDisplayTitle,
+          countdownTimerImage: `countdownTimerImage`,
+          countdownTimerImageStyleSupport: `countdownTimerImageStyleSupport`,
+          countdownTimerSecondsTitle: styles2.countdownTimerSecondsTitle,
+          countdownTimerMinutesTitle: styles2.countdownTimerMinutesTitle,
+          countdownTimerHoursTitle: styles2.countdownTimerHoursTitle,
+          countdownTimerDaysTitle: styles2.countdownTimerDaysTitle,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `countdownTimerDisplaySupportClassv2`,
+          mainDisplayTitle: styles2.mainDisplayTitlev2,
+          countdownTimerImage: `countdownTimerImagev2`,
+          countdownTimerImageStyleSupport: `countdownTimerImageStyleSupportv2`,
+          countdownTimerSecondsTitle: styles2.countdownTimerSecondsTitlev2,
+          countdownTimerMinutesTitle: styles2.countdownTimerMinutesTitlev2,
+          countdownTimerHoursTitle: styles2.countdownTimerHoursTitlev2,
+          countdownTimerDaysTitle: styles2.countdownTimerDaysTitlev2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
 
   // Handle return view for component
   return (
@@ -155,6 +207,30 @@ const CountdownTimer: React.FC = () => {
             height={"auto"}
             className={styles.countdownTimerImageStyleSupport}
           />
+        </div>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
         </div>
         <View style={styles.mainDisplayTitleView}>
           <Text
@@ -201,6 +277,14 @@ const styles2 = StyleSheet.create({
   mainDisplayTitle: {
     textAlign: "center",
     color: "rgba(0, 255, 255, 0.3)",
+    textShadowColor: "rgba(112, 128, 144, 1)",
+    textShadowRadius: 5,
+    fontSize: 30,
+    fontWeight: "700",
+  },
+  mainDisplayTitlev2: {
+    textAlign: "center",
+    color: "gainsboro",
     textShadowColor: "rgba(112, 128, 144, 1)",
     textShadowRadius: 5,
     fontSize: 30,
@@ -299,6 +383,34 @@ const styles2 = StyleSheet.create({
   countdownTimerSecondsTitle: {
     border: "0px solid red",
     color: "crimson",
+    textAlign: "center",
+    textShadowColor: "rgba(112, 128, 144, 1)",
+    textShadowRadius: 5,
+  },
+  countdownTimerDaysTitlev2: {
+    border: "0px solid red",
+    color: "black",
+    textAlign: "center",
+    textShadowColor: "rgba(112, 128, 144, 1)",
+    textShadowRadius: 5,
+  },
+  countdownTimerHoursTitlev2: {
+    border: "0px solid red",
+    color: "black",
+    textAlign: "center",
+    textShadowColor: "rgba(112, 128, 144, 1)",
+    textShadowRadius: 5,
+  },
+  countdownTimerMinutesTitlev2: {
+    border: "0px solid red",
+    color: "black",
+    textAlign: "center",
+    textShadowColor: "rgba(112, 128, 144, 1)",
+    textShadowRadius: 5,
+  },
+  countdownTimerSecondsTitlev2: {
+    border: "0px solid red",
+    color: "black",
     textAlign: "center",
     textShadowColor: "rgba(112, 128, 144, 1)",
     textShadowRadius: 5,

@@ -9,6 +9,8 @@ import {
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./RandomQuizStyles.scss";
 
 // Declare variable holding quiz api url
@@ -73,6 +75,9 @@ const MobileRandomQuiz: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupport: { width: "100%", height: screenHeight },
     backgroundImage: { width: "100%", height: screenHeight },
+    headerBar: `headerBarForRQ`,
+    backToIndexPageButton: `backToIndexPageButtonForRQ`,
+    switchStylesButton: `switchStylesButtonForRQ`,
     mainHeader: styles2.mainHeader,
     mainHeaderTitleView: styles2.mainHeaderTitleView,
     mainHeaderTitle: styles2.mainHeaderTitle,
@@ -158,6 +163,14 @@ const MobileRandomQuiz: React.FC = () => {
   );
   // Declare variable tracking quiz score
   const [quizScore, setQuizScore] = React.useState(0);
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Handle wisdom quote retrieval
   React.useEffect(() => {
@@ -417,7 +430,14 @@ const MobileRandomQuiz: React.FC = () => {
         setQuizView(tempWisdomViewHold);
       }
     }
-  }, [quiz, wisdomData, currentQuestion, answerSubmitButtonView, quizPage]);
+  }, [
+    quiz,
+    wisdomData,
+    currentQuestion,
+    answerSubmitButtonView,
+    quizPage,
+    styles,
+  ]);
 
   // Handle submit button data refresh
   React.useEffect(() => {
@@ -480,19 +500,105 @@ const MobileRandomQuiz: React.FC = () => {
         </button>
       </View>
     );
-  }, [quiz, answerHold]);
+  }, [quiz, answerHold, styles]);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainHeaderTitle: styles2.mainHeaderTitle,
+          quizQuestionTitleText: styles2.quizQuestionTitleText,
+          quizAnswersView: styles2.quizAnswersView,
+          quizAnswerText: styles2.quizAnswerText,
+          quizAnswerSubmitButtonView: styles2.quizAnswerSubmitButtonView,
+          quizAnswerSubmitButton: `quizAnswerSubmitButton`,
+          quizSummaryHeader: styles2.quizSummaryHeader,
+          quizSummaryDifficultyText: styles2.quizSummaryDifficultyText,
+          quizSummaryNumOfQuestionsText: styles2.quizSummaryNumOfQuestionsText,
+          quizSummaryScore: styles2.quizSummaryScore,
+          quizSummaryCategoriesView: styles2.quizSummaryCategoriesView,
+          quizSummaryCategoryText: styles2.quizSummaryCategoryText,
+          newQuizButton: `newQuizButton`,
+          wisdomView: styles2.wisdomView,
+          wisdomQuoteText: styles2.wisdomQuoteText,
+          wisdomAuthorText: styles2.wisdomAuthorText,
+          returnToQuizButton: `returnToQuizButton`,
+          genericText: styles2.genericText,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainHeaderTitle: styles2.mainHeaderTitlev2,
+          quizQuestionTitleText: styles2.quizQuestionTitleTextv2,
+          quizAnswersView: styles2.quizAnswersViewv2,
+          quizAnswerText: styles2.quizAnswerTextv2,
+          quizAnswerSubmitButtonView: styles2.quizAnswerSubmitButtonViewv2,
+          quizAnswerSubmitButton: `quizAnswerSubmitButtonv2`,
+          quizSummaryHeader: styles2.quizSummaryHeaderv2,
+          quizSummaryDifficultyText: styles2.quizSummaryDifficultyTextv2,
+          quizSummaryNumOfQuestionsText:
+            styles2.quizSummaryNumOfQuestionsTextv2,
+          quizSummaryScore: styles2.quizSummaryScorev2,
+          quizSummaryCategoriesView: styles2.quizSummaryCategoriesViewv2,
+          quizSummaryCategoryText: styles2.quizSummaryCategoryTextv2,
+          newQuizButton: `newQuizButtonv2`,
+          wisdomView: styles2.wisdomViewv2,
+          wisdomQuoteText: styles2.wisdomQuoteTextv2,
+          wisdomAuthorText: styles2.wisdomAuthorTextv2,
+          returnToQuizButton: `returnToQuizButtonv2`,
+          genericText: styles2.genericTextv2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
 
   // Handle component return view
   return (
     <ImageBackground
       source={{
         uri:
-          "https://i.pinimg.com/originals/5c/5f/0f/5c5f0fecc214f310b1b4e0a83ebd3d2a.jpg",
+          kindOfStyle === `colorful`
+            ? "https://i.pinimg.com/originals/5c/5f/0f/5c5f0fecc214f310b1b4e0a83ebd3d2a.jpg"
+            : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQYV2O4c+fOfwAIwAOUHj6BoQAAAABJRU5ErkJggg==",
       }}
       imageStyle={{ resizeMode: "cover" }}
       style={styles.backgroundImage}
     >
       <View style={[styles.mainDisplay, styles.mainDisplaySupport]}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <View style={styles.mainHeader}>
           <View style={styles.mainHeaderTitleView}>
             <Text style={styles.mainHeaderTitle}>{`{-:|BRAIN JERKER|:-}`}</Text>
@@ -516,7 +622,7 @@ const styles2 = StyleSheet.create({
     top: "0%",
     flexDirection: "row",
     width: "100%",
-    height: "10%",
+    height: "7%",
   },
   mainHeaderTitleView: {
     position: "relative",
@@ -528,6 +634,15 @@ const styles2 = StyleSheet.create({
     color: "rgba(0, 15, 85, 1)",
     textAlign: "center",
     textShadowColor: "rgba(128, 0, 0, 1)",
+    textShadowRadius: 5,
+    fontSize: 30,
+    fontWeight: "700",
+    fontFamily: "Consolas",
+  },
+  mainHeaderTitlev2: {
+    color: "black",
+    textAlign: "center",
+    textShadowColor: "silver",
     textShadowRadius: 5,
     fontSize: 30,
     fontWeight: "700",
@@ -553,6 +668,17 @@ const styles2 = StyleSheet.create({
     fontSize: 25,
     fontWeight: "700",
   },
+  quizQuestionTitleTextv2: {
+    paddingLeft: "10px",
+    paddingRight: "10px",
+    paddingBottom: "5px",
+    color: "black",
+    textShadowColor: "silver",
+    textShadowRadius: 5,
+    fontFamily: "monospace",
+    fontSize: 25,
+    fontWeight: "700",
+  },
   quizAnswersView: {
     width: "100%",
     height: "75%",
@@ -563,6 +689,20 @@ const styles2 = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomStyle: "solid",
     backgroundColor: "rgba(231, 201, 169, 0.75)",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    overflowX: "scroll,",
+  },
+  quizAnswersViewv2: {
+    width: "100%",
+    height: "75%",
+    borderTopColor: "black",
+    borderTopWidth: 1,
+    borderTopStyle: "solid",
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    borderBottomStyle: "solid",
+    backgroundColor: "gainsboro",
     justifyContent: "space-evenly",
     alignItems: "center",
     overflowX: "scroll,",
@@ -583,10 +723,26 @@ const styles2 = StyleSheet.create({
     fontSize: 25,
     fontWeight: "700",
   },
+  quizAnswerTextv2: {
+    paddingBottom: "5px",
+    color: "black",
+    textShadowColor: "silver",
+    textShadowRadius: 5,
+    fontFamily: "monospace",
+    fontSize: 25,
+    fontWeight: "700",
+  },
   quizAnswerSubmitButtonView: {
     width: "100%",
     height: "10%",
     borderTopColor: "cyan",
+    borderTopWidth: 1,
+    borderTopStyle: "solid",
+  },
+  quizAnswerSubmitButtonViewv2: {
+    width: "100%",
+    height: "10%",
+    borderTopColor: "black",
     borderTopWidth: 1,
     borderTopStyle: "solid",
   },
@@ -604,14 +760,39 @@ const styles2 = StyleSheet.create({
     borderTopWidth: 1,
     borderTopStyle: "solid",
   },
+  quizSummaryHeaderv2: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    height: "5%",
+    paddingLeft: "2%",
+    paddingRight: "2%",
+    backgroundColor: "gainsboro",
+    borderTopColor: "black",
+    borderTopWidth: 1,
+    borderTopStyle: "solid",
+  },
   quizSummaryDifficultyText: {
     color: "rgba(112, 128, 144, 1)",
     fontSize: 15,
     fontWeight: "600",
     fontFamily: "Consolas",
   },
+  quizSummaryDifficultyTextv2: {
+    color: "black",
+    fontSize: 15,
+    fontWeight: "600",
+    fontFamily: "Consolas",
+  },
   quizSummaryNumOfQuestionsText: {
     color: "rgba(112, 128, 144, 1)",
+    fontSize: 15,
+    fontWeight: "600",
+    fontFamily: "Consolas",
+  },
+  quizSummaryNumOfQuestionsTextv2: {
+    color: "black",
     fontSize: 15,
     fontWeight: "600",
     fontFamily: "Consolas",
@@ -625,6 +806,14 @@ const styles2 = StyleSheet.create({
   quizSummaryScore: {
     color: "rgba(0, 255, 255, 1)",
     textShadowColor: "rgba(0, 15, 85, 1)",
+    textShadowRadius: 3,
+    fontSize: 100,
+    fontWeight: "800",
+    fontFamily: "Consolas",
+  },
+  quizSummaryScorev2: {
+    color: "black",
+    textShadowColor: "silver",
     textShadowRadius: 3,
     fontSize: 100,
     fontWeight: "800",
@@ -644,11 +833,34 @@ const styles2 = StyleSheet.create({
     height: "20%",
     overflow: "scroll",
   },
+  quizSummaryCategoriesViewv2: {
+    paddingLeft: "2%",
+    paddingRight: "2%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    borderBottomStyle: "solid",
+    backgroundColor: "gainsboro",
+    width: "100%",
+    height: "20%",
+    overflow: "scroll",
+  },
   quizSummaryCategoryText: {
     marginTop: "5px",
     marginLeft: "5px",
     marginRight: "5px",
     color: "rgba(112, 128, 144, 1)",
+    fontSize: 10,
+    fontWeight: "400",
+    fontFamily: "Consolas",
+  },
+  quizSummaryCategoryTextv2: {
+    marginTop: "5px",
+    marginLeft: "5px",
+    marginRight: "5px",
+    color: "black",
     fontSize: 10,
     fontWeight: "400",
     fontFamily: "Consolas",
@@ -668,9 +880,28 @@ const styles2 = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(220, 220, 220, 0.5)",
   },
+  wisdomViewv2: {
+    width: "100%",
+    height: "90%",
+    paddingLeft: "10px",
+    paddingRight: "10px",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: "gainsboro",
+  },
   wisdomQuoteText: {
     color: "rgba(47, 79, 79, 1)",
     textShadowColor: "rgba(112, 128, 144, 1)",
+    textShadowRadius: 2,
+    fontFamily: "monospace",
+    fontSize: 35,
+    fontWeight: "700",
+    lineHeight: 45,
+    letterSpacing: 5,
+  },
+  wisdomQuoteTextv2: {
+    color: "black",
+    textShadowColor: "silver",
     textShadowRadius: 2,
     fontFamily: "monospace",
     fontSize: 35,
@@ -684,12 +915,22 @@ const styles2 = StyleSheet.create({
     fontSize: 25,
     fontWeight: "600",
   },
+  wisdomAuthorTextv2: {
+    color: "black",
+    fontFamily: "monospace",
+    fontSize: 25,
+    fontWeight: "600",
+  },
   returnToQuizButtonView: {
     width: "100%",
     height: "10%",
   },
   genericText: {
     color: "slategrey",
+    textAlign: "center",
+  },
+  genericTextv2: {
+    color: "black",
     textAlign: "center",
   },
 });

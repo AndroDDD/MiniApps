@@ -15,6 +15,11 @@ import { localUrl } from "../../../../routes/routerBlock";
 import "./IndexPageStyles.scss";
 
 const IndexPage: React.FC = () => {
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
   // Handle screen size detection and changes
   const [screenHeight, setScreenHeight] = React.useState(() => {
     let fetchedScreenHeight = Dimensions.get("window").height;
@@ -30,10 +35,12 @@ const IndexPage: React.FC = () => {
   });
 
   // Declare stylesheet for manipulation
-  const [styles, setStyles] = React.useState({
+  const [styles, setStyles] = React.useState<Record<string, any>>({
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `indexPageDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBar`,
+    switchStylesButton: `switchStylesButton`,
     indexDisplay: styles2.indexDisplay,
     indexDisplayTitleText: styles2.indexDisplayTitleText,
     artPageButton: `artPageButton`,
@@ -55,11 +62,15 @@ const IndexPage: React.FC = () => {
     popupButton: `popupButtonv2`,
     rainingHeartsButton: `rainingHeartsButton`,
     soundBoardButton: `soundBoardButton`,
-    toastNotificationButton: `toastNotificationButton`,
+    toastNotificationButton: `toastNotificationButtonv2`,
+    basicButtonStyle: {},
   });
 
   // Declare ref for main display
   const mainDisplayRef = useRef(null);
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = useRef<any>(null);
 
   // Declare refs for buttons
   let artPageButtonRef = useRef<HTMLButtonElement>(null);
@@ -144,6 +155,38 @@ const IndexPage: React.FC = () => {
     );
   }, []);
 
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `indexPageDisplaySupportClass`,
+          indexDisplayTitleText: styles2.indexDisplayTitleText,
+          basicButtonStyle: {},
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `indexPageDisplaySupportClassv2`,
+          indexDisplayTitleText: styles2.basicIndexDisplayTitleText,
+          basicButtonStyle: {
+            color: `rgb(213, 214, 215)`,
+            backgroundColor: `black`,
+          },
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   return (
     <div
       ref={mainDisplayRef}
@@ -151,11 +194,30 @@ const IndexPage: React.FC = () => {
       style={styles.mainDisplaySupportStyle}
     >
       <View style={styles.mainDisplay}>
+        <div className={styles.headerBar}>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <View style={styles.indexDisplay}>
           <Text style={styles.indexDisplayTitleText}>{`MINI APPS INDEX`}</Text>
           <button
             ref={artPageButtonRef}
-            className={styles.artPageButton}
+            className={`${styles.artPageButton}`}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}art-board/`, "_self");
             }}
@@ -165,6 +227,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={cookbookButtonRef}
             className={styles.cookbookButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}cookbook/`, "_self");
             }}
@@ -174,6 +237,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={countdownTimerButtonRef}
             className={styles.countdownTimerButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}countdown-timer/`, "_self");
             }}
@@ -183,6 +247,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={githubProfilesButtonRef}
             className={styles.githubProfilesButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}github-profiles/`, "_self");
             }}
@@ -192,6 +257,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={moviesLibraryButtonRef}
             className={styles.moviesLibraryButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}movies-library/`, "_self");
             }}
@@ -201,6 +267,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={notepadButtonRef}
             className={styles.notepadButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}notepad/`, "_self");
             }}
@@ -210,6 +277,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={passwordGeneratorButtonRef}
             className={styles.passwordGeneratorButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}password-generator/`, "_self");
             }}
@@ -219,6 +287,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={randomQuizButtonRef}
             className={styles.randomQuizButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}random-quiz/`, "_self");
             }}
@@ -228,6 +297,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={todoListButtonRef}
             className={styles.todoListButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}todo-list/`, "_self");
             }}
@@ -237,6 +307,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={weatherDetectorButtonRef}
             className={styles.weatherDetectorButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}weather-detector/`, "_self");
             }}
@@ -246,6 +317,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={autoTextWriterButtonRef}
             className={styles.autoTextWriterButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}auto-text-writer/`, "_self");
             }}
@@ -255,6 +327,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={backgroundChangerButtonRef}
             className={styles.backgroundChangerButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}background-changer/`, "_self");
             }}
@@ -264,6 +337,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={carouselButtonRef}
             className={styles.carouselButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}carousel/`, "_self");
             }}
@@ -273,6 +347,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={darkModeTogglerButtonRef}
             className={styles.darkModeTogglerButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}dark-mode-toggler/`, "_self");
             }}
@@ -282,6 +357,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={hamburgerExpansionButtonRef}
             className={styles.hamburgerExpansionButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}hamburger-expansion/`, "_self");
             }}
@@ -291,6 +367,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={magnifyButtonRef}
             className={styles.magnifyButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}magnify/`, "_self");
             }}
@@ -300,6 +377,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={popupButtonRef}
             className={styles.popupButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}popup/`, "_self");
             }}
@@ -309,6 +387,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={rainingHeartsButtonRef}
             className={styles.rainingHeartsButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}raining-hearts/`, "_self");
             }}
@@ -318,6 +397,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={soundBoardButtonRef}
             className={styles.soundBoardButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}sound-board/`, "_self");
             }}
@@ -327,6 +407,7 @@ const IndexPage: React.FC = () => {
           <button
             ref={toastNotificationButtonRef}
             className={styles.toastNotificationButton}
+            style={styles.basicButtonStyle}
             onClick={() => {
               window.open(`${localUrl}toast-notification/`, "_self");
             }}
@@ -341,9 +422,7 @@ const IndexPage: React.FC = () => {
 
 const styles2 = StyleSheet.create({
   mainDisplay: {
-    paddingTop: "25px",
     paddingBottom: "25px",
-    margin: "auto",
     width: "100%",
     height: "100%",
     justifyContent: "flex-start",
@@ -368,6 +447,20 @@ const styles2 = StyleSheet.create({
     textShadowColor: "rgba(255, 165, 0, 0.95)",
     textShadowRadius: 10,
     fontFamily: "Marker felt, fantasy",
+    fontWeight: "700",
+    fontSize: 20,
+    letterSpacing: 8,
+  },
+  basicIndexDisplayTitleText: {
+    width: "100%",
+    paddingTop: "10px",
+    paddingBottom: "12px",
+    backgroundColor: "black",
+    color: "gainsboro",
+    textAlign: "center",
+    textShadowColor: "rgba(255, 165, 0, 0.95)",
+    textShadowRadius: 10,
+    fontFamily: "monospace",
     fontWeight: "700",
     fontSize: 20,
     letterSpacing: 8,

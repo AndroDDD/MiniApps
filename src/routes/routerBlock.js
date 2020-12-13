@@ -33,7 +33,7 @@ import MobileArtPage from "../features/Interfaces/Mobile/ArtPage/ArtPage";
 import MobileCookbook from "../features/Interfaces/Mobile/Cookbook/Cookbook";
 import MobileCountdownTimer from "../features/Interfaces/Mobile/CountdownTimer/CountdownTimer";
 import MobileGitHubProfiles from "../features/Interfaces/Mobile/GitHubProfiles/GitHubProfiles";
-import {MobileNotePad} from "../features/Interfaces/Mobile/NotePad/NotePad";
+import { MobileNotePad } from "../features/Interfaces/Mobile/NotePad/NotePad";
 import MobilePasswordGenerator from "../features/Interfaces/Mobile/PasswordGenerator/PasswordGenerator";
 import MobileRandomQuiz from "../features/Interfaces/Mobile/RandomQuiz/RandomQuiz";
 import MobileTodoList from "../features/Interfaces/Mobile/TodoList/TodoList";
@@ -61,8 +61,9 @@ function checkIfMobileBrowser() {
 
 export const isMobile = checkIfMobileBrowser();
 
-export const localUrl = isMobile ? `http://192.168.1.144:3000/`: `http://localhost:3000/`;
-
+export const localUrl = isMobile
+  ? `http://192.168.1.144:3000/`
+  : `http://localhost:3000/`;
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   return (
@@ -80,6 +81,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 };
 
 const RoutesComposed = () => {
+  // Declare variables holding session authorization information
   const token = localStorage.getItem("token");
   const expirationDate = Number(localStorage.getItem("expirationDate"));
   const currentTime = new Date().getTime();
@@ -102,7 +104,13 @@ const RoutesComposed = () => {
             <Route
               exact
               path="/"
-              component={isMobile ? MobileIndexPage : IndexPage}
+              component={() => {
+                if (isMobile) {
+                  return <MobileIndexPage />;
+                } else {
+                  return <IndexPage />;
+                }
+              }}
             />
             <Route
               exact
@@ -131,7 +139,7 @@ const RoutesComposed = () => {
             />
             <Route
               exact
-              path="/portSite/mini-appsv2/movies-library"
+              path="/movies-library"
               component={isMobile ? MoviesLibrary : MoviesLibrary}
             />
             <Route
@@ -151,7 +159,7 @@ const RoutesComposed = () => {
             />
             <Route
               exact
-              path="/portSite/mini-appsv2/weather-detector"
+              path="/weather-detector"
               component={isMobile ? WeatherDetector : WeatherDetector}
             />
             <Route
@@ -169,40 +177,36 @@ const RoutesComposed = () => {
               path="/auto-text-writer"
               component={isMobile ? AutoTextWriter : AutoTextWriter}
             />
-            <Route
-              exact
-              path="/popup"
-              component={isMobile ? Popup: Popup}
-            />
+            <Route exact path="/popup" component={isMobile ? Popup : Popup} />
             <Route
               exact
               path="/raining-hearts"
-              component={isMobile ? RainingHearts: RainingHearts}
+              component={isMobile ? RainingHearts : RainingHearts}
             />
             <Route
               exact
               path="/background-changer"
-              component={isMobile ? BackgroundChanger: BackgroundChanger}
+              component={isMobile ? BackgroundChanger : BackgroundChanger}
             />
             <Route
               exact
               path="/dark-mode-toggler"
-              component={isMobile ? DarkModeToggler:DarkModeToggler}
+              component={isMobile ? DarkModeToggler : DarkModeToggler}
             />
             <Route
               exact
               path="/carousel"
-              component={isMobile ? Carousel: Carousel}
+              component={isMobile ? Carousel : Carousel}
             />
             <Route
               exact
               path="/sound-board"
-              component={isMobile ? SoundBoard: SoundBoard}
+              component={isMobile ? SoundBoard : SoundBoard}
             />
             <Route
               exact
               path="/magnify"
-              component={isMobile ? Magnify: Magnify}
+              component={isMobile ? Magnify : Magnify}
             />
             <ProtectedRoute
               path="/protected"

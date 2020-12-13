@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./AutoTextWriterStyles.scss";
 
 const AutoTextWriter: React.FC = () => {
@@ -38,6 +40,9 @@ const AutoTextWriter: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `mainATWDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForATW`,
+    backToIndexPageButton: `backToIndexPageButtonForATW`,
+    switchStylesButton: `switchStylesButtonForATW`,
     genericText: styles2.genericText,
   });
 
@@ -47,6 +52,14 @@ const AutoTextWriter: React.FC = () => {
   );
   const [textDisplayed, setTextDisplayed] = React.useState(``);
   const [currentTextStringIndex, setCurrentTextStringIndex] = React.useState(0);
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Handle updating of text
   React.useEffect(() => {
@@ -66,6 +79,33 @@ const AutoTextWriter: React.FC = () => {
     }, 500);
   }, [currentTextStringIndex]);
 
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainATWDisplaySupportClass`,
+          genericText: styles2.genericText,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainATWDisplaySupportClassv2`,
+          genericText: styles2.genericTextv2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   // Handle component return view
   return (
     <div
@@ -73,6 +113,30 @@ const AutoTextWriter: React.FC = () => {
       style={styles.mainDisplaySupportStyle}
     >
       <View style={styles.mainDisplay}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <Text style={styles.genericText}>{textDisplayed}</Text>
       </View>
     </div>
@@ -99,6 +163,22 @@ const styles2 = StyleSheet.create({
     color: "rgba(231, 201, 169, 1)",
     textAlign: "center",
     textShadowColor: "rgba(0, 255, 255, 0.9)",
+    textShadowRadius: 5,
+    fontFamily: "cursive",
+    fontSize: 40,
+    fontWeight: "700",
+  },
+  genericTextv2: {
+    paddingLeft: "10px",
+    paddingRight: "10px",
+    borderColor: "gainsboro",
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderRadius: 10,
+    backgroundColor: "black",
+    color: "gainsboro",
+    textAlign: "center",
+    textShadowColor: "rgba(112, 128, 144, 0.9)",
     textShadowRadius: 5,
     fontFamily: "monospace",
     fontSize: 40,

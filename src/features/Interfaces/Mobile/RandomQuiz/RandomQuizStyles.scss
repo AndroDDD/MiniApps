@@ -1,7 +1,69 @@
+.headerBarForRQ {
+  width: 100%;
+  height: 3%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: black;
+  border-bottom: 1px solid rgba(112, 128, 144, 1);
+}
+
+.backToIndexPageButtonForRQ {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid honeydew;
+  color: honeydew;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.backToIndexPageButtonForRQ:hover {
+  background-color: slategrey;
+}
+
+.switchStylesButtonForRQ {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 7px;
+  padding-right: 3px;
+  padding-left: 3px;
+  padding-bottom: 2px;
+  border: 1px solid goldenrod;
+  color: goldenrod;
+  background-color: black;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+.switchStylesButtonForRQ:hover {
+  background-color: slategrey;
+}
+
 .quizAnswerSubmitButton {
   height: 100%;
   color: red;
   background-color: rgba(231, 201, 169, 0.95);
+  font-family: monospace;
+}
+
+.quizAnswerSubmitButtonv2 {
+  height: 100%;
+  color: black;
+  background-color: gainsboro;
   font-family: monospace;
 }
 
@@ -15,9 +77,23 @@
   font-family: monospace;
 }
 
+.newQuizButtonv2 {
+  height: 100%;
+  color: black;
+  background-color: gainsboro;
+  font-family: monospace;
+}
+
 .returnToQuizButton {
   height: 100%;
   color: cyan;
   background-color: rgba(231, 201, 169, 0.95);
+  font-family: monospace;
+}
+
+.returnToQuizButtonv2 {
+  height: 100%;
+  color: black;
+  background-color: gainsboro;
   font-family: monospace;
 }

@@ -9,6 +9,8 @@ import {
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./MobileArtPageStyles.scss";
 
 const MobileArtPage: React.FC = () => {
@@ -44,18 +46,11 @@ const MobileArtPage: React.FC = () => {
         ...styles,
         mainDisplaySupport: {
           ...styles.mainDisplaySupport,
-          height: Dimensions.get("window").height,
-        },
-        backgroundImage: {
-          ...styles.backgroundImage,
-          height: Dimensions.get("window").height,
+          height: screenHeight,
         },
         canvasDisplay: {
           ...styles.canvasDisplay,
-          height: Dimensions.get("window").height,
-        },
-        toolkitSupport: {
-          ...styles.toolkitSupport,
+          height: screenHeight,
         },
       };
       return updatedSizes;
@@ -66,12 +61,15 @@ const MobileArtPage: React.FC = () => {
   const [styles, setStyles] = React.useState({
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupport: { width: "100%", height: screenHeight },
+    headerBar: `headerBarForMobileArtPage`,
+    backToIndexPageButton: `backToIndexPageButtonForMobileArtPage`,
+    switchStylesButton: `switchStylesButtonForMobileArtPage`,
     canvasDisplay: {
       width: "100%",
       height: screenHeight,
       backgroundColor: "rgba(0, 0, 0, 1)",
     },
-    backgroundImage: { width: "100%", height: screenHeight },
+    backgroundImage: styles2.backgroundImage,
     toolkit: styles2.toolkit,
     toolkitSupport: { width: "100%" },
     brushButton: `brushButton`,
@@ -107,6 +105,14 @@ const MobileArtPage: React.FC = () => {
     x: 0,
     y: 0,
   });
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Declare variable tracking drawing status
   const [isDrawing, setIsDrawing] = React.useState(false);
@@ -172,11 +178,103 @@ const MobileArtPage: React.FC = () => {
       canvasCtx.clearRect(
         0,
         0,
-        styles.canvasDisplay.width,
-        styles.canvasDisplay.height
+        canvasRef.current.offsetWidth,
+        canvasRef.current.offsetHeight
       );
     }
   }, [drawTool]);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      if (drawTool === `brush`) {
+        brushButtonRef.current.style.backgroundColor = "rgba(0, 255, 255, 0.5)";
+        brushButtonRef.current.style.color = "whitesmoke";
+
+        // Handle other toolkit buttons style changes
+        eraserButtonRef.current.style.backgroundColor = "rgba(255, 115, 0, 1)";
+        eraserButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+        resetButtonRef.current.style.backgroundColor = "rgba(255, 0, 0, 1)";
+        resetButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+      } else if (drawTool === `eraser`) {
+        // Handle current button style change
+        eraserButtonRef.current.style.backgroundColor =
+          "rgba(255, 115, 0, 0.5)";
+        eraserButtonRef.current.style.color = "whitesmoke";
+
+        // Handle other toolkit buttons style changes
+        brushButtonRef.current.style.backgroundColor = "cyan";
+        brushButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+        resetButtonRef.current.style.backgroundColor = "rgba(255, 0, 0, 1)";
+        resetButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+      } else if (drawTool === `reset`) {
+        // Handle current button style change
+        resetButtonRef.current.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+        resetButtonRef.current.style.color = "whitesmoke";
+
+        // Handle other toolkit buttons style changes
+        brushButtonRef.current.style.backgroundColor = "cyan";
+        brushButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+        eraserButtonRef.current.style.backgroundColor = "rgba(255, 115, 0, 1)";
+        eraserButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          brushButton: `brushButton`,
+          eraserButton: `eraserButton`,
+          resetButton: `resetButton`,
+          genericText: styles2.genericText,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      if (drawTool === `brush`) {
+        brushButtonRef.current.style.backgroundColor = "gainsboro";
+        brushButtonRef.current.style.color = "black";
+
+        // Handle other toolkit buttons style changes
+        eraserButtonRef.current.style.backgroundColor = "black";
+        eraserButtonRef.current.style.color = "gainsboro";
+        resetButtonRef.current.style.backgroundColor = "black";
+        resetButtonRef.current.style.color = "gainsboro";
+      } else if (drawTool === `eraser`) {
+        // Handle current button style change
+        eraserButtonRef.current.style.backgroundColor = "gainsboro";
+        eraserButtonRef.current.style.color = "black";
+
+        // Handle other toolkit buttons style changes
+        brushButtonRef.current.style.backgroundColor = "black";
+        brushButtonRef.current.style.color = "gainsboro";
+        resetButtonRef.current.style.backgroundColor = "black";
+        resetButtonRef.current.style.color = "gainsboro";
+      } else if (drawTool === `reset`) {
+        // Handle current button style change
+        resetButtonRef.current.style.backgroundColor = "gainsboro";
+        resetButtonRef.current.style.color = "black";
+
+        // Handle other toolkit buttons style changes
+        brushButtonRef.current.style.backgroundColor = "black";
+        brushButtonRef.current.style.color = "gainsboro";
+        eraserButtonRef.current.style.backgroundColor = "black";
+        eraserButtonRef.current.style.color = "gainsboro";
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          brushButton: `brushButtonv2`,
+          eraserButton: `eraserButtonv2`,
+          resetButton: `resetButtonv2`,
+          genericText: styles2.genericTextv2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
 
   // Handle component return view
   return (
@@ -189,6 +287,30 @@ const MobileArtPage: React.FC = () => {
       style={styles.backgroundImage}
     >
       <View style={[styles.mainDisplay, styles.mainDisplaySupport]}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <Text
           style={styles.genericText}
         >{`drawing: ${isDrawing}, x: ${Math.floor(
@@ -251,17 +373,28 @@ const MobileArtPage: React.FC = () => {
                 return `brush`;
               });
               // Handle current button style change
-              brushButtonRef.current.style.backgroundColor =
-                "rgba(0, 255, 255, 0.5)";
-              brushButtonRef.current.style.color = "whitesmoke";
+              if (kindOfStyle === `colorful`) {
+                brushButtonRef.current.style.backgroundColor =
+                  "rgba(0, 255, 255, 0.5)";
+                brushButtonRef.current.style.color = "whitesmoke";
 
-              // Handle other toolkit buttons style changes
-              eraserButtonRef.current.style.backgroundColor =
-                "rgba(255, 115, 0, 1)";
-              eraserButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
-              resetButtonRef.current.style.backgroundColor =
-                "rgba(255, 0, 0, 1)";
-              resetButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+                // Handle other toolkit buttons style changes
+                eraserButtonRef.current.style.backgroundColor =
+                  "rgba(255, 115, 0, 1)";
+                eraserButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+                resetButtonRef.current.style.backgroundColor =
+                  "rgba(255, 0, 0, 1)";
+                resetButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+              } else if (kindOfStyle === `plain`) {
+                brushButtonRef.current.style.backgroundColor = "gainsboro";
+                brushButtonRef.current.style.color = "black";
+
+                // Handle other toolkit buttons style changes
+                eraserButtonRef.current.style.backgroundColor = "black";
+                eraserButtonRef.current.style.color = "gainsboro";
+                resetButtonRef.current.style.backgroundColor = "black";
+                resetButtonRef.current.style.color = "gainsboro";
+              }
             }}
           >{`BRUSH`}</button>
           <button
@@ -271,17 +404,29 @@ const MobileArtPage: React.FC = () => {
               setDrawTool(() => {
                 return `eraser`;
               });
-              // Handle current button style change
-              eraserButtonRef.current.style.backgroundColor =
-                "rgba(255, 115, 0, 0.5)";
-              eraserButtonRef.current.style.color = "whitesmoke";
+              if (kindOfStyle === `colorful`) {
+                // Handle current button style change
+                eraserButtonRef.current.style.backgroundColor =
+                  "rgba(255, 115, 0, 0.5)";
+                eraserButtonRef.current.style.color = "whitesmoke";
 
-              // Handle other toolkit buttons style changes
-              brushButtonRef.current.style.backgroundColor = "cyan";
-              brushButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
-              resetButtonRef.current.style.backgroundColor =
-                "rgba(255, 0, 0, 1)";
-              resetButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+                // Handle other toolkit buttons style changes
+                brushButtonRef.current.style.backgroundColor = "cyan";
+                brushButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+                resetButtonRef.current.style.backgroundColor =
+                  "rgba(255, 0, 0, 1)";
+                resetButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+              } else if (kindOfStyle === `plain`) {
+                // Handle current button style change
+                eraserButtonRef.current.style.backgroundColor = "gainsboro";
+                eraserButtonRef.current.style.color = "black";
+
+                // Handle other toolkit buttons style changes
+                brushButtonRef.current.style.backgroundColor = "black";
+                brushButtonRef.current.style.color = "gainsboro";
+                resetButtonRef.current.style.backgroundColor = "black";
+                resetButtonRef.current.style.color = "gainsboro";
+              }
             }}
           >{`ERASER`}</button>
           <button
@@ -291,17 +436,29 @@ const MobileArtPage: React.FC = () => {
               setDrawTool(() => {
                 return `reset`;
               });
-              // Handle current button style change
-              resetButtonRef.current.style.backgroundColor =
-                "rgba(255, 0, 0, 0.5)";
-              resetButtonRef.current.style.color = "whitesmoke";
+              if (kindOfStyle === `colorful`) {
+                // Handle current button style change
+                resetButtonRef.current.style.backgroundColor =
+                  "rgba(255, 0, 0, 0.5)";
+                resetButtonRef.current.style.color = "whitesmoke";
 
-              // Handle other toolkit buttons style changes
-              brushButtonRef.current.style.backgroundColor = "cyan";
-              brushButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
-              eraserButtonRef.current.style.backgroundColor =
-                "rgba(255, 115, 0, 1)";
-              eraserButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+                // Handle other toolkit buttons style changes
+                brushButtonRef.current.style.backgroundColor = "cyan";
+                brushButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+                eraserButtonRef.current.style.backgroundColor =
+                  "rgba(255, 115, 0, 1)";
+                eraserButtonRef.current.style.color = "rgba(112, 128, 144, 1)";
+              } else if (kindOfStyle === `plain`) {
+                // Handle current button style change
+                resetButtonRef.current.style.backgroundColor = "gainsboro";
+                resetButtonRef.current.style.color = "black";
+
+                // Handle other toolkit buttons style changes
+                brushButtonRef.current.style.backgroundColor = "black";
+                brushButtonRef.current.style.color = "gainsboro";
+                eraserButtonRef.current.style.backgroundColor = "black";
+                eraserButtonRef.current.style.color = "gainsboro";
+              }
             }}
           >{`RESET`}</button>
         </View>
@@ -312,10 +469,15 @@ const MobileArtPage: React.FC = () => {
 
 // Declare stylesheet for react-native components
 const styles2 = StyleSheet.create({
+  backgroundImage: {
+    width: "100%",
+    height: "100%",
+    overflow: "hidden",
+  },
   mainDisplay: {
     width: "100%",
     height: "100%",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   toolkit: {
@@ -326,7 +488,14 @@ const styles2 = StyleSheet.create({
   },
   genericText: {
     position: "absolute",
+    top: "35px",
     color: "cyan",
+    textAlign: "center",
+  },
+  genericTextv2: {
+    position: "absolute",
+    top: "35px",
+    color: "silver",
     textAlign: "center",
   },
 });

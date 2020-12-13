@@ -4,6 +4,8 @@ import { gsap } from "gsap";
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./HamburgerExpansionStyles.scss";
 
 const HamburgerExpansion: React.FC = () => {
@@ -38,6 +40,9 @@ const HamburgerExpansion: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `mainHEDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForHED`,
+    backToIndexPageButton: `backToIndexPageButtonForHED`,
+    switchStylesButton: `switchStylesButtonForHED`,
     hamburgerExpansionDisplay: `hamburgerExpansionDisplay`,
     hamburgerIngredientsDisplay: `hamburgerIngredientsDisplay`,
     hamburgerIngredientsListDisplay: `hamburgerIngredientsListDisplay`,
@@ -52,6 +57,14 @@ const HamburgerExpansion: React.FC = () => {
   ] = React.useState(() => {
     return false;
   });
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Declare gsap ref
   let gsapRef = React.useRef<any>();
@@ -89,12 +102,71 @@ const HamburgerExpansion: React.FC = () => {
     }
   }, [isIngredientsDisplayOpen]);
 
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainHEDisplaySupportClass`,
+          hamburgerExpansionDisplay: `hamburgerExpansionDisplay`,
+          hamburgerIngredientsDisplay: `hamburgerIngredientsDisplay`,
+          hamburgerIngredientsListDisplay: `hamburgerIngredientsListDisplay`,
+          hamburgerButtonDisplay: `hamburgerButtonDisplay`,
+          hamburgerButtonIcon: `hamburgerButtonIcon`,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainHEDisplaySupportClassv2`,
+          hamburgerExpansionDisplay: `hamburgerExpansionDisplayv2`,
+          hamburgerIngredientsDisplay: `hamburgerIngredientsDisplayv2`,
+          hamburgerIngredientsListDisplay: `hamburgerIngredientsListDisplayv2`,
+          hamburgerButtonDisplay: `hamburgerButtonDisplayv2`,
+          hamburgerButtonIcon: `hamburgerButtonIconv2`,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   return (
     <div
       className={styles.mainDisplaySupportClass}
       style={styles.mainDisplaySupportStyle}
     >
       <View style={styles.mainDisplay}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <div className={styles.hamburgerExpansionDisplay}>
           <div
             ref={hamburgerIngredientsDisplayRef}
@@ -145,7 +217,7 @@ const styles2 = StyleSheet.create({
     margin: "auto",
     width: "100%",
     height: "100%",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     overflow: "hidden",
   },

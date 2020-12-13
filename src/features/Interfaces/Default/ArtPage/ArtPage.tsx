@@ -11,8 +11,9 @@ import { Drawable } from "roughjs/bin/core";
 
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./ArtPageStyles.scss";
-import { formatDiagnosticsWithColorAndContext } from "typescript";
 
 const generator = rough.generator();
 
@@ -31,17 +32,26 @@ const ArtPage: React.FC = () => {
     console.log({ updatedScreenHeight: screenHeight });
   });
 
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
   // Declare stylesheet for manipulation
   const [styles, setStyles] = React.useState({
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `artPageDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForArtPage`,
+    backToIndexPageButton: `backToIndexPageButtonForArtPage`,
+    switchStylesButton: `switchStylesButtonForArtPage`,
     artBoardDisplay: styles2.artBoardDisplay,
     artBoardCanvas: "artBoardCanvas",
     canvasToolsetView: styles2.canvasToolsetView,
     selectLineButton: `selectLineButton`,
     selectRectButton: `selectRectButton`,
     selectSelectionButton: `selectSelectionButton`,
+    basicButtonStyle: {},
   });
 
   // Handle screen size changes
@@ -64,6 +74,9 @@ const ArtPage: React.FC = () => {
     return canvasConfig;
   };
   const canvasRef = React.useRef(createCanvasRef());
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Declare canvas run states
   // variable tracking drawing data
@@ -257,6 +270,7 @@ const ArtPage: React.FC = () => {
     }
   };
 
+  // Declare functions handling mouse events for canvas
   const handleMouseDown = (
     event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
   ) => {
@@ -343,6 +357,7 @@ const ArtPage: React.FC = () => {
       }
     }
   };
+
   const handleMouseUp = (
     event: React.MouseEvent<HTMLCanvasElement, MouseEvent>
   ) => {
@@ -373,12 +388,66 @@ const ArtPage: React.FC = () => {
     }
   }, [elements]);
 
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `artPageDisplaySupportClass`,
+          basicButtonStyle: {},
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `artPageDisplaySupportClassv2`,
+          basicButtonStyle: {
+            color: `slategrey`,
+            backgroundColor: `black`,
+          },
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   return (
     <div
       className={styles.mainDisplaySupportClass}
       style={styles.mainDisplaySupportStyle}
     >
       <View style={styles.mainDisplay}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <View style={styles.artBoardDisplay}>
           <canvas
             ref={canvasRef}
@@ -392,6 +461,7 @@ const ArtPage: React.FC = () => {
           <View style={styles.canvasToolsetView}>
             <button
               className={styles.selectLineButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 setSelectedTool(`line`);
               }}
@@ -400,6 +470,7 @@ const ArtPage: React.FC = () => {
             </button>
             <button
               className={styles.selectRectButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 setSelectedTool(`rect`);
               }}
@@ -408,6 +479,7 @@ const ArtPage: React.FC = () => {
             </button>
             <button
               className={styles.selectSelectionButton}
+              style={styles.basicButtonStyle}
               onClick={() => {
                 setSelectedTool(`selection`);
               }}

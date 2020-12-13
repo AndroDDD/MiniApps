@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Dimensions } from "react-native";
 import ReactAudioPlayer from "react-audio-player";
 import $ from "jquery";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import helicopter1 from "../../../Media/forSoundBoard/0000545.mp3";
 import heavyShoveling from "../../../Media/forSoundBoard/0001041.mp3";
 import tappingSomething from "../../../Media/forSoundBoard/0001197.mp3";
@@ -52,6 +54,9 @@ const SoundBoard: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `mainSoundBoardDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForSoundBoard`,
+    backToIndexPageButton: `backToIndexPageButtonForSoundBoard`,
+    switchStylesButton: `switchStylesButtonForSoundBoard`,
     soundPlayersDisplay: `soundPlayersDisplay`,
     soundPlayerContainer: `soundPlayerContainer`,
     soundPlayerTitle: `soundPlayerTitle`,
@@ -78,6 +83,39 @@ const SoundBoard: React.FC = () => {
     ];
   });
 
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainSoundBoardDisplaySupportClass`,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `mainSoundBoardDisplaySupportClassv2`,
+        };
+      });
+    }
+  }, [kindOfStyle]);
+
   // Handle component return view
   return (
     <div
@@ -86,6 +124,30 @@ const SoundBoard: React.FC = () => {
     >
       <View style={styles.mainDisplay}>
         <div className={styles.soundPlayersDisplay}>
+          <div className={styles.headerBar}>
+            <div
+              className={styles.backToIndexPageButton}
+              onClick={() => {
+                window.location.href = `${localUrl}`;
+              }}
+            >{`Back To Index Page`}</div>
+            <div
+              ref={switchStylesButtonRef}
+              className={styles.switchStylesButton}
+              onClick={(event) => {
+                const innerHtml = event.currentTarget.innerHTML;
+                if (innerHtml === `Switch To Plain View`) {
+                  setKindOfStyle(() => {
+                    return `plain`;
+                  });
+                } else if (innerHtml === `Switch To Colorful View`) {
+                  setKindOfStyle(() => {
+                    return `colorful`;
+                  });
+                }
+              }}
+            >{`Switch To Plain View`}</div>
+          </div>
           {sounds.map((sound) => (
             <div className={styles.soundPlayerContainer}>
               <div className={styles.soundPlayerTitle}>{sound.title}</div>

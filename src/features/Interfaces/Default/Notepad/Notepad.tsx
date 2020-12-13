@@ -14,6 +14,8 @@ import $ from "jquery";
 
 import FormikField from "./FormikField";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./NotepadStyles.scss";
 
 interface FormValues {
@@ -65,7 +67,11 @@ const Notepad: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `notepadDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForNotepad`,
+    backToIndexPageButton: `backToIndexPageButtonForNotepad`,
+    switchStylesButton: `switchStylesButtonForNotepad`,
     notepadDisplay: styles2.notepadDisplay,
+    notepadDisplayEditMode: styles2.notepadDisplayEditMode,
     notepadHeader: styles2.notepadHeader,
     headerTitleText: styles2.headerTitleText,
     addPostIconButton: `addPostIconButton`,
@@ -73,8 +79,7 @@ const Notepad: React.FC = () => {
     availableNotesView: styles2.availableNotesView,
     availableNotesButtonsView: styles2.availableNotesButtonsView,
     availableNoteButton: `availableNoteButton`,
-    availableNoteButtonText: styles2.availableNoteButtonText,
-    availableNoteButtonTextHovered: styles2.availableNoteButtonTextHovered,
+    availableNoteButtonText: `availableNoteButtonText`,
     addNoteView: styles2.addNoteView,
     homeIconButton: `homeIconButton`,
     homeIcon: `homeIcon`,
@@ -94,6 +99,14 @@ const Notepad: React.FC = () => {
     title: ``,
     note: ``,
   });
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Handle submission of form
   const handleNotePost = (values: FormValues): void => {
@@ -184,15 +197,7 @@ const Notepad: React.FC = () => {
               setNotepadView(`reviewNote`);
             }}
           >
-            <Text
-              style={
-                availableNotesButtonStatus[index].hovered
-                  ? styles.availableNoteButtonTextHovered
-                  : styles.availableNoteButtonText
-              }
-            >
-              {note.title}
-            </Text>
+            <div className={styles.availableNoteButtonText}>{note.title}</div>
           </button>
         );
         return noteButtonConfig;
@@ -207,7 +212,48 @@ const Notepad: React.FC = () => {
 
       setAvailableNotesViewData(tempViewHold);
     }
-  }, [notes, availableNotesButtonStatus]);
+  }, [notes, availableNotesButtonStatus, styles]);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `notepadDisplaySupportClass`,
+          notepadDisplay: styles2.notepadDisplay,
+          notepadDisplayEditMode: styles2.notepadDisplayEditMode,
+          headerTitleText: styles2.headerTitleText,
+          availableNoteButtonText: `availableNoteButtonText`,
+          addPostIcon: `addPostIcon`,
+          homeIcon: `homeIcon`,
+          availableNoteButton: `availableNoteButton`,
+          formSubmitButton: `formSubmitButton`,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `notepadDisplaySupportClassv2`,
+          notepadDisplay: styles2.notepadDisplayv2,
+          notepadDisplayEditMode: styles2.notepadDisplayEditModev2,
+          headerTitleText: styles2.headerTitleTextv2,
+          availableNoteButtonText: `availableNoteButtonTextv2`,
+          addPostIcon: `addPostIconv2`,
+          homeIcon: `homeIconv2`,
+          availableNoteButton: `availableNoteButtonv2`,
+          formSubmitButton: `formSubmitButtonv2`,
+        };
+      });
+    }
+  }, [kindOfStyle]);
 
   switch (notepadView) {
     case `main`:
@@ -217,6 +263,30 @@ const Notepad: React.FC = () => {
           style={styles.mainDisplaySupportStyle}
         >
           <View style={styles.mainDisplay}>
+            <div className={styles.headerBar}>
+              <div
+                className={styles.backToIndexPageButton}
+                onClick={() => {
+                  window.location.href = `${localUrl}`;
+                }}
+              >{`Back To Index Page`}</div>
+              <div
+                ref={switchStylesButtonRef}
+                className={styles.switchStylesButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (innerHtml === `Switch To Plain View`) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                  } else if (innerHtml === `Switch To Colorful View`) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                  }
+                }}
+              >{`Switch To Plain View`}</div>
+            </div>
             <View style={styles.notepadDisplay}>
               <View style={styles.notepadHeader}>
                 <Text style={styles.headerTitleText}>{`Notepad`}</Text>
@@ -244,7 +314,31 @@ const Notepad: React.FC = () => {
           style={styles.mainDisplaySupportStyle}
         >
           <View style={styles.mainDisplay}>
-            <View style={styles.notepadDisplay}>
+            <div className={styles.headerBar}>
+              <div
+                className={styles.backToIndexPageButton}
+                onClick={() => {
+                  window.location.href = `${localUrl}`;
+                }}
+              >{`Back To Index Page`}</div>
+              <div
+                ref={switchStylesButtonRef}
+                className={styles.switchStylesButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (innerHtml === `Switch To Plain View`) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                  } else if (innerHtml === `Switch To Colorful View`) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                  }
+                }}
+              >{`Switch To Plain View`}</div>
+            </div>
+            <View style={styles.notepadDisplayEditMode}>
               <View style={styles.notepadHeader}>
                 <Text style={styles.headerTitleText}>{`Add A Note`}</Text>
                 <IconButton
@@ -263,7 +357,7 @@ const Notepad: React.FC = () => {
                 >
                   {() => {
                     return (
-                      <Form style={{ height: "100%" }}>
+                      <Form>
                         <FormikField
                           style={{
                             disableUnderline: true,
@@ -271,6 +365,7 @@ const Notepad: React.FC = () => {
                           name="title"
                           label=" TITLE"
                           required
+                          kindOfStyle={kindOfStyle}
                         />
                         <FormikField
                           style={{
@@ -284,11 +379,12 @@ const Notepad: React.FC = () => {
                           name="note"
                           label=" WHAT'S THE NOTE?"
                           required
+                          kindOfStyle={kindOfStyle}
                         />
                         <View
                           style={{
                             position: "relative",
-                            top: "100px",
+                            top: "28px",
                             alignItems: "center",
                           }}
                         >
@@ -313,7 +409,31 @@ const Notepad: React.FC = () => {
           style={styles.mainDisplaySupportStyle}
         >
           <View style={styles.mainDisplay}>
-            <View style={styles.notepadDisplay}>
+            <div className={styles.headerBar}>
+              <div
+                className={styles.backToIndexPageButton}
+                onClick={() => {
+                  window.location.href = `${localUrl}`;
+                }}
+              >{`Back To Index Page`}</div>
+              <div
+                ref={switchStylesButtonRef}
+                className={styles.switchStylesButton}
+                onClick={(event) => {
+                  const innerHtml = event.currentTarget.innerHTML;
+                  if (innerHtml === `Switch To Plain View`) {
+                    setKindOfStyle(() => {
+                      return `plain`;
+                    });
+                  } else if (innerHtml === `Switch To Colorful View`) {
+                    setKindOfStyle(() => {
+                      return `colorful`;
+                    });
+                  }
+                }}
+              >{`Switch To Plain View`}</div>
+            </div>
+            <View style={styles.notepadDisplayEditMode}>
               <View style={styles.notepadHeader}>
                 <Text style={styles.headerTitleText}>{`Add A Note`}</Text>
                 <IconButton
@@ -340,6 +460,7 @@ const Notepad: React.FC = () => {
                           name="title"
                           label=" TITLE"
                           required
+                          kindOfStyle={kindOfStyle}
                         />
                         <FormikField
                           style={{
@@ -353,11 +474,12 @@ const Notepad: React.FC = () => {
                           name="note"
                           label=" WHAT'S THE NOTE?"
                           required
+                          kindOfStyle={kindOfStyle}
                         />
                         <View
                           style={{
                             position: "relative",
-                            top: "100px",
+                            top: "28px",
                             alignItems: "center",
                           }}
                         >
@@ -379,6 +501,30 @@ const Notepad: React.FC = () => {
     default:
       return (
         <View>
+          <div className={styles.headerBar}>
+            <div
+              className={styles.backToIndexPageButton}
+              onClick={() => {
+                window.location.href = `${localUrl}`;
+              }}
+            >{`Back To Idex Page`}</div>
+            <div
+              ref={switchStylesButtonRef}
+              className={styles.switchStylesButton}
+              onClick={(event) => {
+                const innerHtml = event.currentTarget.innerHTML;
+                if (innerHtml === `Switch To Plain View`) {
+                  setKindOfStyle(() => {
+                    return `plain`;
+                  });
+                } else if (innerHtml === `Switch To Colorful View`) {
+                  setKindOfStyle(() => {
+                    return `colorful`;
+                  });
+                }
+              }}
+            >{`Switch To Plain View`}</div>
+          </div>
           <Text>{`It is strange how you got here.!.`}</Text>
         </View>
       );
@@ -399,6 +545,27 @@ const styles2 = StyleSheet.create({
     border: "1px solid rgba(0, 0, 0, 0.75)",
     backgroundColor: "rgba(112, 128, 144, 0.9)",
   },
+  notepadDisplayv2: {
+    margin: "auto",
+    width: "500px",
+    height: "650px",
+    border: "1px solid rgba(0, 0, 0, 0.75)",
+    backgroundColor: "gainsboro",
+  },
+  notepadDisplayEditMode: {
+    margin: "auto",
+    width: "500px",
+    height: "auto",
+    border: "1px solid rgba(0, 0, 0, 0.75)",
+    backgroundColor: "rgba(112, 128, 144, 0.9)",
+  },
+  notepadDisplayEditModev2: {
+    margin: "auto",
+    width: "500px",
+    height: "auto",
+    border: "1px solid rgba(0, 0, 0, 0.75)",
+    backgroundColor: "gainsboro",
+  },
   notepadHeader: {
     position: "relative",
     left: "50px",
@@ -417,6 +584,16 @@ const styles2 = StyleSheet.create({
     fontSize: 20,
     fontWeight: "500",
   },
+  headerTitleTextv2: {
+    width: "80%",
+    margin: "auto",
+    color: "black",
+    textAlign: "center",
+    textShadowColor: "rgba(112, 128, 144, 0.75)",
+    textShadowRadius: 3,
+    fontSize: 20,
+    fontWeight: "500",
+  },
   availableNotesView: {
     margin: "auto",
     width: "100%",
@@ -429,23 +606,7 @@ const styles2 = StyleSheet.create({
     paddingRight: "10px",
     width: "100%",
     height: "100%",
-    justifyContent: "space-between",
-  },
-  availableNoteButtonText: {
-    color: "rgba(255, 102, 204, 0.75)",
-    textAlign: "center",
-    fontSize: 40,
-    fontWeight: "700",
-    textShadowColor: "rgba(112, 128, 144, 0.75)",
-    textShadowRadius: 3,
-  },
-  availableNoteButtonTextHovered: {
-    color: "rgba(255, 102, 204, 0.75)",
-    textAlign: "center",
-    fontSize: 40,
-    fontWeight: "700",
-    textShadowColor: "rgba(112, 128, 144, 0.75)",
-    textShadowRadius: 3,
+    justifyContent: "flex-start",
   },
   addNoteView: {
     margin: "auto",

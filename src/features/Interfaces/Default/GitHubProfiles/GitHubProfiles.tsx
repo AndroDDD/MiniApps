@@ -14,6 +14,8 @@ import $ from "jquery";
 
 import FormikField from "./FormikField";
 
+import { localUrl } from "../../../../routes/routerBlock";
+
 import "./GitHubProfilesStyles.scss";
 
 const APIURL = `https://api.github.com/users/`;
@@ -38,6 +40,9 @@ const GitHubProfiles: React.FC = () => {
     mainDisplay: styles2.mainDisplay,
     mainDisplaySupportClass: `gitHubProfilesPageDisplaySupportClass`,
     mainDisplaySupportStyle: { width: "100%", height: `${screenHeight}px` },
+    headerBar: `headerBarForGitHubProfiles`,
+    backToIndexPageButton: `backToIndexPageButtonForGitHubProfiles`,
+    switchStylesButton: `switchStylesButtonForGitHubProfiles`,
     searchView: styles2.searchView,
     searchQueryButtonView: styles2.searchQueryButtonView,
     searchQueryButton: `searchQueryButton`,
@@ -59,6 +64,14 @@ const GitHubProfiles: React.FC = () => {
 
   // Declare variable storing profile view
   const [profileView, setProfileView] = React.useState(<View></View>);
+
+  // Declare variable tracking options for kind of style
+  const [kindOfStyle, setKindOfStyle] = React.useState(() => {
+    return `colorful`;
+  });
+
+  // Declare ref for kind of page style button
+  let switchStylesButtonRef = React.useRef<any>(null);
 
   // Declare function for handling profile search queries
   const performSearch = (query: string) => {
@@ -144,7 +157,50 @@ const GitHubProfiles: React.FC = () => {
       console.log({ fetchedData, fecthedRepoData });
     };
     fetchProcess(searchQuery);
-  }, [searchQuery]);
+  }, [searchQuery, styles]);
+
+  // Handle kind of style for page
+  React.useEffect(() => {
+    if (kindOfStyle === `colorful`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Plain View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `gitHubProfilesPageDisplaySupportClass`,
+          mainDisplay: styles2.mainDisplay,
+          searchView: styles2.searchView,
+          profileView: styles2.profileView,
+          profileName: styles2.profileName,
+          profileFollowers: styles2.profileFollowers,
+          profileFollowing: styles2.profileFollowing,
+          profilePublicRepos: styles2.profilePublicRepos,
+          repository: styles2.repository,
+          repoName: styles2.repoName,
+        };
+      });
+    } else if (kindOfStyle === `plain`) {
+      if (switchStylesButtonRef.current) {
+        switchStylesButtonRef.current.innerHTML = `Switch To Colorful View`;
+      }
+      setStyles((styles) => {
+        return {
+          ...styles,
+          mainDisplaySupportClass: `gitHubProfilesPageDisplaySupportClassv2`,
+          mainDisplay: styles2.mainDisplayv2,
+          searchView: styles2.searchViewv2,
+          profileView: styles2.profileViewv2,
+          profileName: styles2.profileNamev2,
+          profileFollowers: styles2.profileFollowersv2,
+          profileFollowing: styles2.profileFollowingv2,
+          profilePublicRepos: styles2.profilePublicReposv2,
+          repository: styles2.repositoryv2,
+          repoName: styles2.repoNamev2,
+        };
+      });
+    }
+  }, [kindOfStyle]);
 
   return (
     <div
@@ -152,6 +208,30 @@ const GitHubProfiles: React.FC = () => {
       style={styles.mainDisplaySupportStyle}
     >
       <View style={styles.mainDisplay}>
+        <div className={styles.headerBar}>
+          <div
+            className={styles.backToIndexPageButton}
+            onClick={() => {
+              window.location.href = `${localUrl}`;
+            }}
+          >{`Back To Index Page`}</div>
+          <div
+            ref={switchStylesButtonRef}
+            className={styles.switchStylesButton}
+            onClick={(event) => {
+              const innerHtml = event.currentTarget.innerHTML;
+              if (innerHtml === `Switch To Plain View`) {
+                setKindOfStyle(() => {
+                  return `plain`;
+                });
+              } else if (innerHtml === `Switch To Colorful View`) {
+                setKindOfStyle(() => {
+                  return `colorful`;
+                });
+              }
+            }}
+          >{`Switch To Plain View`}</div>
+        </div>
         <View style={styles.searchView}>
           <Formik
             initialValues={{ searchQuery }}
@@ -169,6 +249,7 @@ const GitHubProfiles: React.FC = () => {
                       disableUnderline: true,
                     }}
                     required={false}
+                    kindOfStyle={kindOfStyle}
                   />
                   <View style={styles.searchQueryButtonView}>
                     <IconButton
@@ -198,6 +279,14 @@ const styles2 = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: "rgba(0, 0, 0, 0.75)",
   },
+  mainDisplayv2: {
+    margin: "auto",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+    overflow: "hidden",
+    backgroundColor: "rgba(0, 0, 0, 0)",
+  },
   searchView: {
     position: "relative",
     margin: "auto",
@@ -206,6 +295,17 @@ const styles2 = StyleSheet.create({
     height: "100px",
     border: "1px solid rgba(12, 5, 112, 0.705)",
     backgroundColor: "rgba(112, 128, 144, 0.75)",
+    borderRadius: 10,
+    borderBottomLeftRadius: 50,
+  },
+  searchViewv2: {
+    position: "relative",
+    margin: "auto",
+    justifyContent: "center",
+    width: "500px",
+    height: "100px",
+    border: "1px solid rgba(12, 5, 112, 0.705)",
+    backgroundColor: "whitesmoke",
     borderRadius: 10,
     borderBottomLeftRadius: 50,
   },
@@ -234,6 +334,22 @@ const styles2 = StyleSheet.create({
     backgroundColor: "rgba(112, 128, 144, 0.75)",
     overflow: "hidden",
   },
+  profileViewv2: {
+    postion: "relative",
+    top: "-100px",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    margin: "auto",
+    padding: "5px",
+    width: "500px",
+    height: "200px",
+    border: "1px solid rgba(12, 5, 112, 0.705)",
+    borderRadius: 10,
+    borderTopLeftRadius: 50,
+    backgroundColor: "whitesmoke",
+    overflow: "hidden",
+  },
   profilePhotoView: {
     margin: "auto",
     width: "20%",
@@ -258,9 +374,25 @@ const styles2 = StyleSheet.create({
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowRadius: 3,
   },
+  profileNamev2: {
+    width: "100%",
+    color: "black",
+    fontWeight: "600",
+    textAlign: "left",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowRadius: 3,
+  },
   profileFollowers: {
     width: "100%",
     color: "rgba(112, 128, 144, 1)",
+    fontWeight: "600",
+    textAlign: "left",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowRadius: 3,
+  },
+  profileFollowersv2: {
+    width: "100%",
+    color: "black",
     fontWeight: "600",
     textAlign: "left",
     textShadowColor: "rgba(0, 0, 0, 0.75)",
@@ -274,9 +406,25 @@ const styles2 = StyleSheet.create({
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowRadius: 3,
   },
+  profileFollowingv2: {
+    width: "100%",
+    color: "black",
+    fontWeight: "600",
+    textAlign: "left",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowRadius: 3,
+  },
   profilePublicRepos: {
     width: "100%",
     color: "rgba(112, 128, 144, 1)",
+    fontWeight: "600",
+    textAlign: "left",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowRadius: 3,
+  },
+  profilePublicReposv2: {
+    width: "100%",
+    color: "black",
     fontWeight: "600",
     textAlign: "left",
     textShadowColor: "rgba(0, 0, 0, 0.75)",
@@ -292,10 +440,29 @@ const styles2 = StyleSheet.create({
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowRadius: 3,
   },
+  repositoryv2: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    width: "100%",
+    color: "black",
+    fontWeight: "600",
+    textAlign: "left",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowRadius: 3,
+  },
   repoName: {
     paddingLeft: "5px",
     paddingRight: "5px",
     color: "rgba(112, 128, 144, 1)",
+    fontWeight: "600",
+    textAlign: "left",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowRadius: 3,
+  },
+  repoNamev2: {
+    paddingLeft: "5px",
+    paddingRight: "5px",
+    color: "black",
     fontWeight: "600",
     textAlign: "left",
     textShadowColor: "rgba(0, 0, 0, 0.75)",
